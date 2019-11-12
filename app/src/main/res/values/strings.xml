@@ -1,3 +1,14 @@
 <resources>
     <string name="app_name">OnlyShoot</string>
+    <string name="add_fight">Add fight</string>
+    <string name="edit_fight">Edit fight</string>
+    <string name="add_squad">Add squad</string>
+    <string name="edit_squad">Edit squad</string>
+    <string name="add_unit">Add unit</string>
+    <string name="edit_unit">Edit unit</string>
+    <string name="attack_direction">Attack direction</string>
+    <string name="attack_result">Attack result</string>
+    <string name="fight_list">Fight list</string>
+    <string name="select_squad">Select squad</string>
+    <string name="settings">Settings</string>
 </resources>

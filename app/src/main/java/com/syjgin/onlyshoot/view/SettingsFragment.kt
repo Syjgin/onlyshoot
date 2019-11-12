@@ -2,13 +2,23 @@ package com.syjgin.onlyshoot.view
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
+import com.syjgin.onlyshoot.R
+import com.syjgin.onlyshoot.viewmodel.SettingsViewModel
 
-class SettingsFragment : Fragment() {
+class SettingsFragment : BaseFragment<SettingsViewModel>(SettingsViewModel::class.java) {
     companion object {
         fun createFragment(bundle: Bundle?) : Fragment {
             val fragment = SettingsFragment()
             fragment.arguments = bundle
             return fragment
         }
+    }
+
+    override fun fragmentTitle() = R.string.settings
+
+    override fun fragmentLayout() = R.layout.fragment_settings
+
+    override fun parseArguments(args: Bundle?) {
+
     }
 }
