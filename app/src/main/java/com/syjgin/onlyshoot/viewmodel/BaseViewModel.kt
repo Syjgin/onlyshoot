@@ -23,4 +23,8 @@ open class BaseViewModel : ViewModel() {
     open fun onFirstLaunch() {
 
     }
+
+    fun goBack() {
+        router.exit()
+    }
 }

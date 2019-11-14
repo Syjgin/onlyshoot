@@ -24,4 +24,6 @@ class AddEditUnitFragment : BaseFragment<AddEditUnitViewModel>(AddEditUnitViewMo
     override fun parseArguments(args: Bundle?) {
 
     }
+
+    override fun hasBackButton() = true
 }

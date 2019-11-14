@@ -21,4 +21,6 @@ class AttackResultFragment : BaseFragment<AttackResultViewModel>(AttackResultVie
     override fun parseArguments(args: Bundle?) {
 
     }
+
+    override fun hasBackButton() = true
 }

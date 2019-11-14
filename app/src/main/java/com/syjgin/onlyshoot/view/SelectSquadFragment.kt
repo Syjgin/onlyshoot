@@ -21,4 +21,6 @@ class SelectSquadFragment : BaseFragment<SelectSquadViewModel>(SelectSquadViewMo
     override fun parseArguments(args: Bundle?) {
 
     }
+
+    override fun hasBackButton() = true
 }

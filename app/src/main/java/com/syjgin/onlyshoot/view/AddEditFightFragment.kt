@@ -24,4 +24,6 @@ class AddEditFightFragment : BaseFragment<AddEditFightViewModel>(AddEditFightVie
     override fun parseArguments(args: Bundle?) {
 
     }
+
+    override fun hasBackButton() = true
 }

@@ -9,5 +9,7 @@ class FightListViewModel : BaseViewModel() {
         OnlyShootApp.getInstance().getAppComponent().inject(this)
     }
 
-
+    fun settingsSelected() {
+        router.navigateTo(OnlyShootScreen(ScreenEnum.Settings))
+    }
 }

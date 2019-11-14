@@ -7,7 +7,7 @@ import androidx.room.Query
 
 @Dao
 interface FightDao {
-    @Query("SELECT * FROM Fight")
+    @Query("SELECT * FROM Fight ORDER BY date DESC")
     fun getAll() : List<Fight>
     @Query("SELECT * FROM Fight WHERE id = :id")
     fun getById(id: Long) : Fight

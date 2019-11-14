@@ -8,5 +8,7 @@ data class Fight(
     @PrimaryKey
     val id: Long,
     val name: String,
-    val firstEnemyId: Long,
-    val SecondEnemyId: Long)
+    val firstSquadId: Long,
+    val SecondSquadId: Long,
+    val date: Long
+    )

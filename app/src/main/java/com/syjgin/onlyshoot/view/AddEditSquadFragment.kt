@@ -24,4 +24,6 @@ class AddEditSquadFragment : BaseFragment<AddEditSquadViewModel>(AddEditSquadVie
     override fun parseArguments(args: Bundle?) {
 
     }
+
+    override fun hasBackButton() = true
 }

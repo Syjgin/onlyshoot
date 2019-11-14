@@ -1,7 +1,11 @@
 package com.syjgin.onlyshoot.view
 
 import android.os.Bundle
+import android.view.MenuItem
+import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
 import com.syjgin.onlyshoot.R
 import com.syjgin.onlyshoot.viewmodel.SettingsViewModel
 
@@ -18,7 +22,7 @@ class SettingsFragment : BaseFragment<SettingsViewModel>(SettingsViewModel::clas
 
     override fun fragmentLayout() = R.layout.fragment_settings
 
-    override fun parseArguments(args: Bundle?) {
+    override fun hasBackButton() = true
 
-    }
+    override fun parseArguments(args: Bundle?) {}
 }

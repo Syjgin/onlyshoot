@@ -23,4 +23,5 @@ class AttackDirectionFragment : BaseFragment<AttackDirectionViewModel>(AttackDir
 
     }
 
+    override fun hasBackButton() = true
 }
