@@ -4,5 +4,8 @@
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
     <color name="white">#fff</color>
+    <color name="attack">#771100</color>
+    <color name="defend">#117700</color>
     <color name="text_color">#111</color>
+    <color name="caption_color">#222</color>
 </resources>

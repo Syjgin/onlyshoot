@@ -11,4 +11,12 @@
         <item name="android:textColor">@color/text_color</item>
         <item name="android:textSize">@dimen/normal_size</item>
     </style>
+    <style name="WhiteText" parent="Widget.AppCompat.TextView">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">@dimen/normal_size</item>
+    </style>
+    <style name="CaptionFieldTheme" parent="Widget.AppCompat.TextView">
+        <item name="android:textColor">@color/caption_color</item>
+        <item name="android:textSize">@dimen/caption_size</item>
+    </style>
 </resources>

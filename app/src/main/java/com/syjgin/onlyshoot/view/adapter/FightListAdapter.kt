@@ -8,12 +8,15 @@ import com.syjgin.onlyshoot.R
 import com.syjgin.onlyshoot.model.Fight
 import kotlinx.android.synthetic.main.item_fight_list.view.*
 
-class FightListAdapter(private val removeListener: RemoveClickListener, private var data: List<Fight>) : RecyclerView.Adapter<FightListAdapter.FightListViewHolder>() {
+class FightListAdapter(private val listener: RemoveClickListener, private var data: List<Fight>) : RecyclerView.Adapter<FightListAdapter.FightListViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FightListViewHolder {
         val holder = FightListViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_fight_list, parent, false))
         holder.itemView.remove_button.setOnClickListener {
-            removeListener.removeClicked(data[holder.adapterPosition])
+            listener.removeClicked(data[holder.adapterPosition])
+        }
+        holder.itemView.setOnClickListener {
+            listener.itemClicked(data[holder.adapterPosition])
         }
         return holder
     }
@@ -33,5 +36,6 @@ class FightListAdapter(private val removeListener: RemoveClickListener, private 
 
     interface RemoveClickListener {
         fun removeClicked(fight: Fight)
+        fun itemClicked(fight: Fight)
     }
 }

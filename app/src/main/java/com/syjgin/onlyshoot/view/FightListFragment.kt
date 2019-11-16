@@ -41,14 +41,19 @@ class FightListFragment : BaseFragment<FightListViewModel>(FightListViewModel::c
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setHasOptionsMenu(true)
-        viewModel?.getFightList()?.observe(this, Observer {
-            if(adapter == null) {
-                adapter = FightListAdapter(this@FightListFragment, it)
-                fight_recycler_view.adapter = adapter
-            } else {
-                adapter?.updateData(it)
-            }
-        })
+        viewModel?.getFightList()?.observe(this, Observer { displayFightList(it) })
+        add_fight.setOnClickListener {
+            viewModel?.addFight()
+        }
+    }
+
+    private fun displayFightList(it: List<Fight>) {
+        if (adapter == null) {
+            adapter = FightListAdapter(this@FightListFragment, it)
+            fight_recycler_view.adapter = adapter
+        } else {
+            adapter?.updateData(it)
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -61,5 +66,14 @@ class FightListFragment : BaseFragment<FightListViewModel>(FightListViewModel::c
 
     override fun removeClicked(fight: Fight) {
         viewModel?.removeItem(fight)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel?.refreshList()
+    }
+
+    override fun itemClicked(fight: Fight) {
+        viewModel?.openFight(fight)
     }
 }
