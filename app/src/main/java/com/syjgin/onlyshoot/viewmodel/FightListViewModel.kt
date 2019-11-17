@@ -2,26 +2,18 @@ package com.syjgin.onlyshoot.viewmodel
 
 import android.os.Bundle
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
 import com.syjgin.onlyshoot.di.OnlyShootApp
 import com.syjgin.onlyshoot.model.Fight
 import com.syjgin.onlyshoot.navigation.BundleKeys
 import com.syjgin.onlyshoot.navigation.OnlyShootScreen
 import com.syjgin.onlyshoot.navigation.ScreenEnum
-import kotlinx.coroutines.launch
 
 class FightListViewModel : BaseViewModel() {
-    private val fightList = MutableLiveData<List<Fight>>()
+    private val fightList : LiveData<List<Fight>>
 
     init {
         OnlyShootApp.getInstance().getAppComponent().inject(this)
-    }
-
-    fun refreshList() {
-        viewModelScope.launch {
-            fightList.postValue(database.FightDao().getAll())
-        }
+        fightList = database.FightDao().getAll()
     }
 
     fun settingsSelected() {

@@ -68,11 +68,6 @@ class FightListFragment : BaseFragment<FightListViewModel>(FightListViewModel::c
         viewModel?.removeItem(fight)
     }
 
-    override fun onResume() {
-        super.onResume()
-        viewModel?.refreshList()
-    }
-
     override fun itemClicked(fight: Fight) {
         viewModel?.openFight(fight)
     }

@@ -20,8 +20,10 @@ class AddEditFightViewModel : BaseViewModel() {
     }
     private val attackLiveData = MutableLiveData<Squad>()
     private val defendLiveData = MutableLiveData<Squad>()
+    private val saveDialogLiveData = MutableLiveData<Boolean>()
     private var attackersId : Long = NO_DATA
     private var defendersId : Long = NO_DATA
+    private var isEditMode = false
 
     init {
         OnlyShootApp.getInstance().getAppComponent().inject(this)
@@ -36,6 +38,7 @@ class AddEditFightViewModel : BaseViewModel() {
     }
 
     fun renderFight(fight: Fight) {
+        isEditMode = true
         attackersId = fight.firstSquadId
         defendersId = fight.secondSquadId
         viewModelScope.launch {
@@ -56,6 +59,39 @@ class AddEditFightViewModel : BaseViewModel() {
                 defendLiveData.postValue(Squad.createFromUnitList(database.UnitDao().getBySquad(defendersId), defendersId))
             }
         }
+    }
+
+    override fun goBack() {
+        if(isEditMode) {
+            router.exit()
+        } else {
+            if(attackersId == NO_DATA || defendersId == NO_DATA) {
+                router.exit()
+            } else {
+                saveDialogLiveData.postValue(true)
+            }
+        }
+    }
+
+    fun saveFight(name: String) {
+        if(attackersId == NO_DATA || defendersId == NO_DATA) {
+            router.exit()
+            return
+        }
+        val fightId = DbUtils.generateLongUUID()
+        val fight = Fight(fightId, name, attackersId, defendersId, System.currentTimeMillis())
+        viewModelScope.launch {
+            database.FightDao().insert(fight)
+            router.exit()
+        }
+    }
+
+    fun exit() {
+        router.exit()
+    }
+
+    fun getSaveDialogLiveData() : LiveData<Boolean> {
+        return saveDialogLiveData
     }
 
     fun loadSquad(attackers: Boolean) {

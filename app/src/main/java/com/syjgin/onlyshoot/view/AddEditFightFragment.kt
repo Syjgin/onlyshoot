@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.util.ArrayMap
 import android.view.View
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -14,6 +15,7 @@ import com.syjgin.onlyshoot.model.Squad
 import com.syjgin.onlyshoot.model.SquadUnit
 import com.syjgin.onlyshoot.navigation.BundleKeys
 import com.syjgin.onlyshoot.utils.AddEditUtils
+import com.syjgin.onlyshoot.utils.DialogUtils
 import com.syjgin.onlyshoot.view.adapter.SquadUnitListAdapter
 import com.syjgin.onlyshoot.viewmodel.AddEditFightViewModel
 import kotlinx.android.synthetic.main.fragment_add_edit_fight.*
@@ -48,14 +50,12 @@ class AddEditFightFragment : BaseFragment<AddEditFightViewModel>(AddEditFightVie
         super.onViewCreated(view, savedInstanceState)
         viewModel?.getAttackFightData()?.observe(this, Observer{ displaySquad(it, true) })
         viewModel?.getDefendFightData()?.observe(this, Observer{ displaySquad(it, false) })
+        viewModel?.getSaveDialogLiveData()?.observe(this, Observer { displaySaveDialog() })
         defenders.layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
         attackers.layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
         defenders.adapter = defendersAdapter
         attackers.adapter = attackersAdapter
-        if(fight != null) {
-            setupExisting()
-            viewModel?.renderFight(fight!!)
-        } else {
+        if(fight == null) {
             setupLoading()
         }
         attack.setOnClickListener {
@@ -67,6 +67,20 @@ class AddEditFightFragment : BaseFragment<AddEditFightViewModel>(AddEditFightVie
         }
         swap.setOnClickListener {
             viewModel?.swap()
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                viewModel?.goBack()
+            }
+
+        })
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if(fight != null) {
+            setupExisting()
+            viewModel?.renderFight(fight!!)
         }
     }
 
@@ -98,6 +112,19 @@ class AddEditFightFragment : BaseFragment<AddEditFightViewModel>(AddEditFightVie
         load_defenders.text = getString(R.string.load_defenders)
         load_attackers.setOnClickListener {viewModel?.loadSquad(true)}
         load_defenders.setOnClickListener {viewModel?.loadSquad(false)}
+    }
+
+    private fun displaySaveDialog() {
+        DialogUtils.createInputDialog(context, getString(R.string.save_fight), object :
+            DialogUtils.InputFieldDialogListener {
+            override fun onValueSelected(value: String) {
+                viewModel?.saveFight(value)
+            }
+
+            override fun onCancel() {
+                viewModel?.exit()
+            }
+        })?.show()
     }
 
     private fun displaySquad(squad: Squad, isAttackers: Boolean) {

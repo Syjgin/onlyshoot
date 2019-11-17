@@ -24,7 +24,7 @@ open class BaseViewModel : ViewModel() {
 
     }
 
-    fun goBack() {
+    open fun goBack() {
         router.exit()
     }
 }
