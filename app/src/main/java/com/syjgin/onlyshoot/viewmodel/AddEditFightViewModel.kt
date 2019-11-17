@@ -47,7 +47,7 @@ class AddEditFightViewModel : BaseViewModel() {
         }
     }
 
-    fun setSquad(squadId: Long, attackers: Boolean) {
+    fun setSquadAndReturn(squadId: Long, attackers: Boolean) {
         if(attackers) {
             attackersId = squadId
             viewModelScope.launch {
@@ -59,6 +59,7 @@ class AddEditFightViewModel : BaseViewModel() {
                 defendLiveData.postValue(Squad.createFromUnitList(database.UnitDao().getBySquad(defendersId), defendersId))
             }
         }
+        router.exit()
     }
 
     override fun goBack() {

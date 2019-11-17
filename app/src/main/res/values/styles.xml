@@ -19,4 +19,10 @@
         <item name="android:textColor">@color/caption_color</item>
         <item name="android:textSize">@dimen/caption_size</item>
     </style>
+    <style name="BottomButton" parent="Widget.AppCompat.Button">
+        <item name="android:textColor">@drawable/bottom_button_text</item>
+        <item name="android:textSize">@dimen/normal_size</item>
+        <item name="android:background">@drawable/bottom_button_color</item>
+        <item name="android:textAllCaps">true</item>
+    </style>
 </resources>

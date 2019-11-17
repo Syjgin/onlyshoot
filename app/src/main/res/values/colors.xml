@@ -8,4 +8,7 @@
     <color name="defend">#117700</color>
     <color name="text_color">#111</color>
     <color name="caption_color">#222</color>
+    <color name="bottom_button_active">#009900</color>
+    <color name="bottom_button_inactive">#889988</color>
+    <color name="bottom_text_inactive">#aaa</color>
 </resources>
