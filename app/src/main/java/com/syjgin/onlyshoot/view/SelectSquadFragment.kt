@@ -6,14 +6,19 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.syjgin.onlyshoot.R
 import com.syjgin.onlyshoot.model.Squad
+import com.syjgin.onlyshoot.navigation.BundleKeys
+import com.syjgin.onlyshoot.view.adapter.SquadSelectAdapter
 import com.syjgin.onlyshoot.viewmodel.AddEditFightViewModel
 import com.syjgin.onlyshoot.viewmodel.SelectSquadViewModel
 import kotlinx.android.synthetic.main.fragment_select_squad.*
 
-class SelectSquadFragment : BaseFragment<SelectSquadViewModel>(SelectSquadViewModel::class.java) {
+class SelectSquadFragment : BaseFragment<SelectSquadViewModel>(SelectSquadViewModel::class.java),
+    SquadSelectAdapter.SquadSelectListener {
+
     companion object {
         fun createFragment(bundle: Bundle?) : Fragment {
             val fragment = SelectSquadFragment()
@@ -24,12 +29,17 @@ class SelectSquadFragment : BaseFragment<SelectSquadViewModel>(SelectSquadViewMo
 
     private var squad: Squad? = null
     private var isAttackers = false
+    private val adapter = SquadSelectAdapter(this)
 
     override fun fragmentTitle() = R.string.select_squad
 
     override fun fragmentLayout() = R.layout.fragment_select_squad
 
-    override fun parseArguments(args: Bundle?) {}
+    override fun parseArguments(args: Bundle?) {
+        if(args == null)
+            return
+        isAttackers = args.getBoolean(BundleKeys.SelectAttackers.name)
+    }
 
     override fun hasBackButton() = true
 
@@ -51,9 +61,25 @@ class SelectSquadFragment : BaseFragment<SelectSquadViewModel>(SelectSquadViewMo
             if(squad != null) {
                 val addEditFightViewModel = ViewModelProviders.of(this).get(AddEditFightViewModel::class.java)
                 if(squad!!.list.isNotEmpty()) {
-                    addEditFightViewModel.setSquadAndReturn(squad!!.list[0].squadId, isAttackers)
+                    addEditFightViewModel.setSquadAndReturn(squad!!.getId()!!, isAttackers)
                 }
             }
         }
+        existing_squads.adapter = adapter
+        viewModel?.getSquadsLiveData()?.observe(this, Observer { showSquads(it)})
+        viewModel?.loadData()
+    }
+
+    private fun showSquads(squads: List<Squad>) {
+        adapter.addData(squads)
+    }
+
+    override fun squadSelected(squad: Squad) {
+        this.squad = squad
+        select_squad.isEnabled = true
+    }
+
+    override fun squadEditClick(squad: Squad) {
+        viewModel?.startEditSquad(squad)
     }
 }

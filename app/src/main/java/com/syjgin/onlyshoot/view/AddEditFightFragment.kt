@@ -1,7 +1,6 @@
 package com.syjgin.onlyshoot.view
 
 import android.os.Bundle
-import android.util.ArrayMap
 import android.view.View
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
@@ -16,6 +15,7 @@ import com.syjgin.onlyshoot.model.SquadUnit
 import com.syjgin.onlyshoot.navigation.BundleKeys
 import com.syjgin.onlyshoot.utils.AddEditUtils
 import com.syjgin.onlyshoot.utils.DialogUtils
+import com.syjgin.onlyshoot.utils.StringUtils
 import com.syjgin.onlyshoot.view.adapter.SquadUnitListAdapter
 import com.syjgin.onlyshoot.viewmodel.AddEditFightViewModel
 import kotlinx.android.synthetic.main.fragment_add_edit_fight.*
@@ -130,27 +130,11 @@ class AddEditFightFragment : BaseFragment<AddEditFightViewModel>(AddEditFightVie
     private fun displaySquad(squad: Squad, isAttackers: Boolean) {
         if(isAttackers) {
             attackersAdapter.addData(squad.list)
-            attackers_description.text = createDescription(squad.list)
+            attackers_description.text = StringUtils.createDescription(squad.list)
         } else {
             defendersAdapter.addData(squad.list)
-            defenders_description.text = createDescription(squad.list)
+            defenders_description.text = StringUtils.createDescription(squad.list)
         }
-    }
-
-    private fun createDescription(units: List<SquadUnit>) : String {
-        val result = StringBuilder()
-        val map = ArrayMap<String, Int>()
-        for(squadUnit in units) {
-            if(map.contains(squadUnit.name)) {
-                map[squadUnit.name] = map[squadUnit.name]!!+1
-            } else {
-                map[squadUnit.name] = 1
-            }
-        }
-        for (keyValuePair in map.entries) {
-            result.append(String.format("%s: %d", keyValuePair.key, keyValuePair.value))
-        }
-        return result.toString()
     }
 
     override fun hasBackButton() = true

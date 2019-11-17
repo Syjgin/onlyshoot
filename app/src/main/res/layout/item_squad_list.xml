@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:padding="@dimen/content_offset"
+    android:layout_height="match_parent">
+    <TextView
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        style="@style/TextFieldTheme"
+        android:id="@+id/squad_name"
+        tools:text="Name"/>
+    <Button
+        android:layout_width="@dimen/square_button"
+        android:id="@+id/edit_button"
+        android:layout_height="wrap_content"
+        android:background="@drawable/ic_edit"/>
+    <RadioButton
+        android:layout_width="@dimen/square_button"
+        android:layout_marginStart="@dimen/content_offset"
+        android:id="@+id/select_radio_button"
+        android:layout_height="@dimen/square_button"/>
+</LinearLayout>

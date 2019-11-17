@@ -6,4 +6,8 @@ data class Squad(val list: List<SquadUnit>, val isAttackers: Boolean) {
             return Squad(list, if(list.isEmpty()) false else list[0].squadId == attackersId)
         }
     }
+
+    fun getId() : Long? {
+        return if(list.isEmpty()) null else list[0].squadId
+    }
 }

@@ -5,6 +5,7 @@ enum class BundleKeys {
     Fight,
     Unit,
     SelectAttackers,
+    SquadId,
     AttackSquadId,
     DefendSquadId,
 }
