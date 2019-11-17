@@ -15,7 +15,6 @@ import com.syjgin.onlyshoot.model.SquadUnit
 import com.syjgin.onlyshoot.navigation.BundleKeys
 import com.syjgin.onlyshoot.utils.AddEditUtils
 import com.syjgin.onlyshoot.utils.DialogUtils
-import com.syjgin.onlyshoot.utils.StringUtils
 import com.syjgin.onlyshoot.view.adapter.SquadUnitListAdapter
 import com.syjgin.onlyshoot.viewmodel.AddEditFightViewModel
 import kotlinx.android.synthetic.main.fragment_add_edit_fight.*
@@ -130,10 +129,10 @@ class AddEditFightFragment : BaseFragment<AddEditFightViewModel>(AddEditFightVie
     private fun displaySquad(squad: Squad, isAttackers: Boolean) {
         if(isAttackers) {
             attackersAdapter.addData(squad.list)
-            attackers_description.text = StringUtils.createDescription(squad.list)
+            attackers_description.text = squad.name
         } else {
             defendersAdapter.addData(squad.list)
-            defenders_description.text = StringUtils.createDescription(squad.list)
+            defenders_description.text = squad.name
         }
     }
 

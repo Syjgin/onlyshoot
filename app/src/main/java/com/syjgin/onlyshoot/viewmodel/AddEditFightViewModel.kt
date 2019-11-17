@@ -42,8 +42,14 @@ class AddEditFightViewModel : BaseViewModel() {
         attackersId = fight.firstSquadId
         defendersId = fight.secondSquadId
         viewModelScope.launch {
-            attackLiveData.postValue(Squad.createFromUnitList(database.UnitDao().getBySquad(attackersId), attackersId))
-            defendLiveData.postValue(Squad.createFromUnitList(database.UnitDao().getBySquad(defendersId), defendersId))
+            attackLiveData.postValue(Squad.createFromUnitList(
+                database.UnitDao().getBySquad(attackersId),
+                attackersId,
+                database.SquadDescriptionDao().getById(attackersId).name))
+            defendLiveData.postValue(Squad.createFromUnitList(
+                database.UnitDao().getBySquad(defendersId),
+                defendersId,
+                database.SquadDescriptionDao().getById(defendersId).name))
         }
     }
 
@@ -51,12 +57,18 @@ class AddEditFightViewModel : BaseViewModel() {
         if(attackers) {
             attackersId = squadId
             viewModelScope.launch {
-                attackLiveData.postValue(Squad.createFromUnitList(database.UnitDao().getBySquad(attackersId), attackersId))
+                attackLiveData.postValue(Squad.createFromUnitList(
+                    database.UnitDao().getBySquad(attackersId),
+                    attackersId,
+                    database.SquadDescriptionDao().getById(attackersId).name))
             }
         } else {
             defendersId = squadId
             viewModelScope.launch {
-                defendLiveData.postValue(Squad.createFromUnitList(database.UnitDao().getBySquad(defendersId), defendersId))
+                defendLiveData.postValue(Squad.createFromUnitList(
+                    database.UnitDao().getBySquad(defendersId),
+                    defendersId,
+                    database.SquadDescriptionDao().getById(defendersId).name))
             }
         }
         router.exit()
@@ -124,11 +136,17 @@ class AddEditFightViewModel : BaseViewModel() {
             database.UnitDao().insert(targetUnit)
             if(isAttackers) {
                 viewModelScope.launch {
-                    attackLiveData.postValue(Squad.createFromUnitList(database.UnitDao().getBySquad(attackersId), attackersId))
+                    attackLiveData.postValue(Squad.createFromUnitList(
+                        database.UnitDao().getBySquad(attackersId),
+                        attackersId,
+                        database.SquadDescriptionDao().getById(attackersId).name))
                 }
             } else {
                 viewModelScope.launch {
-                    defendLiveData.postValue(Squad.createFromUnitList(database.UnitDao().getBySquad(defendersId), defendersId))
+                    defendLiveData.postValue(Squad.createFromUnitList(
+                        database.UnitDao().getBySquad(defendersId),
+                        defendersId,
+                        database.SquadDescriptionDao().getById(defendersId).name))
                 }
             }
         }
@@ -146,8 +164,14 @@ class AddEditFightViewModel : BaseViewModel() {
         attackersId = defendersId
         defendersId = tempId
         viewModelScope.launch {
-            attackLiveData.postValue(Squad.createFromUnitList(database.UnitDao().getBySquad(attackersId), attackersId))
-            defendLiveData.postValue(Squad.createFromUnitList(database.UnitDao().getBySquad(defendersId), defendersId))
+            attackLiveData.postValue(Squad.createFromUnitList(
+                database.UnitDao().getBySquad(attackersId),
+                attackersId,
+                database.SquadDescriptionDao().getById(attackersId).name))
+            defendLiveData.postValue(Squad.createFromUnitList(
+                database.UnitDao().getBySquad(defendersId),
+                defendersId,
+                database.SquadDescriptionDao().getById(defendersId).name))
         }
     }
 }

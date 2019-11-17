@@ -10,6 +10,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.syjgin.onlyshoot.R
 import com.syjgin.onlyshoot.model.Squad
+import com.syjgin.onlyshoot.model.SquadDescription
 import com.syjgin.onlyshoot.navigation.BundleKeys
 import com.syjgin.onlyshoot.view.adapter.SquadSelectAdapter
 import com.syjgin.onlyshoot.viewmodel.AddEditFightViewModel
@@ -27,7 +28,7 @@ class SelectSquadFragment : BaseFragment<SelectSquadViewModel>(SelectSquadViewMo
         }
     }
 
-    private var squad: Squad? = null
+    private var squad: SquadDescription? = null
     private var isAttackers = false
     private val adapter = SquadSelectAdapter(this)
 
@@ -60,26 +61,23 @@ class SelectSquadFragment : BaseFragment<SelectSquadViewModel>(SelectSquadViewMo
         select_squad.setOnClickListener {
             if(squad != null) {
                 val addEditFightViewModel = ViewModelProviders.of(this).get(AddEditFightViewModel::class.java)
-                if(squad!!.list.isNotEmpty()) {
-                    addEditFightViewModel.setSquadAndReturn(squad!!.getId()!!, isAttackers)
-                }
+                addEditFightViewModel.setSquadAndReturn(squad!!.id, isAttackers)
             }
         }
         existing_squads.adapter = adapter
         viewModel?.getSquadsLiveData()?.observe(this, Observer { showSquads(it)})
-        viewModel?.loadData()
     }
 
-    private fun showSquads(squads: List<Squad>) {
+    private fun showSquads(squads: List<SquadDescription>) {
         adapter.addData(squads)
     }
 
-    override fun squadSelected(squad: Squad) {
+    override fun squadSelected(squad: SquadDescription) {
         this.squad = squad
         select_squad.isEnabled = true
     }
 
-    override fun squadEditClick(squad: Squad) {
+    override fun squadEditClick(squad: SquadDescription) {
         viewModel?.startEditSquad(squad)
     }
 }
