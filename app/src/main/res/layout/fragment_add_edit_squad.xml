@@ -1,6 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical">
+    <EditText
+        style="@style/CaptionFieldTheme"
+        tools:text="text"
+        android:inputType="textCapSentences"
+        android:id="@+id/title_text"
+        android:padding="@dimen/content_offset"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:ignore="Autofill,LabelFor" />
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/existing_squads"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        android:layout_weight="1" />
 
+    <Button
+        android:id="@+id/save_squad"
+        style="@style/BottomButton"
+        android:enabled="false"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/save" />
 </LinearLayout>

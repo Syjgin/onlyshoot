@@ -21,4 +21,5 @@
     <string name="save_fight">Enter the name for this fight, if you want to save it</string>
     <string name="add">add</string>
     <string name="select">Select</string>
+    <string name="save">Save</string>
 </resources>
