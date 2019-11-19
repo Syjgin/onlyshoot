@@ -16,7 +16,7 @@ class AddEditUnitFragment : BaseFragment<AddEditUnitViewModel>(AddEditUnitViewMo
     }
 
     override fun fragmentTitle(): Int {
-        return AddEditUtils.getAddEditFragmentTitle(arguments, R.string.add_squad, R.string.edit_squad)
+        return AddEditUtils.getAddEditFragmentTitle(arguments, R.string.add_unit, R.string.edit_unit)
     }
 
     override fun fragmentLayout() = R.layout.fragment_add_edit_unit
