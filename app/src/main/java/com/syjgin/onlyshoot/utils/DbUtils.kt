@@ -5,6 +5,7 @@ import java.nio.ByteBuffer
 import java.util.*
 
 object DbUtils {
+    const val NO_DATA = -1L
     fun generateLongUUID() : Long {
         var result: Long
         do {

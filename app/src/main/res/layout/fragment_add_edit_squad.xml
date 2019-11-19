@@ -15,12 +15,11 @@
         android:layout_height="wrap_content"
         tools:ignore="Autofill,LabelFor" />
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/existing_squads"
+        android:id="@+id/squad_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         android:layout_weight="1" />
-
     <Button
         android:id="@+id/save_squad"
         style="@style/BottomButton"

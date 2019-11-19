@@ -30,8 +30,8 @@ class AddEditFightFragment : BaseFragment<AddEditFightViewModel>(AddEditFightVie
     }
 
     private var fight: Fight? = null
-    private val attackersAdapter = SquadUnitListAdapter(this, true)
-    private val defendersAdapter = SquadUnitListAdapter(this, false)
+    private val attackersAdapter = SquadUnitListAdapter(this, true, isHorizontal = false)
+    private val defendersAdapter = SquadUnitListAdapter(this, false, isHorizontal = false)
 
     override fun fragmentTitle(): Int {
         return AddEditUtils.getAddEditFragmentTitle(arguments, R.string.add_fight,R.string.edit_fight)
@@ -89,6 +89,10 @@ class AddEditFightFragment : BaseFragment<AddEditFightViewModel>(AddEditFightVie
 
     override fun addUnit(squadUnit: SquadUnit, isAttackers: Boolean) {
         viewModel?.duplicateUnit(squadUnit, isAttackers)
+    }
+
+    override fun removeUnit(squadUnit: SquadUnit, isAttackers: Boolean) {
+        viewModel?.removeUnit(squadUnit, isAttackers)
     }
 
     private fun setupExisting() {

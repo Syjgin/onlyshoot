@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="horizontal"
+    android:baselineAligned="false"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/content_offset">
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/caption"
+            style="@style/CaptionFieldTheme"
+            android:gravity="center_horizontal"
+            android:layout_marginBottom="@dimen/field_offset"
+            tools:text="Title"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="HP: "
+            style="@style/TextFieldTheme"
+            android:layout_marginBottom="@dimen/field_offset"
+            android:id="@+id/hp"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="Attack: "
+            style="@style/TextFieldTheme"
+            android:layout_marginBottom="@dimen/field_offset"
+            android:id="@+id/attack"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="Damage: "
+            style="@style/TextFieldTheme"
+            android:layout_marginBottom="@dimen/field_offset"
+            android:id="@+id/damage"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="Armor: "
+            style="@style/TextFieldTheme"
+            android:layout_marginBottom="@dimen/field_offset"
+            android:id="@+id/armor"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:orientation="vertical">
+        <Button
+            android:id="@+id/add_unit"
+            android:layout_width="@dimen/square_button"
+            android:layout_height="@dimen/square_button"
+            android:background="@drawable/ic_add"/>
+        <Button
+            android:id="@+id/remove_unit"
+            android:layout_width="@dimen/square_button"
+            android:layout_height="@dimen/square_button"
+            android:background="@drawable/ic_remove"/>
+    </LinearLayout>
+</LinearLayout>

@@ -12,12 +12,10 @@ import com.syjgin.onlyshoot.navigation.BundleKeys
 import com.syjgin.onlyshoot.navigation.OnlyShootScreen
 import com.syjgin.onlyshoot.navigation.ScreenEnum
 import com.syjgin.onlyshoot.utils.DbUtils
+import com.syjgin.onlyshoot.utils.DbUtils.NO_DATA
 import kotlinx.coroutines.launch
 
 class AddEditFightViewModel : BaseViewModel() {
-    companion object {
-        const val NO_DATA = -1L
-    }
     private val attackLiveData = MutableLiveData<Squad>()
     private val defendLiveData = MutableLiveData<Squad>()
     private val saveDialogLiveData = MutableLiveData<Boolean>()
@@ -42,14 +40,8 @@ class AddEditFightViewModel : BaseViewModel() {
         attackersId = fight.firstSquadId
         defendersId = fight.secondSquadId
         viewModelScope.launch {
-            attackLiveData.postValue(Squad.createFromUnitList(
-                database.UnitDao().getBySquad(attackersId),
-                attackersId,
-                database.SquadDescriptionDao().getById(attackersId).name))
-            defendLiveData.postValue(Squad.createFromUnitList(
-                database.UnitDao().getBySquad(defendersId),
-                defendersId,
-                database.SquadDescriptionDao().getById(defendersId).name))
+            refreshAttackers()
+            refreshDefenders()
         }
     }
 
@@ -57,18 +49,12 @@ class AddEditFightViewModel : BaseViewModel() {
         if(attackers) {
             attackersId = squadId
             viewModelScope.launch {
-                attackLiveData.postValue(Squad.createFromUnitList(
-                    database.UnitDao().getBySquad(attackersId),
-                    attackersId,
-                    database.SquadDescriptionDao().getById(attackersId).name))
+                refreshAttackers()
             }
         } else {
             defendersId = squadId
             viewModelScope.launch {
-                defendLiveData.postValue(Squad.createFromUnitList(
-                    database.UnitDao().getBySquad(defendersId),
-                    defendersId,
-                    database.SquadDescriptionDao().getById(defendersId).name))
+                refreshDefenders()
             }
         }
         router.exit()
@@ -136,17 +122,11 @@ class AddEditFightViewModel : BaseViewModel() {
             database.UnitDao().insert(targetUnit)
             if(isAttackers) {
                 viewModelScope.launch {
-                    attackLiveData.postValue(Squad.createFromUnitList(
-                        database.UnitDao().getBySquad(attackersId),
-                        attackersId,
-                        database.SquadDescriptionDao().getById(attackersId).name))
+                    refreshAttackers()
                 }
             } else {
                 viewModelScope.launch {
-                    defendLiveData.postValue(Squad.createFromUnitList(
-                        database.UnitDao().getBySquad(defendersId),
-                        defendersId,
-                        database.SquadDescriptionDao().getById(defendersId).name))
+                    refreshDefenders()
                 }
             }
         }
@@ -164,14 +144,40 @@ class AddEditFightViewModel : BaseViewModel() {
         attackersId = defendersId
         defendersId = tempId
         viewModelScope.launch {
-            attackLiveData.postValue(Squad.createFromUnitList(
-                database.UnitDao().getBySquad(attackersId),
-                attackersId,
-                database.SquadDescriptionDao().getById(attackersId).name))
-            defendLiveData.postValue(Squad.createFromUnitList(
+            refreshAttackers()
+            refreshDefenders()
+        }
+    }
+
+    private suspend fun refreshDefenders() {
+        defendLiveData.postValue(
+            Squad.createFromUnitList(
                 database.UnitDao().getBySquad(defendersId),
                 defendersId,
-                database.SquadDescriptionDao().getById(defendersId).name))
+                database.SquadDescriptionDao().getById(defendersId)!!.name
+            )
+        )
+    }
+
+    private suspend fun refreshAttackers() {
+        attackLiveData.postValue(
+            Squad.createFromUnitList(
+                database.UnitDao().getBySquad(attackersId),
+                attackersId,
+                database.SquadDescriptionDao().getById(attackersId)!!.name
+            )
+        )
+    }
+
+    fun removeUnit(squadUnit: SquadUnit, attackers: Boolean) {
+        viewModelScope.launch {
+            squadUnit.squadId = NO_DATA
+            database.UnitDao().insert(squadUnit)
+            if(attackers) {
+                refreshAttackers()
+            } else {
+                refreshDefenders()
+            }
         }
     }
 }

@@ -47,4 +47,9 @@
         android:layout_width="@dimen/square_button"
         android:layout_height="@dimen/square_button"
         android:background="@drawable/ic_add"/>
+    <Button
+        android:id="@+id/remove_unit"
+        android:layout_width="@dimen/square_button"
+        android:layout_height="@dimen/square_button"
+        android:background="@drawable/ic_remove"/>
 </LinearLayout>
