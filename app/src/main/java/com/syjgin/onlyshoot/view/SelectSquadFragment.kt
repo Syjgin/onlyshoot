@@ -9,7 +9,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.syjgin.onlyshoot.R
-import com.syjgin.onlyshoot.model.Squad
 import com.syjgin.onlyshoot.model.SquadDescription
 import com.syjgin.onlyshoot.navigation.BundleKeys
 import com.syjgin.onlyshoot.view.adapter.SquadSelectAdapter
@@ -36,9 +35,7 @@ class SelectSquadFragment : BaseFragment<SelectSquadViewModel>(SelectSquadViewMo
 
     override fun fragmentLayout() = R.layout.fragment_select_squad
 
-    override fun parseArguments(args: Bundle?) {
-        if(args == null)
-            return
+    override fun parseArguments(args: Bundle) {
         isAttackers = args.getBoolean(BundleKeys.SelectAttackers.name)
     }
 

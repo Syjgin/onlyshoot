@@ -18,7 +18,7 @@ class AttackResultFragment : BaseFragment<AttackResultViewModel>(AttackResultVie
 
     override fun fragmentLayout() = R.layout.fragment_attack_result
 
-    override fun parseArguments(args: Bundle?) {
+    override fun parseArguments(args: Bundle) {
 
     }
 

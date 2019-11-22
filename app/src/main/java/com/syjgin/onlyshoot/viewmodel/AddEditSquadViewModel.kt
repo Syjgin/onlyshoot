@@ -11,7 +11,6 @@ import com.syjgin.onlyshoot.navigation.BundleKeys
 import com.syjgin.onlyshoot.navigation.OnlyShootScreen
 import com.syjgin.onlyshoot.navigation.ScreenEnum
 import com.syjgin.onlyshoot.utils.DbUtils
-import com.syjgin.onlyshoot.utils.DbUtils.NO_DATA
 import kotlinx.coroutines.launch
 
 class AddEditSquadViewModel : BaseViewModel() {
@@ -27,9 +26,9 @@ class AddEditSquadViewModel : BaseViewModel() {
     fun loadSquad(id: Long) {
         squadId = id
         isEditMode = true
-        squadLiveData = database.UnitDao().getBySquadLiveData(squadId)
+        squadLiveData = database.unitDao().getBySquadLiveData(squadId)
         viewModelScope.launch {
-            val description = database.SquadDescriptionDao().getById(squadId)
+            val description = database.squadDescriptionDao().getById(squadId)
             if(description != null) {
                 nameLiveData.postValue(description.name)
             }
@@ -45,25 +44,26 @@ class AddEditSquadViewModel : BaseViewModel() {
     fun addUnit() {
         val bundle = Bundle()
         bundle.putBoolean(BundleKeys.AddFlavor.name, true)
+        bundle.putLong(BundleKeys.SquadId.name, squadId)
         router.navigateTo(OnlyShootScreen(ScreenEnum.AddEditUnit, bundle))
     }
 
     fun saveSquad(title: String, members: List<SquadUnit>) {
         viewModelScope.launch {
             if(isEditMode) {
-                database.SquadDescriptionDao().insert(SquadDescription(squadId, title))
+                database.squadDescriptionDao().insert(SquadDescription(squadId, title))
                 for(member in members) {
                     if(member.squadId != squadId) {
                         member.squadId = squadId
-                        database.UnitDao().insert(member)
+                        database.unitDao().insert(member)
                     }
                 }
             } else {
-                database.SquadDescriptionDao().insert(SquadDescription(squadId, title))
+                database.squadDescriptionDao().insert(SquadDescription(squadId, title))
                 for(member in members) {
                     if(member.squadId != squadId) {
                         member.squadId = squadId
-                        database.UnitDao().insert(member)
+                        database.unitDao().insert(member)
                     }
                 }
             }
@@ -78,19 +78,12 @@ class AddEditSquadViewModel : BaseViewModel() {
     }
 
     fun duplicateUnit(squadUnit: SquadUnit) {
-        viewModelScope.launch {
-            val targetUnit = database.UnitDao().getById(squadUnit.parentId)
-            targetUnit.id = DbUtils.generateLongUUID()
-            targetUnit.squadId = squadId
-            database.UnitDao().insert(targetUnit)
-
-        }
+        DbUtils.duplicateUnit(viewModelScope, database, squadUnit, squadId)
     }
 
     fun removeUnit(squadUnit: SquadUnit) {
         viewModelScope.launch {
-            squadUnit.squadId = NO_DATA
-            database.UnitDao().insert(squadUnit)
+            database.unitDao().delete(squadUnit)
         }
     }
 }

@@ -10,7 +10,7 @@ interface SquadDescriptionDao {
     @Query("SELECT * FROM SquadDescription WHERE id = :id")
     suspend fun getById(id: Long) : SquadDescription?
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(squad: SquadDescription)
+    suspend fun insert(squad: SquadDescription)
     @Delete
-    fun delete(squad: SquadDescription)
+    suspend fun delete(squad: SquadDescription)
 }

@@ -15,7 +15,7 @@ import com.syjgin.onlyshoot.viewmodel.BaseViewModel
 
 abstract class BaseFragment<B: BaseViewModel>(private val viewModelType: Class<B>) : Fragment() {
     @StringRes abstract fun fragmentTitle() : Int
-    abstract fun parseArguments(args: Bundle?)
+    abstract fun parseArguments(args: Bundle)
     @LayoutRes abstract fun fragmentLayout() : Int
     abstract fun hasBackButton() : Boolean
 
@@ -23,7 +23,9 @@ abstract class BaseFragment<B: BaseViewModel>(private val viewModelType: Class<B
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        parseArguments(arguments)
+        if(arguments == null)
+            return
+        parseArguments(arguments!!)
     }
 
     override fun onResume() {

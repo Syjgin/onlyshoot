@@ -80,7 +80,7 @@ class AddEditFightViewModel : BaseViewModel() {
         val fightId = DbUtils.generateLongUUID()
         val fight = Fight(fightId, name, attackersId, defendersId, System.currentTimeMillis())
         viewModelScope.launch {
-            database.FightDao().insert(fight)
+            database.fightDao().insert(fight)
             router.exit()
         }
     }
@@ -116,10 +116,7 @@ class AddEditFightViewModel : BaseViewModel() {
 
     fun duplicateUnit(squadUnit: SquadUnit, isAttackers: Boolean) {
         viewModelScope.launch {
-            val targetUnit = database.UnitDao().getById(squadUnit.parentId)
-            targetUnit.id = DbUtils.generateLongUUID()
-            targetUnit.squadId = if(isAttackers) attackersId else defendersId
-            database.UnitDao().insert(targetUnit)
+            DbUtils.duplicateUnit(viewModelScope, database, squadUnit, if(isAttackers) attackersId else defendersId)
             if(isAttackers) {
                 viewModelScope.launch {
                     refreshAttackers()
@@ -152,9 +149,9 @@ class AddEditFightViewModel : BaseViewModel() {
     private suspend fun refreshDefenders() {
         defendLiveData.postValue(
             Squad.createFromUnitList(
-                database.UnitDao().getBySquad(defendersId),
+                database.unitDao().getBySquad(defendersId),
                 defendersId,
-                database.SquadDescriptionDao().getById(defendersId)!!.name
+                database.squadDescriptionDao().getById(defendersId)!!.name
             )
         )
     }
@@ -162,9 +159,9 @@ class AddEditFightViewModel : BaseViewModel() {
     private suspend fun refreshAttackers() {
         attackLiveData.postValue(
             Squad.createFromUnitList(
-                database.UnitDao().getBySquad(attackersId),
+                database.unitDao().getBySquad(attackersId),
                 attackersId,
-                database.SquadDescriptionDao().getById(attackersId)!!.name
+                database.squadDescriptionDao().getById(attackersId)!!.name
             )
         )
     }
@@ -172,7 +169,7 @@ class AddEditFightViewModel : BaseViewModel() {
     fun removeUnit(squadUnit: SquadUnit, attackers: Boolean) {
         viewModelScope.launch {
             squadUnit.squadId = NO_DATA
-            database.UnitDao().insert(squadUnit)
+            database.unitDao().insert(squadUnit)
             if(attackers) {
                 refreshAttackers()
             } else {

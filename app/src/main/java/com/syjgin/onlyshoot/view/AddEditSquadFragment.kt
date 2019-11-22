@@ -13,6 +13,7 @@ import com.syjgin.onlyshoot.R
 import com.syjgin.onlyshoot.model.SquadUnit
 import com.syjgin.onlyshoot.navigation.BundleKeys
 import com.syjgin.onlyshoot.utils.AddEditUtils
+import com.syjgin.onlyshoot.utils.DbUtils.NO_DATA
 import com.syjgin.onlyshoot.view.adapter.SquadUnitListAdapter
 import com.syjgin.onlyshoot.viewmodel.AddEditSquadViewModel
 import kotlinx.android.synthetic.main.fragment_add_edit_squad.*
@@ -27,7 +28,7 @@ class AddEditSquadFragment : BaseFragment<AddEditSquadViewModel>(AddEditSquadVie
         }
     }
 
-    private var squadId : Long? = null
+    private var squadId : Long = NO_DATA
     private var isEditMode = false
     private val adapter = SquadUnitListAdapter(this, false, isHorizontal = true)
 
@@ -37,11 +38,10 @@ class AddEditSquadFragment : BaseFragment<AddEditSquadViewModel>(AddEditSquadVie
 
     override fun fragmentLayout() = R.layout.fragment_add_edit_squad
 
-    override fun parseArguments(args: Bundle?) {
-        if(args == null)
-            return
-        isEditMode = args.getBoolean(BundleKeys.AddFlavor.name)
-        squadId = args.getLong(BundleKeys.SquadId.name)
+    override fun parseArguments(args: Bundle) {
+        isEditMode = !args.getBoolean(BundleKeys.AddFlavor.name)
+        if(isEditMode)
+            squadId = args.getLong(BundleKeys.SquadId.name)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -72,10 +72,10 @@ class AddEditSquadFragment : BaseFragment<AddEditSquadViewModel>(AddEditSquadVie
                 refreshButtonState()
             }
         })
-        if(squadId != null && isEditMode) {
+        if(isEditMode) {
             viewModel?.getSquadLiveData()?.observe(this, Observer { showUnitsList(it)})
             viewModel?.getNameLiveData()?.observe(this, Observer { title_text.setText(it) })
-            viewModel?.loadSquad(squadId!!)
+            viewModel?.loadSquad(squadId)
         }
 
     }

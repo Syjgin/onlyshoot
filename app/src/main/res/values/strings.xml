@@ -52,4 +52,5 @@
     <string name="anger_default">10</string>
     <string name="can_use_anger">Can use anger</string>
     <string name="can_die_from_anger">Can die from anger</string>
+    <string name="archetype">archetype</string>
 </resources>

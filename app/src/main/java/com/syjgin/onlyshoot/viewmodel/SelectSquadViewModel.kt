@@ -13,7 +13,7 @@ class SelectSquadViewModel : BaseViewModel() {
 
     init {
         OnlyShootApp.getInstance().getAppComponent().inject(this)
-        squadsLiveData = database.SquadDescriptionDao().getAll()
+        squadsLiveData = database.squadDescriptionDao().getAll()
     }
 
     fun getSquadsLiveData() : LiveData<List<SquadDescription>> {

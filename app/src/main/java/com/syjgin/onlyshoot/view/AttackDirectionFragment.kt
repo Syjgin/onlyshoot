@@ -19,7 +19,7 @@ class AttackDirectionFragment : BaseFragment<AttackDirectionViewModel>(AttackDir
 
     override fun fragmentLayout() = R.layout.fragment_attack_direction
 
-    override fun parseArguments(args: Bundle?) {
+    override fun parseArguments(args: Bundle) {
 
     }
 

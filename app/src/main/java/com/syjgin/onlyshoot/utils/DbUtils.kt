@@ -1,5 +1,9 @@
 package com.syjgin.onlyshoot.utils
 
+import com.syjgin.onlyshoot.model.Database
+import com.syjgin.onlyshoot.model.SquadUnit
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 import java.math.BigInteger
 import java.nio.ByteBuffer
 import java.util.*
@@ -17,5 +21,23 @@ object DbUtils {
             result = bigInt.toLong()
         } while (result < 0)
         return result
+    }
+
+    fun duplicateUnit(viewModelScope: CoroutineScope, database: Database, squadUnit: SquadUnit, squadId: Long) {
+        viewModelScope.launch {
+            val targetUnit = database.archetypeDao().getById(squadUnit.parentId)
+            val squad = database.unitDao().getBySquad(squadId)
+            var nameCount = 0
+            for(currentUnit in squad) {
+                if(currentUnit.name == squadUnit.name) {
+                    nameCount++
+                }
+            }
+            if(targetUnit != null) {
+                val newUnit = targetUnit.convertToSquadUnit(squadId, squadUnit.name + nameCount)
+                database.unitDao().insert(newUnit)
+            }
+
+        }
     }
 }

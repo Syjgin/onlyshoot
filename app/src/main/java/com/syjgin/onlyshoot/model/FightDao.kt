@@ -8,9 +8,9 @@ interface FightDao {
     @Query("SELECT * FROM Fight ORDER BY date DESC")
     fun getAll() : LiveData<List<Fight>>
     @Query("SELECT * FROM Fight WHERE id = :id")
-    fun getById(id: Long) : Fight
+    suspend fun getById(id: Long) : Fight
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(fight: Fight)
+    suspend fun insert(fight: Fight)
     @Delete
-    fun delete(fight: Fight)
+    suspend fun delete(fight: Fight)
 }

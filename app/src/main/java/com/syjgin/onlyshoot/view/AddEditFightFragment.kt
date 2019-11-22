@@ -39,8 +39,8 @@ class AddEditFightFragment : BaseFragment<AddEditFightViewModel>(AddEditFightVie
 
     override fun fragmentLayout() = R.layout.fragment_add_edit_fight
 
-    override fun parseArguments(args: Bundle?) {
-        if(args != null && !args.getBoolean(BundleKeys.AddFlavor.name)) {
+    override fun parseArguments(args: Bundle) {
+        if(!args.getBoolean(BundleKeys.AddFlavor.name)) {
             fight = args.getSerializable(BundleKeys.Fight.name) as Fight
         }
     }

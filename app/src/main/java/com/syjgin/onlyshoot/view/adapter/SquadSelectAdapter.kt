@@ -13,7 +13,7 @@ class SquadSelectAdapter(private val listener : SquadSelectListener) : RecyclerV
     private var selectedSquad : SquadDescription? = null
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SquadSelectViewHolder {
         val holder = SquadSelectViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_squad_list, parent, false))
-        holder.itemView.select_radio_button.setOnCheckedChangeListener { buttonView, isChecked ->
+        holder.itemView.select_radio_button.setOnCheckedChangeListener { _, isChecked ->
             if(isChecked) {
                 val newSquad = data[holder.adapterPosition]
                 if(newSquad.id != selectedSquad?.id) {

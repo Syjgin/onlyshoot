@@ -2,22 +2,20 @@ package com.syjgin.onlyshoot.viewmodel
 
 import android.os.Bundle
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.viewModelScope
 import com.syjgin.onlyshoot.di.OnlyShootApp
 import com.syjgin.onlyshoot.model.Fight
 import com.syjgin.onlyshoot.navigation.BundleKeys
 import com.syjgin.onlyshoot.navigation.OnlyShootScreen
 import com.syjgin.onlyshoot.navigation.ScreenEnum
+import kotlinx.coroutines.launch
 
 class FightListViewModel : BaseViewModel() {
     private val fightList : LiveData<List<Fight>>
 
     init {
         OnlyShootApp.getInstance().getAppComponent().inject(this)
-        fightList = database.FightDao().getAll()
-    }
-
-    fun settingsSelected() {
-        router.navigateTo(OnlyShootScreen(ScreenEnum.Settings))
+        fightList = database.fightDao().getAll()
     }
 
     fun getFightList() : LiveData<List<Fight>> {
@@ -25,7 +23,9 @@ class FightListViewModel : BaseViewModel() {
     }
 
     fun removeItem(fight: Fight) {
-        database.FightDao().delete(fight)
+        viewModelScope.launch {
+            database.fightDao().delete(fight)
+        }
     }
 
     fun addFight() {

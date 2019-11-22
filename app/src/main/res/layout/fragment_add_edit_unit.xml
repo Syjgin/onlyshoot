@@ -237,7 +237,7 @@
         </LinearLayout>
     </ScrollView>
     <Button
-        android:id="@+id/save_squad"
+        android:id="@+id/save_unit"
         style="@style/BottomButton"
         android:enabled="false"
         android:layout_width="match_parent"
