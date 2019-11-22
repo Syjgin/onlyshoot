@@ -15,6 +15,7 @@ class OnlyShootScreen(private val screen: ScreenEnum, private val bundle: Bundle
             ScreenEnum.AddEditUnit -> AddEditUnitFragment.createFragment(bundle)
             ScreenEnum.AttackDirection -> AttackDirectionFragment.createFragment(bundle)
             ScreenEnum.AttackResult -> AttackResultFragment.createFragment(bundle)
+            ScreenEnum.SelectUnit -> SelectUnitFragment.createFragment(bundle)
         }
     }
 }

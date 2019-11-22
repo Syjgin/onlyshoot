@@ -45,12 +45,16 @@ class AddEditSquadFragment : BaseFragment<AddEditSquadViewModel>(AddEditSquadVie
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.add_menu, menu)
+        inflater.inflate(R.menu.add_archetype_menu, menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if(item.itemId == R.id.add) {
+        if(item.itemId == R.id.add_unit) {
             viewModel?.addUnit()
+            return true
+        }
+        if(item.itemId == R.id.add_archetype) {
+            viewModel?.addArchetype()
             return true
         }
         return super.onOptionsItemSelected(item)

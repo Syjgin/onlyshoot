@@ -7,5 +7,6 @@ enum class ScreenEnum {
     AddEditSquad,
     AddEditUnit,
     AttackDirection,
-    AttackResult
+    AttackResult,
+    SelectUnit
 }

@@ -86,4 +86,8 @@ class AddEditSquadViewModel : BaseViewModel() {
             database.unitDao().delete(squadUnit)
         }
     }
+
+    fun addArchetype() {
+        router.navigateTo(OnlyShootScreen(ScreenEnum.SelectUnit))
+    }
 }
