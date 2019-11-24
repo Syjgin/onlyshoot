@@ -17,6 +17,7 @@ class AddEditUnitViewModel : BaseViewModel() {
     private var archetypeUnitId : Long = NO_DATA
     private var squadId : Long = NO_DATA
     private var unitName = ""
+    private var isArchetypeMode = false
 
     fun getUnitLiveData() : LiveData<SquadUnit> = unitLiveData
 
@@ -57,8 +58,10 @@ class AddEditUnitViewModel : BaseViewModel() {
         isEditMode: Boolean
     ) {
         viewModelScope.launch {
-            if(archetypeUnitId == NO_DATA) {
-                archetypeUnitId = DbUtils.generateLongUUID()
+            if (archetypeUnitId == NO_DATA || isArchetypeMode) {
+                if (archetypeUnitId == NO_DATA) {
+                    archetypeUnitId = DbUtils.generateLongUUID()
+                }
                 val archetype = UnitArchetype(
                     archetypeUnitId,
                     name,
@@ -81,6 +84,8 @@ class AddEditUnitViewModel : BaseViewModel() {
                     deathFromRage,
                     rage)
                 database.archetypeDao().insert(archetype)
+                if (isArchetypeMode)
+                    return@launch
             }
 
             val squadUnit =
@@ -120,6 +125,18 @@ class AddEditUnitViewModel : BaseViewModel() {
                 val squadUnit = archetype.convertToSquadUnit(squadId, unitName)
                 unitLiveData.postValue(squadUnit)
             }
+        }
+    }
+
+    fun loadArchetypeData(unitId: Long) {
+        isArchetypeMode = true
+        archetypeUnitId = unitId
+        viewModelScope.launch {
+            val archetypeUnit = database.archetypeDao().getById(unitId)
+            if (archetypeUnit != null) {
+                unitName = archetypeUnit.name
+            }
+            unitLiveData.postValue(archetypeUnit?.convertToSquadUnit(NO_DATA, archetypeUnit.name))
         }
     }
 

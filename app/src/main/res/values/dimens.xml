@@ -5,5 +5,6 @@
     <dimen name="field_offset">12dp</dimen>
     <dimen name="normal_size">14sp</dimen>
     <dimen name="caption_size">18sp</dimen>
+    <dimen name="digit_size">21sp</dimen>
     <dimen name="unit_card_size">180dp</dimen>
 </resources>

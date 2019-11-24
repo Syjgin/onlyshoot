@@ -88,6 +88,8 @@ class AddEditSquadViewModel : BaseViewModel() {
     }
 
     fun addArchetype() {
-        router.navigateTo(OnlyShootScreen(ScreenEnum.SelectUnit))
+        val bundle = Bundle()
+        bundle.putLong(BundleKeys.SquadId.name, squadId)
+        router.navigateTo(OnlyShootScreen(ScreenEnum.SelectUnit, bundle))
     }
 }

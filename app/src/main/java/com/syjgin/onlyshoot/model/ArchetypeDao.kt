@@ -9,7 +9,7 @@ interface ArchetypeDao {
     suspend fun getById(id: Long) : UnitArchetype?
 
     @Query("SELECT * FROM UnitArchetype")
-    fun getAllBySquads() : LiveData<List<UnitArchetype>>
+    fun getAll(): LiveData<List<UnitArchetype>>
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(fight: UnitArchetype)
     @Delete

@@ -2,6 +2,7 @@ package com.syjgin.onlyshoot.utils
 
 import com.syjgin.onlyshoot.model.Database
 import com.syjgin.onlyshoot.model.SquadUnit
+import com.syjgin.onlyshoot.model.UnitArchetype
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import java.math.BigInteger
@@ -38,6 +39,25 @@ object DbUtils {
                 database.unitDao().insert(newUnit)
             }
 
+        }
+    }
+
+    fun duplicateArchetype(
+        viewModelScope: CoroutineScope,
+        database: Database,
+        archetype: UnitArchetype,
+        squadId: Long
+    ) {
+        viewModelScope.launch {
+            val squad = database.unitDao().getBySquad(squadId)
+            var nameCount = 0
+            for (currentUnit in squad) {
+                if (currentUnit.name.startsWith(archetype.name)) {
+                    nameCount++
+                }
+            }
+            val newUnit = archetype.convertToSquadUnit(squadId, archetype.name + nameCount)
+            database.unitDao().insert(newUnit)
         }
     }
 }

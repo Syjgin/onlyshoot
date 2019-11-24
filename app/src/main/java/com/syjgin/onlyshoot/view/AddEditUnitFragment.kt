@@ -30,6 +30,7 @@ class AddEditUnitFragment : BaseFragment<AddEditUnitViewModel>(AddEditUnitViewMo
     var squadId: Long = NO_DATA
     var isEditMode = false
     var isRadioListenersActive = true
+    var isArchetypeEditMode = false
 
     override fun fragmentTitle(): Int {
         return AddEditUtils.getAddEditFragmentTitle(arguments, R.string.add_unit, R.string.edit_unit)
@@ -43,10 +44,11 @@ class AddEditUnitFragment : BaseFragment<AddEditUnitViewModel>(AddEditUnitViewMo
             unitId = args.getLong(BundleKeys.Unit.name)
         }
         squadId = args.getLong(BundleKeys.SquadId.name, NO_DATA)
+        isArchetypeEditMode = args.getBoolean(BundleKeys.EditArchetype.name, false)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        if(isEditMode)
+        if (isEditMode && !isArchetypeEditMode)
             inflater.inflate(R.menu.archetype_menu, menu)
     }
 
@@ -110,6 +112,10 @@ class AddEditUnitFragment : BaseFragment<AddEditUnitViewModel>(AddEditUnitViewMo
         if(isEditMode) {
             viewModel?.getUnitLiveData()?.observe(this, Observer { loadUnit(it) })
             viewModel?.loadUnitData(unitId, squadId)
+        }
+        if (isArchetypeEditMode) {
+            viewModel?.getUnitLiveData()?.observe(this, Observer { loadUnit(it) })
+            viewModel?.loadArchetypeData(unitId)
         }
     }
 
