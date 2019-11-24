@@ -33,7 +33,11 @@ class AddEditUnitFragment : BaseFragment<AddEditUnitViewModel>(AddEditUnitViewMo
     var isArchetypeEditMode = false
 
     override fun fragmentTitle(): Int {
-        return AddEditUtils.getAddEditFragmentTitle(arguments, R.string.add_unit, R.string.edit_unit)
+        return if (isArchetypeEditMode) R.string.edit_archetype else AddEditUtils.getAddEditFragmentTitle(
+            arguments,
+            R.string.add_unit,
+            R.string.edit_unit
+        )
     }
 
     override fun fragmentLayout() = R.layout.fragment_add_edit_unit
@@ -109,13 +113,12 @@ class AddEditUnitFragment : BaseFragment<AddEditUnitViewModel>(AddEditUnitViewMo
         save_unit.setOnClickListener {
             saveUnit()
         }
-        if(isEditMode) {
-            viewModel?.getUnitLiveData()?.observe(this, Observer { loadUnit(it) })
-            viewModel?.loadUnitData(unitId, squadId)
-        }
         if (isArchetypeEditMode) {
             viewModel?.getUnitLiveData()?.observe(this, Observer { loadUnit(it) })
             viewModel?.loadArchetypeData(unitId)
+        } else if (isEditMode) {
+            viewModel?.getUnitLiveData()?.observe(this, Observer { loadUnit(it) })
+            viewModel?.loadUnitData(unitId, squadId)
         }
     }
 
@@ -170,11 +173,13 @@ class AddEditUnitFragment : BaseFragment<AddEditUnitViewModel>(AddEditUnitViewMo
     }
 
     private fun loadUnit(squadUnit: SquadUnit) {
+        title_text.setText(squadUnit.name)
         attack_skill.setText(squadUnit.attack.toString())
         attack_modifier.setText(squadUnit.attackModifier.toString())
         normal_armor.setText(squadUnit.usualArmor.toString())
         proof_armor.setText(squadUnit.proofArmor.toString())
         damage_amount.setText(squadUnit.damage.toString())
+        damage_modifier.setText(squadUnit.damageModifier.toString())
         when(squadUnit.damageType) {
             DamageType.Explosion -> explosion.isChecked = true
             DamageType.Cut -> cut.isChecked = true

@@ -76,12 +76,13 @@ class AddEditSquadFragment : BaseFragment<AddEditSquadViewModel>(AddEditSquadVie
                 refreshButtonState()
             }
         })
-        if(isEditMode) {
-            viewModel?.getSquadLiveData()?.observe(this, Observer { showUnitsList(it)})
-            viewModel?.getNameLiveData()?.observe(this, Observer { title_text.setText(it) })
+        viewModel?.getSquadLiveData()?.observe(this, Observer { showUnitsList(it) })
+        viewModel?.getNameLiveData()?.observe(this, Observer { title_text.setText(it) })
+        if (isEditMode) {
             viewModel?.loadSquad(squadId)
+        } else {
+            viewModel?.startObserveSquad()
         }
-
     }
 
     private fun refreshButtonState() {

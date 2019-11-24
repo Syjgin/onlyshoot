@@ -22,7 +22,7 @@
 
     <style name="DigitFieldTheme" parent="Widget.AppCompat.TextView">
         <item name="android:textColor">@color/caption_color</item>
-        <item name="android:textAppearance">bold</item>
+        <item name="android:textStyle">bold</item>
         <item name="android:textSize">@dimen/digit_size</item>
     </style>
     <style name="BottomButton" parent="Widget.AppCompat.Button">

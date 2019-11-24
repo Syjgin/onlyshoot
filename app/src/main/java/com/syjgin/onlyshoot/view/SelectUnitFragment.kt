@@ -51,6 +51,16 @@ class SelectUnitFragment : BaseFragment<SelectUnitViewModel>(SelectUnitViewModel
         viewModel?.archetypeSelected(archetype)
     }
 
+    override fun archetypeCountChanged() {
+        for (mapEntry in adapter.getCountMap()) {
+            if (mapEntry.value > 0) {
+                select_squad.isEnabled = true
+                return
+            }
+        }
+        select_squad.isEnabled = false
+    }
+
     private fun renderData(data: List<UnitArchetype>) {
         adapter.addData(data)
     }

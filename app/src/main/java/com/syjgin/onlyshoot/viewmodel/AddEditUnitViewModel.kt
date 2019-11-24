@@ -84,8 +84,10 @@ class AddEditUnitViewModel : BaseViewModel() {
                     deathFromRage,
                     rage)
                 database.archetypeDao().insert(archetype)
-                if (isArchetypeMode)
+                if (isArchetypeMode) {
+                    router.exit()
                     return@launch
+                }
             }
 
             val squadUnit =

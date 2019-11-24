@@ -29,7 +29,7 @@ class SquadUnitListAdapter(private val listener: SquadListClickListener, private
 
     override fun onBindViewHolder(holder: SquadUnitViewHolder, position: Int) {
         val currentUnit = data[position]
-        holder.itemView.caption.text = String.format("%d. %s", position, currentUnit.name)
+        holder.itemView.caption.text = currentUnit.name
         holder.itemView.hp.text = String.format(holder.itemView.context.getString(R.string.hp_template), currentUnit.hp)
         holder.itemView.attack.text = String.format(holder.itemView.context.getString(R.string.attack_template), currentUnit.attack)
         holder.itemView.damage.text = String.format(holder.itemView.context.getString(R.string.damage_template), currentUnit.damage)

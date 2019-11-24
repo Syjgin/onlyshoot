@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.syjgin.onlyshoot.R
 import com.syjgin.onlyshoot.model.UnitArchetype
-import kotlinx.android.synthetic.main.item_squad_unit.view.*
+import kotlinx.android.synthetic.main.item_archetype_horizontal.view.*
 
 class ArchetypeUnitListAdapter(private val listener: ArchetypeListClickListener) :
     RecyclerView.Adapter<ArchetypeUnitListAdapter.SquadUnitViewHolder>() {
@@ -30,6 +30,8 @@ class ArchetypeUnitListAdapter(private val listener: ArchetypeListClickListener)
             if (currentCount == null)
                 currentCount = 0
             countMap[currentArchetype] = ++currentCount
+            notifyItemChanged(holder.adapterPosition)
+            listener.archetypeCountChanged()
         }
         holder.itemView.remove_unit.setOnClickListener {
             val currentArchetype = data[holder.adapterPosition]
@@ -40,6 +42,8 @@ class ArchetypeUnitListAdapter(private val listener: ArchetypeListClickListener)
             } else {
                 countMap[currentArchetype] = currentCount2
             }
+            notifyItemChanged(holder.adapterPosition)
+            listener.archetypeCountChanged()
         }
         return holder
     }
@@ -48,7 +52,7 @@ class ArchetypeUnitListAdapter(private val listener: ArchetypeListClickListener)
 
     override fun onBindViewHolder(holder: SquadUnitViewHolder, position: Int) {
         val currentUnit = data[position]
-        holder.itemView.caption.text = String.format("%d. %s", position, currentUnit.name)
+        holder.itemView.caption.text = currentUnit.name
         holder.itemView.hp.text =
             String.format(holder.itemView.context.getString(R.string.hp_template), currentUnit.hp)
         holder.itemView.attack.text = String.format(
@@ -63,6 +67,8 @@ class ArchetypeUnitListAdapter(private val listener: ArchetypeListClickListener)
             holder.itemView.context.getString(R.string.armor_template),
             currentUnit.usualArmor
         )
+        val count = countMap[data[position]]
+        holder.itemView.count.text = count?.toString() ?: "0"
     }
 
     fun addData(newData: List<UnitArchetype>) {
@@ -77,6 +83,7 @@ class ArchetypeUnitListAdapter(private val listener: ArchetypeListClickListener)
 
     interface ArchetypeListClickListener {
         fun selectUnit(archetype: UnitArchetype)
+        fun archetypeCountChanged()
     }
 
     class SquadUnitViewHolder(view: View) : RecyclerView.ViewHolder(view)

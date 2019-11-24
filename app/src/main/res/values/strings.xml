@@ -55,4 +55,5 @@
     <string name="archetype">archetype</string>
     <string name="add_archetype">Add archetype</string>
     <string name="select_from_archetype">Select from archetype</string>
+    <string name="edit_archetype">Edit archetype</string>
 </resources>

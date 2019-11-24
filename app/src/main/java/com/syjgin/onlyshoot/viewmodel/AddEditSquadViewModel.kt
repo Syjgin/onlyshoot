@@ -26,7 +26,7 @@ class AddEditSquadViewModel : BaseViewModel() {
     fun loadSquad(id: Long) {
         squadId = id
         isEditMode = true
-        squadLiveData = database.unitDao().getBySquadLiveData(squadId)
+        startObserveSquad()
         viewModelScope.launch {
             val description = database.squadDescriptionDao().getById(squadId)
             if(description != null) {
@@ -91,5 +91,9 @@ class AddEditSquadViewModel : BaseViewModel() {
         val bundle = Bundle()
         bundle.putLong(BundleKeys.SquadId.name, squadId)
         router.navigateTo(OnlyShootScreen(ScreenEnum.SelectUnit, bundle))
+    }
+
+    fun startObserveSquad() {
+        squadLiveData = database.unitDao().getBySquadLiveData(squadId)
     }
 }
