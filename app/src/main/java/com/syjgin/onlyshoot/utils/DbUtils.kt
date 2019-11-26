@@ -23,7 +23,13 @@ object DbUtils {
         return result
     }
 
-    fun duplicateUnit(viewModelScope: CoroutineScope, database: Database, squadUnit: SquadUnit, squadId: Long) {
+    fun duplicateUnit(
+        viewModelScope: CoroutineScope,
+        database: Database,
+        squadUnit: SquadUnit,
+        squadId: Long,
+        callback: (() -> Unit)? = null
+    ) {
         viewModelScope.launch {
             val targetUnit = database.archetypeDao().getById(squadUnit.parentId)
             val squad = database.unitDao().getBySquad(squadId)
@@ -37,7 +43,9 @@ object DbUtils {
                 val newUnit = targetUnit.convertToSquadUnit(squadId, squadUnit.name + nameCount)
                 database.unitDao().insert(newUnit)
             }
-
+            if (callback != null) {
+                callback()
+            }
         }
     }
 }

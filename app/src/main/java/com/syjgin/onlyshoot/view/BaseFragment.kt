@@ -18,6 +18,9 @@ abstract class BaseFragment<B: BaseViewModel>(private val viewModelType: Class<B
     abstract fun parseArguments(args: Bundle)
     @LayoutRes abstract fun fragmentLayout() : Int
     abstract fun hasBackButton() : Boolean
+    open fun getProviderFromFragment(): Boolean {
+        return true
+    }
 
     protected var viewModel : B? = null
 
@@ -43,7 +46,11 @@ abstract class BaseFragment<B: BaseViewModel>(private val viewModelType: Class<B
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel = ViewModelProviders.of(this).get(viewModelType)
+        viewModel = if (getProviderFromFragment()) {
+            ViewModelProviders.of(this).get(viewModelType)
+        } else {
+            ViewModelProviders.of(activity!!).get(viewModelType)
+        }
         viewModel?.onCreate()
         (activity as AppCompatActivity?)?.supportActionBar?.setDisplayHomeAsUpEnabled(hasBackButton())
         (activity as AppCompatActivity?)?.supportActionBar?.setDisplayShowHomeEnabled(hasBackButton())

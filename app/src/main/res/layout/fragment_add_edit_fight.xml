@@ -10,6 +10,8 @@
     android:id="@+id/attackers"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+        android:paddingTop="@dimen/square_button"
+        android:paddingBottom="@dimen/square_button"
     android:layout_alignBottom="@+id/border"
     />
     <Button
@@ -44,6 +46,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_alignTop="@+id/border"
+        android:paddingTop="@dimen/square_button"
+        android:paddingBottom="@dimen/square_button"
     />
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:layout_width="wrap_content"

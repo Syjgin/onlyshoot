@@ -65,7 +65,7 @@ class AddEditSquadFragment : BaseFragment<AddEditSquadViewModel>(AddEditSquadVie
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         save_squad.setOnClickListener {
-            viewModel?.saveSquad(title_text.text.toString(), listOf())
+            viewModel?.saveSquad(title_text.text.toString())
         }
         squad_recycler_view.adapter = adapter
         title_text.addTextChangedListener {
@@ -86,11 +86,12 @@ class AddEditSquadFragment : BaseFragment<AddEditSquadViewModel>(AddEditSquadVie
     }
 
     private fun refreshButtonState() {
-        save_squad.isEnabled = !title_text.text.isEmpty() && adapter.itemCount > 0
+        save_squad.isEnabled = title_text.text.isNotEmpty() && adapter.itemCount > 0
     }
 
     private fun showUnitsList(units: List<SquadUnit>) {
         adapter.addData(units)
+        refreshButtonState()
     }
 
     override fun selectUnit(squadUnit: SquadUnit) {

@@ -37,6 +37,10 @@ class AddEditFightFragment : BaseFragment<AddEditFightViewModel>(AddEditFightVie
         return AddEditUtils.getAddEditFragmentTitle(arguments, R.string.add_fight,R.string.edit_fight)
     }
 
+    override fun getProviderFromFragment(): Boolean {
+        return false
+    }
+
     override fun fragmentLayout() = R.layout.fragment_add_edit_fight
 
     override fun parseArguments(args: Bundle) {
@@ -47,8 +51,8 @@ class AddEditFightFragment : BaseFragment<AddEditFightViewModel>(AddEditFightVie
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel?.getAttackFightData()?.observe(this, Observer{ displaySquad(it, true) })
-        viewModel?.getDefendFightData()?.observe(this, Observer{ displaySquad(it, false) })
+        viewModel?.getAttackFightData()?.observe(activity!!, Observer { displaySquad(it, true) })
+        viewModel?.getDefendFightData()?.observe(activity!!, Observer { displaySquad(it, false) })
         viewModel?.getSaveDialogLiveData()?.observe(this, Observer { displaySaveDialog() })
         defenders.layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
         attackers.layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
@@ -96,10 +100,6 @@ class AddEditFightFragment : BaseFragment<AddEditFightViewModel>(AddEditFightVie
     }
 
     private fun setupExisting() {
-        load_attackers.visibility = View.GONE
-        load_defenders.visibility = View.GONE
-        attackers_description.visibility = View.VISIBLE
-        defenders_description.visibility = View.VISIBLE
         load_attackers.text = getString(R.string.add_unit)
         load_defenders.text = getString(R.string.add_unit)
         load_attackers.setOnClickListener {viewModel?.loadUnit(true)}
@@ -107,10 +107,6 @@ class AddEditFightFragment : BaseFragment<AddEditFightViewModel>(AddEditFightVie
     }
 
     private fun setupLoading() {
-        load_attackers.visibility = View.VISIBLE
-        load_defenders.visibility = View.VISIBLE
-        attackers_description.visibility = View.GONE
-        defenders_description.visibility = View.GONE
         load_attackers.text = getString(R.string.load_attackers)
         load_defenders.text = getString(R.string.load_defenders)
         load_attackers.setOnClickListener {viewModel?.loadSquad(true)}

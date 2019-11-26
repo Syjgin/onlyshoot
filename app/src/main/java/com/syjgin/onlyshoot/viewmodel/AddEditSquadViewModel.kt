@@ -48,25 +48,18 @@ class AddEditSquadViewModel : BaseViewModel() {
         router.navigateTo(OnlyShootScreen(ScreenEnum.AddEditUnit, bundle))
     }
 
-    fun saveSquad(title: String, members: List<SquadUnit>) {
+    fun saveSquad(title: String) {
         viewModelScope.launch {
-            if(isEditMode) {
-                database.squadDescriptionDao().insert(SquadDescription(squadId, title))
-                for(member in members) {
-                    if(member.squadId != squadId) {
-                        member.squadId = squadId
-                        database.unitDao().insert(member)
-                    }
-                }
-            } else {
-                database.squadDescriptionDao().insert(SquadDescription(squadId, title))
-                for(member in members) {
-                    if(member.squadId != squadId) {
-                        member.squadId = squadId
-                        database.unitDao().insert(member)
-                    }
+            if (squadLiveData == null)
+                return@launch
+            database.squadDescriptionDao().insert(SquadDescription(squadId, title))
+            for (member in squadLiveData!!.value!!) {
+                if (member.squadId != squadId) {
+                    member.squadId = squadId
+                    database.unitDao().insert(member)
                 }
             }
+            router.exit()
         }
     }
 

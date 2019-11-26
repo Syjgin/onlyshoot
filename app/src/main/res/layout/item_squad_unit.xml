@@ -4,8 +4,7 @@
     android:orientation="vertical"
     android:layout_width="@dimen/unit_card_size"
     android:layout_height="match_parent"
-    android:gravity="center_vertical"
-    android:padding="@dimen/content_offset">
+    android:gravity="center">
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -14,34 +13,6 @@
         android:gravity="center_horizontal"
         android:layout_marginBottom="@dimen/field_offset"
         tools:text="Title"/>
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        tools:text="HP: "
-        style="@style/TextFieldTheme"
-        android:layout_marginBottom="@dimen/field_offset"
-        android:id="@+id/hp"/>
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        tools:text="Attack: "
-        style="@style/TextFieldTheme"
-        android:layout_marginBottom="@dimen/field_offset"
-        android:id="@+id/attack"/>
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        tools:text="Damage: "
-        style="@style/TextFieldTheme"
-        android:layout_marginBottom="@dimen/field_offset"
-        android:id="@+id/damage"/>
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        tools:text="Armor: "
-        style="@style/TextFieldTheme"
-        android:layout_marginBottom="@dimen/field_offset"
-        android:id="@+id/armor"/>
     <Button
         android:id="@+id/add_unit"
         android:layout_width="@dimen/square_button"

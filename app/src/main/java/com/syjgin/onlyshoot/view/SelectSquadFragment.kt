@@ -57,7 +57,8 @@ class SelectSquadFragment : BaseFragment<SelectSquadViewModel>(SelectSquadViewMo
         super.onViewCreated(view, savedInstanceState)
         select_squad.setOnClickListener {
             if(squad != null) {
-                val addEditFightViewModel = ViewModelProviders.of(this).get(AddEditFightViewModel::class.java)
+                val addEditFightViewModel =
+                    ViewModelProviders.of(activity!!).get(AddEditFightViewModel::class.java)
                 addEditFightViewModel.setSquadAndReturn(squad!!.id, isAttackers)
             }
         }

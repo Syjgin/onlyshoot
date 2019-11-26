@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.syjgin.onlyshoot.R
 import com.syjgin.onlyshoot.model.SquadUnit
-import kotlinx.android.synthetic.main.item_squad_unit.view.*
+import kotlinx.android.synthetic.main.item_squad_horizontal.view.*
 
 class SquadUnitListAdapter(private val listener: SquadListClickListener, private val isAttackers: Boolean, private val isHorizontal : Boolean) : RecyclerView.Adapter<SquadUnitListAdapter.SquadUnitViewHolder>() {
     private val data = ArrayList<SquadUnit>()
@@ -30,10 +30,24 @@ class SquadUnitListAdapter(private val listener: SquadListClickListener, private
     override fun onBindViewHolder(holder: SquadUnitViewHolder, position: Int) {
         val currentUnit = data[position]
         holder.itemView.caption.text = currentUnit.name
-        holder.itemView.hp.text = String.format(holder.itemView.context.getString(R.string.hp_template), currentUnit.hp)
-        holder.itemView.attack.text = String.format(holder.itemView.context.getString(R.string.attack_template), currentUnit.attack)
-        holder.itemView.damage.text = String.format(holder.itemView.context.getString(R.string.damage_template), currentUnit.damage)
-        holder.itemView.armor.text = String.format(holder.itemView.context.getString(R.string.armor_template), currentUnit.usualArmor)
+        if (isHorizontal) {
+            holder.itemView.hp.text = String.format(
+                holder.itemView.context.getString(R.string.hp_template),
+                currentUnit.hp
+            )
+            holder.itemView.attack.text = String.format(
+                holder.itemView.context.getString(R.string.attack_template),
+                currentUnit.attack
+            )
+            holder.itemView.damage.text = String.format(
+                holder.itemView.context.getString(R.string.damage_template),
+                currentUnit.damage
+            )
+            holder.itemView.armor.text = String.format(
+                holder.itemView.context.getString(R.string.armor_template),
+                currentUnit.usualArmor
+            )
+        }
     }
 
     fun addData(newData: List<SquadUnit>) {
