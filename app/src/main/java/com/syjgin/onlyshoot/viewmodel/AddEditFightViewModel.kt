@@ -26,6 +26,8 @@ class AddEditFightViewModel : BaseViewModel() {
     private val saveDialogLiveEvent = MutableLiveData<Boolean>()
     private var attackersId : Long = NO_DATA
     private var defendersId : Long = NO_DATA
+    private var attackersSquad: Squad? = null
+    private var defendersSquad: Squad? = null
     private var isEditMode = false
 
     init {
@@ -132,6 +134,15 @@ class AddEditFightViewModel : BaseViewModel() {
     }
 
     fun startAttack() {
+        if(attackersSquad == null || defendersSquad == null)
+            return
+        if(attackersSquad!!.isMembersIdentical() && defendersSquad!!.isMembersIdentical()) {
+            val bundle = Bundle()
+            bundle.putLong(BundleKeys.AttackSquadId.name, attackersId)
+            bundle.putLong(BundleKeys.DefendSquadId.name, defendersId)
+            router.navigateTo(OnlyShootScreen(ScreenEnum.AttackResult, bundle))
+            return
+        }
         val bundle = Bundle()
         bundle.putLong(BundleKeys.AttackSquadId.name, attackersId)
         bundle.putLong(BundleKeys.DefendSquadId.name, defendersId)
@@ -156,25 +167,21 @@ class AddEditFightViewModel : BaseViewModel() {
 
     private fun refreshDefenders() {
         viewModelScope.launch {
-            defendLiveData.postValue(
-                Squad.createFromUnitList(
-                    database.unitDao().getBySquad(defendersId),
-                    defendersId,
-                    database.squadDescriptionDao().getById(defendersId)!!.name
-                )
-            )
+            defendersSquad = Squad.createFromUnitList(
+                database.unitDao().getBySquad(defendersId),
+                defendersId,
+                database.squadDescriptionDao().getById(defendersId)!!.name)
+            defendLiveData.postValue(defendersSquad)
         }
     }
 
     private fun refreshAttackers() {
         viewModelScope.launch {
-            attackLiveData.postValue(
-                Squad.createFromUnitList(
-                    database.unitDao().getBySquad(attackersId),
-                    attackersId,
-                    database.squadDescriptionDao().getById(attackersId)!!.name
-                )
-            )
+            attackersSquad = Squad.createFromUnitList(
+                database.unitDao().getBySquad(attackersId),
+                attackersId,
+                database.squadDescriptionDao().getById(attackersId)!!.name)
+            attackLiveData.postValue(attackersSquad)
         }
     }
 

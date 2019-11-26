@@ -56,4 +56,6 @@
     <string name="add_archetype">Add archetype</string>
     <string name="select_from_archetype">Select from archetype</string>
     <string name="edit_archetype">Edit archetype</string>
+    <string name="attacks_remains">Attack remains: %d</string>
+    <string name="start_attack">Start attack</string>
 </resources>

@@ -7,7 +7,14 @@ data class Squad(val list: List<SquadUnit>, val isAttackers: Boolean, val name: 
         }
     }
 
-    fun getId() : Long? {
-        return if(list.isEmpty()) null else list[0].squadId
+    fun isMembersIdentical() : Boolean {
+        for(i in list.indices) {
+            if(i < (list.size-1)) {
+                if(!SquadUnit.equalsWithoutHP(list[i], list[i+1])) {
+                    return false
+                }
+            }
+        }
+        return true
     }
 }

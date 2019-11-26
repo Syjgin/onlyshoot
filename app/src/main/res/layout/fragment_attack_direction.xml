@@ -1,6 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
-
-</LinearLayout>
+    <TextView
+        android:layout_width="match_parent"
+        style="@style/CaptionFieldTheme"
+        android:id="@+id/remain_attacks"
+        tools:text="Attack remains: 10"
+        android:gravity="center"
+        android:layout_alignParentTop="true"
+        android:layout_height="@dimen/square_button"/>
+    <LinearLayout
+        android:layout_below="@+id/remain_attacks"
+        android:layout_above="@+id/start_attack"
+        android:orientation="horizontal" android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:id="@+id/attack_recycler"
+        android:layout_height="match_parent"
+        android:background="@color/attack"/>
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:id="@+id/defence_recycler"
+            android:layout_height="match_parent"
+            android:background="@color/defend"/>
+    </LinearLayout>
+    <Button
+        android:id="@+id/start_attack"
+        style="@style/BottomButton"
+        android:enabled="false"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/start_attack" />
+</RelativeLayout>
