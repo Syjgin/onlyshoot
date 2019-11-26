@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -32,6 +33,7 @@ class AddEditFightFragment : BaseFragment<AddEditFightViewModel>(AddEditFightVie
     private var fight: Fight? = null
     private val attackersAdapter = SquadUnitListAdapter(this, true, isHorizontal = false)
     private val defendersAdapter = SquadUnitListAdapter(this, false, isHorizontal = false)
+    private var isDisplayingDialog = false
 
     override fun fragmentTitle(): Int {
         return AddEditUtils.getAddEditFragmentTitle(arguments, R.string.add_fight,R.string.edit_fight)
@@ -114,16 +116,25 @@ class AddEditFightFragment : BaseFragment<AddEditFightViewModel>(AddEditFightVie
     }
 
     private fun displaySaveDialog() {
-        DialogUtils.createInputDialog(context, getString(R.string.save_fight), object :
+        if (isDisplayingDialog)
+            return
+        isDisplayingDialog = true
+        var dialog: AlertDialog? = null
+        dialog = DialogUtils.createInputDialog(context, getString(R.string.save_fight), object :
             DialogUtils.InputFieldDialogListener {
             override fun onValueSelected(value: String) {
+                isDisplayingDialog = false
+                dialog?.dismiss()
                 viewModel?.saveFight(value)
             }
 
             override fun onCancel() {
-                viewModel?.exit()
+                isDisplayingDialog = false
+                dialog?.dismiss()
+                viewModel?.exitWithoutSaving()
             }
-        })?.show()
+        })
+        dialog?.show()
     }
 
     private fun displaySquad(squad: Squad, isAttackers: Boolean) {

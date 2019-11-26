@@ -23,6 +23,21 @@ object DbUtils {
         return result
     }
 
+    fun getNextUnitName(targetName: String, existingNames: List<String>): String {
+        var sameNameCount = 0
+        for (currentUnitName in existingNames) {
+            val splitted = currentUnitName.split(" ")
+            if (splitted[0] == targetName) {
+                sameNameCount++
+            }
+        }
+        return if (sameNameCount == 0) targetName else String.format(
+            "%s %d",
+            targetName,
+            sameNameCount
+        )
+    }
+
     fun duplicateUnit(
         viewModelScope: CoroutineScope,
         database: Database,
@@ -33,14 +48,13 @@ object DbUtils {
         viewModelScope.launch {
             val targetUnit = database.archetypeDao().getById(squadUnit.parentId)
             val squad = database.unitDao().getBySquad(squadId)
-            var nameCount = 0
+            val names = mutableListOf<String>()
             for(currentUnit in squad) {
-                if(currentUnit.name == squadUnit.name) {
-                    nameCount++
-                }
+                names.add(currentUnit.name)
             }
             if(targetUnit != null) {
-                val newUnit = targetUnit.convertToSquadUnit(squadId, squadUnit.name + nameCount)
+                val targetName = getNextUnitName(targetUnit.name, names)
+                val newUnit = targetUnit.convertToSquadUnit(squadId, targetName)
                 database.unitDao().insert(newUnit)
             }
             if (callback != null) {

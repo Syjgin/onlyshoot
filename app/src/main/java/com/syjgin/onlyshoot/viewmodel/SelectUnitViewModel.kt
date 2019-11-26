@@ -9,6 +9,7 @@ import com.syjgin.onlyshoot.model.UnitArchetype
 import com.syjgin.onlyshoot.navigation.BundleKeys
 import com.syjgin.onlyshoot.navigation.OnlyShootScreen
 import com.syjgin.onlyshoot.navigation.ScreenEnum
+import com.syjgin.onlyshoot.utils.DbUtils
 import kotlinx.coroutines.launch
 
 class SelectUnitViewModel : BaseViewModel() {
@@ -26,19 +27,17 @@ class SelectUnitViewModel : BaseViewModel() {
     fun addArchetypes(map: Map<UnitArchetype, Int>, squadId: Long) {
         viewModelScope.launch {
             for (archetypePair in map.entries) {
-                var nameCount = 0
-                val squad = database.unitDao().getBySquad(squadId)
-                for (currentUnit in squad) {
-                    if (currentUnit.name.startsWith(archetypePair.key.name)) {
-                        nameCount++
-                    }
-                }
                 for (i in 0 until archetypePair.value) {
+                    val squad = database.unitDao().getBySquad(squadId)
+                    val names = mutableListOf<String>()
+                    for (currentUnit in squad) {
+                        names.add(currentUnit.name)
+                    }
+                    val name = DbUtils.getNextUnitName(archetypePair.key.name, names)
                     val newUnit = archetypePair.key.convertToSquadUnit(
                         squadId,
-                        archetypePair.key.name + nameCount
+                        name
                     )
-                    nameCount++
                     Log.d("UNIT_ADD", newUnit.toString())
                     database.unitDao().insert(newUnit)
                 }

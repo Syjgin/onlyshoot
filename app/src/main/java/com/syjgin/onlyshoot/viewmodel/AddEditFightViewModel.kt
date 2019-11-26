@@ -19,11 +19,11 @@ import kotlinx.coroutines.launch
 
 class AddEditFightViewModel : BaseViewModel() {
     companion object {
-        const val REFRESH_DELAY = 1000L
+        const val REFRESH_DELAY = 500L
     }
     private val attackLiveData = MutableLiveData<Squad>()
     private val defendLiveData = MutableLiveData<Squad>()
-    private val saveDialogLiveData = MutableLiveData<Boolean>()
+    private val saveDialogLiveEvent = MutableLiveData<Boolean>()
     private var attackersId : Long = NO_DATA
     private var defendersId : Long = NO_DATA
     private var isEditMode = false
@@ -71,30 +71,28 @@ class AddEditFightViewModel : BaseViewModel() {
             if(attackersId == NO_DATA || defendersId == NO_DATA) {
                 router.exit()
             } else {
-                saveDialogLiveData.postValue(true)
+                saveDialogLiveEvent.postValue(true)
             }
         }
     }
 
     fun saveFight(name: String) {
-        if(attackersId == NO_DATA || defendersId == NO_DATA) {
-            router.exit()
-            return
-        }
-        val fightId = DbUtils.generateLongUUID()
-        val fight = Fight(fightId, name, attackersId, defendersId, System.currentTimeMillis())
-        viewModelScope.launch {
-            database.fightDao().insert(fight)
-            router.exit()
-        }
-    }
-
-    fun exit() {
-        router.exit()
+        Handler(Looper.getMainLooper()).postDelayed(Runnable {
+            if (attackersId == NO_DATA || defendersId == NO_DATA) {
+                router.exit()
+                return@Runnable
+            }
+            val fightId = DbUtils.generateLongUUID()
+            val fight = Fight(fightId, name, attackersId, defendersId, System.currentTimeMillis())
+            viewModelScope.launch {
+                database.fightDao().insert(fight)
+                router.exit()
+            }
+        }, REFRESH_DELAY)
     }
 
     fun getSaveDialogLiveData() : LiveData<Boolean> {
-        return saveDialogLiveData
+        return saveDialogLiveEvent
     }
 
     fun loadSquad(attackers: Boolean) {
@@ -190,5 +188,11 @@ class AddEditFightViewModel : BaseViewModel() {
                 refreshDefenders()
             }
         }
+    }
+
+    fun exitWithoutSaving() {
+        Handler(Looper.getMainLooper()).postDelayed({
+            router.exit()
+        }, REFRESH_DELAY)
     }
 }

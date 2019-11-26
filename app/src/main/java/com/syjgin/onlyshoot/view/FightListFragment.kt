@@ -43,10 +43,9 @@ class FightListFragment : BaseFragment<FightListViewModel>(FightListViewModel::c
     private fun displayFightList(it: List<Fight>) {
         if (adapter == null) {
             adapter = FightListAdapter(this@FightListFragment, it)
-            fight_recycler_view.adapter = adapter
-        } else {
-            adapter?.updateData(it)
         }
+        fight_recycler_view.adapter = adapter
+        adapter?.updateData(it)
     }
 
     override fun removeClicked(fight: Fight) {
