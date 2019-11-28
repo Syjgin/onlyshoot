@@ -136,13 +136,6 @@ class AddEditFightViewModel : BaseViewModel() {
     fun startAttack() {
         if(attackersSquad == null || defendersSquad == null)
             return
-        if(attackersSquad!!.isMembersIdentical() && defendersSquad!!.isMembersIdentical()) {
-            val bundle = Bundle()
-            bundle.putLong(BundleKeys.AttackSquadId.name, attackersId)
-            bundle.putLong(BundleKeys.DefendSquadId.name, defendersId)
-            router.navigateTo(OnlyShootScreen(ScreenEnum.AttackResult, bundle))
-            return
-        }
         val bundle = Bundle()
         bundle.putLong(BundleKeys.AttackSquadId.name, attackersId)
         bundle.putLong(BundleKeys.DefendSquadId.name, defendersId)

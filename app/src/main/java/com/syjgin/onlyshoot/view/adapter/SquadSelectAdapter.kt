@@ -9,7 +9,7 @@ import com.syjgin.onlyshoot.model.SquadDescription
 import kotlinx.android.synthetic.main.item_squad_list.view.*
 
 class SquadSelectAdapter(private val listener : SquadSelectListener) : RecyclerView.Adapter<SquadSelectAdapter.SquadSelectViewHolder>() {
-    private val data = ArrayList<SquadDescription>()
+    private val data = mutableListOf<SquadDescription>()
     private var selectedSquad : SquadDescription? = null
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SquadSelectViewHolder {
         val holder = SquadSelectViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_squad_list, parent, false))

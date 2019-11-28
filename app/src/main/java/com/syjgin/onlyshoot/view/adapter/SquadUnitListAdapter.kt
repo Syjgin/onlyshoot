@@ -9,7 +9,7 @@ import com.syjgin.onlyshoot.model.SquadUnit
 import kotlinx.android.synthetic.main.item_squad_horizontal.view.*
 
 class SquadUnitListAdapter(private val listener: SquadListClickListener, private val isAttackers: Boolean, private val isHorizontal : Boolean) : RecyclerView.Adapter<SquadUnitListAdapter.SquadUnitViewHolder>() {
-    private val data = ArrayList<SquadUnit>()
+    private val data = mutableListOf<SquadUnit>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SquadUnitViewHolder {
         val holder = SquadUnitViewHolder(LayoutInflater.from(parent.context).inflate(if(isHorizontal) R.layout.item_squad_horizontal else R.layout.item_squad_unit, parent, false))

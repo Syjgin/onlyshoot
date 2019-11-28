@@ -1,33 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/background"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:gravity="center_vertical"
-    android:orientation="horizontal"
-    android:padding="@dimen/content_offset">
-
-    <TextView
-        android:id="@+id/sub_squad_name"
-        style="@style/TextFieldTheme"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/content_offset"
-        android:ellipsize="end"
-        android:lines="1"
-        android:maxWidth="100dp"
-        tools:text="Ork1, Ork2Ork1, Ork2Ork1, Ork2" />
+    android:orientation="vertical">
 
     <View
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1" />
+        android:id="@+id/border"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/field_offset"
+        android:background="@color/text_color"
+        android:visibility="gone" />
 
-    <TextView
-        android:id="@+id/attack_count"
-        style="@style/CaptionFieldTheme"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/background"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:text="5" />
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="@dimen/content_offset">
+
+        <TextView
+            android:id="@+id/unit_name"
+            style="@style/TextFieldTheme"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/content_offset"
+            android:ellipsize="end"
+            android:lines="1"
+            android:maxWidth="100dp"
+            tools:text="Ork1, Ork2Ork1, Ork2Ork1, Ork2" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+        <TextView
+            android:id="@+id/attack_count"
+            style="@style/CaptionFieldTheme"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="5" />
+    </LinearLayout>
 </LinearLayout>

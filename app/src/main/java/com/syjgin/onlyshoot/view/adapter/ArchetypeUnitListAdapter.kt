@@ -10,7 +10,7 @@ import kotlinx.android.synthetic.main.item_archetype_horizontal.view.*
 
 class ArchetypeUnitListAdapter(private val listener: ArchetypeListClickListener) :
     RecyclerView.Adapter<ArchetypeUnitListAdapter.SquadUnitViewHolder>() {
-    private val data = ArrayList<UnitArchetype>()
+    private val data = mutableListOf<UnitArchetype>()
     private val countMap = mutableMapOf<UnitArchetype, Int>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SquadUnitViewHolder {
