@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingStart="@dimen/content_offset"
+    android:paddingTop="@dimen/content_offset"
+    android:paddingEnd="@dimen/content_offset">
+
+    <TextView
+        android:id="@+id/from_unit"
+        style="@style/CaptionFieldTheme"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        tools:text="Orc 1" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        app:srcCompat="@drawable/ic_trending_flat"
+        tools:ignore="ContentDescription" />
+
+    <TextView
+        android:id="@+id/to_unit"
+        style="@style/CaptionFieldTheme"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:ellipsize="end"
+        android:lines="1"
+        android:maxWidth="@dimen/max_string"
+        tools:ignore="RelativeOverlap"
+        tools:text="Soldier 1" />
+
+    <TextView
+        android:id="@+id/damage"
+        style="@style/TextFieldTheme"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/from_unit"
+        android:layout_marginTop="@dimen/content_offset" />
+
+    <TextView
+        android:id="@+id/description"
+        style="@style/TextFieldTheme"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/damage"
+        android:layout_marginTop="@dimen/content_offset" />
+
+    <TextView
+        android:id="@+id/parts"
+        style="@style/TextFieldTheme"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/description"
+        android:layout_marginTop="@dimen/content_offset" />
+
+    <TextView
+        android:id="@+id/result"
+        style="@style/TextFieldTheme"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/parts"
+        android:layout_marginTop="@dimen/content_offset" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/text_color" />
+</RelativeLayout>

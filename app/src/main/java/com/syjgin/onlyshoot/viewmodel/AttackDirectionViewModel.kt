@@ -1,7 +1,6 @@
 package com.syjgin.onlyshoot.viewmodel
 
 import android.os.Bundle
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -42,9 +41,6 @@ class AttackDirectionViewModel : BaseViewModel() {
     }
 
     fun startAttack(attacks: List<Attack>) {
-        for(attack in attacks) {
-            Log.d("ATTACK", attack.toString())
-        }
         val bundle = Bundle()
         val arrayList = ArrayList<Attack>(attacks)
         bundle.putParcelableArrayList(BundleKeys.Attacks.name, arrayList)

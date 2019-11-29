@@ -59,4 +59,17 @@
     <string name="random_attacks">Random attacks: %d</string>
     <string name="start_attack">Start attack</string>
     <string name="enter_attack_amount">Enter attack amount:</string>
+    <string name="damage_text">Damage: <b>%d</b></string>
+    <string name="affected_parts">Affected: %s</string>
+    <string name="head">head</string>
+    <string name="torso">torso</string>
+    <string name="right_hand">right hand</string>
+    <string name="left_hand">left hand</string>
+    <string name="right_leg">right leg</string>
+    <string name="left_leg">left leg</string>
+    <string name="misfire">misfire</string>
+    <string name="hit">hit</string>
+    <string name="miss">miss</string>
+    <string name="evasion_result">evasion</string>
+    <string name="death">death</string>
 </resources>
