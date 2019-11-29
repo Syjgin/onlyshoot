@@ -52,6 +52,10 @@ class DefenceAdapter(private val attackDirectionListener: AttackDirectionListene
         return holder
     }
 
+    fun getData() : List<SquadUnit> {
+        return data
+    }
+
     override fun getItemCount() = data.size
 
     override fun onBindViewHolder(holder: DefenceViewHolder, position: Int) {

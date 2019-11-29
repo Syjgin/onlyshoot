@@ -9,5 +9,6 @@ enum class BundleKeys {
     AttackSquadId,
     DefendSquadId,
     EditArchetype,
-    AttackCount
+    AttackCount,
+    Attacks
 }

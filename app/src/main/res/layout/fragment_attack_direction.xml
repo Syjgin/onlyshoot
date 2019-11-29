@@ -34,7 +34,6 @@
     <Button
         android:id="@+id/start_attack"
         style="@style/BottomButton"
-        android:enabled="false"
         android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

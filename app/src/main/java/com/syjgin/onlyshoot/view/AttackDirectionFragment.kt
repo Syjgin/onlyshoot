@@ -48,11 +48,14 @@ class AttackDirectionFragment :
         super.onViewCreated(view, savedInstanceState)
         attack_recycler.adapter = attackAdapter
         defence_recycler.adapter = defenceAdapter
+        start_attack.setOnClickListener {
+            viewModel?.startAttack(attackAdapter.getAttacks(defenceAdapter.getData()))
+        }
         viewModel?.getAttackersLiveData()?.observe(this, Observer {
-            handlerAttackers(it)
+            handleAttackers(it)
         })
         viewModel?.getDefendersLiveData()?.observe(this, Observer {
-            handlerDefenders(it)
+            handleDefenders(it)
         })
         viewModel?.loadData(attackersId, defendersId)
     }
@@ -99,15 +102,13 @@ class AttackDirectionFragment :
         updateRandomAttacksCount()
     }
 
-    private fun handlerAttackers(squad: Squad) {
+    private fun handleAttackers(squad: Squad) {
         attackAdapter.addAttackers(squad.list)
-        for (squadUnit in squad.list) {
-            remainAttacks += squadUnit.attackCount
-        }
+        remainAttacks = attackAdapter.getFreeAttacksCount()
         updateRandomAttacksCount()
     }
 
-    private fun handlerDefenders(squad: Squad) {
+    private fun handleDefenders(squad: Squad) {
         defenceAdapter.addDefenders(squad.list)
     }
 

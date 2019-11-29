@@ -14,12 +14,14 @@ import com.syjgin.onlyshoot.model.SquadUnit
 import com.syjgin.onlyshoot.navigation.BundleKeys
 import kotlinx.android.synthetic.main.item_attack_header.view.*
 import kotlinx.android.synthetic.main.item_single_attack.view.*
+import java.util.*
+import kotlin.random.Random
 
 class AttackAdapter(private val listener: AttackDirectionListener) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     companion object {
-        const val Attacker: Int = 0
-        const val Attack: Int = 1
+        const val AttackerType: Int = 0
+        const val AttackType: Int = 1
     }
 
     data class ItemType(val isHeader: Boolean, val index: Int)
@@ -31,12 +33,32 @@ class AttackAdapter(private val listener: AttackDirectionListener) :
     private val colorsOfDefenders = mutableMapOf<Long, Int>()
 
     fun addAttackers(attackers: List<SquadUnit>) {
+        this.attackers.clear()
         this.attackers.addAll(attackers)
         recreateTypeTable()
         notifyDataSetChanged()
     }
 
+    fun getFreeAttacksCount() : Int {
+        var result = 0
+        for (squadUnit in attackers) {
+            result += squadUnit.attackCount
+        }
+        return result
+    }
+
     fun addAttack(attack: Attack, color: Int) {
+        for(currentAttack in attacks) {
+            if(currentAttack.attackerId == attack.attackerId &&
+                    currentAttack.defenderId == attack.defenderId) {
+                val replacement = Attack(currentAttack.attackerId, currentAttack.defenderId, currentAttack.count + attack.count)
+                attacks.remove(currentAttack)
+                attacks.add(replacement)
+                recreateTypeTable()
+                notifyDataSetChanged()
+                return
+            }
+        }
         attacks.add(attack)
         colorsOfDefenders[attack.defenderId] = color
         recreateTypeTable()
@@ -45,7 +67,7 @@ class AttackAdapter(private val listener: AttackDirectionListener) :
 
     @Suppress("DEPRECATION")
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        if (viewType == Attacker) {
+        if (viewType == AttackerType) {
             val holder = AttackerViewHolder(
                 LayoutInflater.from(parent.context).inflate(
                     R.layout.item_attack_header,
@@ -56,6 +78,8 @@ class AttackAdapter(private val listener: AttackDirectionListener) :
             holder.itemView.setOnLongClickListener {
                 val itemType = itemTypes[holder.adapterPosition]
                 val attacker = attackers[itemType.index]
+                if(freeAttacks[attacker.id] == 0)
+                    return@setOnLongClickListener false
                 val bundle = Bundle()
                 bundle.putLong(BundleKeys.Unit.name, attacker.id)
                 bundle.putInt(BundleKeys.AttackCount.name, freeAttacks[attacker.id]!!)
@@ -96,7 +120,7 @@ class AttackAdapter(private val listener: AttackDirectionListener) :
     override fun getItemCount() = attackers.size + attacks.size
 
     override fun getItemViewType(position: Int): Int {
-        return if (itemTypes[position].isHeader) Attacker else Attack
+        return if (itemTypes[position].isHeader) AttackerType else AttackType
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
@@ -112,8 +136,48 @@ class AttackAdapter(private val listener: AttackDirectionListener) :
         }
     }
 
-    fun getAttacks(): List<Attack> {
-        return attacks
+    fun getAttacks(defenders: List<SquadUnit>): List<Attack> {
+        val result = mutableListOf<Attack>()
+        result.addAll(attacks)
+        if(freeAttacks.isEmpty())
+            return result
+        val random = Random(System.currentTimeMillis())
+        val freeAttackers = freeAttacks.keys
+        val notAttackedDefenders = mutableListOf<SquadUnit>()
+        for(defender in defenders) {
+            val attacksWithThisDefender = attacks.find { it.defenderId == defender.id }
+            if(attacksWithThisDefender == null) {
+                notAttackedDefenders.add(defender)
+            }
+        }
+        val attacksCopy = mutableListOf<Attack>()
+        attacksCopy.addAll(attacks)
+        while (freeAttacks.isNotEmpty()) {
+            val randomDefender : SquadUnit
+            if(notAttackedDefenders.isNotEmpty()) {
+                randomDefender = defenders[random.nextInt(defenders.size)]
+            } else {
+                randomDefender = notAttackedDefenders[random.nextInt(notAttackedDefenders.size)]
+                notAttackedDefenders.remove(randomDefender)
+            }
+            val randomAttacker = freeAttackers.elementAt(random.nextInt(freeAttackers.size))
+            val attack = Attack(randomAttacker, randomDefender.id, 1)
+            val existingAttack = attacksCopy.find { it.attackerId == attack.attackerId && it.defenderId == attack.defenderId }
+            if(existingAttack == null) {
+                attacksCopy.add(attack)
+            } else {
+                val newAttack = Attack(attack.attackerId, attack.defenderId, existingAttack.count+1)
+                attacksCopy.remove(existingAttack)
+                attacksCopy.add(newAttack)
+            }
+            val nextCount = freeAttacks[randomAttacker]!!-1
+            if(nextCount == 0) {
+                freeAttacks.remove(randomAttacker)
+            } else {
+                freeAttacks[randomAttacker] = nextCount
+            }
+        }
+        return attacksCopy
     }
 
     private fun recreateTypeTable() {

@@ -9,6 +9,7 @@
     android:padding="@dimen/content_offset">
 
     <TextView
+        android:background="@color/white"
         android:id="@+id/unit_name"
         style="@style/TextFieldTheme"
         android:layout_width="wrap_content"

@@ -198,7 +198,7 @@ class AddEditFightViewModel : BaseViewModel() {
 
     private fun exit() {
         attackLiveData.postValue(Squad(listOf(), true, ""))
-        defendLiveData.postValue(Squad(listOf(), true, ""))
+        defendLiveData.postValue(Squad(listOf(), false, ""))
         saveDialogLiveEvent.postValue(false)
         router.exit()
     }

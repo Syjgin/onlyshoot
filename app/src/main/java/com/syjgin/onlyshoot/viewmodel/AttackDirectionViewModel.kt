@@ -1,10 +1,16 @@
 package com.syjgin.onlyshoot.viewmodel
 
+import android.os.Bundle
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.syjgin.onlyshoot.di.OnlyShootApp
+import com.syjgin.onlyshoot.model.Attack
 import com.syjgin.onlyshoot.model.Squad
+import com.syjgin.onlyshoot.navigation.BundleKeys
+import com.syjgin.onlyshoot.navigation.OnlyShootScreen
+import com.syjgin.onlyshoot.navigation.ScreenEnum
 import com.syjgin.onlyshoot.utils.DbUtils.NO_DATA
 import kotlinx.coroutines.launch
 
@@ -12,14 +18,18 @@ class AttackDirectionViewModel : BaseViewModel() {
     private val attackersLiveData = MutableLiveData<Squad>()
     private val defendersLiveData = MutableLiveData<Squad>()
     private var attackersId: Long = NO_DATA
+    private var alreadyLoaded = false
 
     fun loadData(attackersId: Long, defendersId: Long) {
-        this.attackersId = attackersId
-        viewModelScope.launch {
-            val attackersSquad = database.unitDao().getBySquad(attackersId)
-            attackersLiveData.postValue(Squad.createFromUnitList(attackersSquad, attackersId, ""))
-            val defendersSquad = database.unitDao().getBySquad(defendersId)
-            defendersLiveData.postValue(Squad.createFromUnitList(defendersSquad, attackersId, ""))
+        if(!alreadyLoaded) {
+            this.attackersId = attackersId
+            viewModelScope.launch {
+                val attackersSquad = database.unitDao().getBySquad(attackersId)
+                attackersLiveData.postValue(Squad.createFromUnitList(attackersSquad, attackersId, ""))
+                val defendersSquad = database.unitDao().getBySquad(defendersId)
+                defendersLiveData.postValue(Squad.createFromUnitList(defendersSquad, attackersId, ""))
+            }
+            alreadyLoaded = true
         }
     }
 
@@ -29,6 +39,16 @@ class AttackDirectionViewModel : BaseViewModel() {
 
     fun getDefendersLiveData(): LiveData<Squad> {
         return defendersLiveData
+    }
+
+    fun startAttack(attacks: List<Attack>) {
+        for(attack in attacks) {
+            Log.d("ATTACK", attack.toString())
+        }
+        val bundle = Bundle()
+        val arrayList = ArrayList<Attack>(attacks)
+        bundle.putParcelableArrayList(BundleKeys.Attacks.name, arrayList)
+        router.navigateTo(OnlyShootScreen(ScreenEnum.AttackResult, bundle))
     }
 
     init {
