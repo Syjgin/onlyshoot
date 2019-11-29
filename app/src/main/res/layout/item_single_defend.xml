@@ -3,12 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:id="@+id/item_background"
     android:gravity="center_vertical"
     android:orientation="horizontal"
     android:padding="@dimen/content_offset">
 
     <TextView
-        android:id="@+id/sub_squad_name"
+        android:id="@+id/unit_name"
         style="@style/TextFieldTheme"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

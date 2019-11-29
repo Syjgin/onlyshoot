@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -20,20 +21,21 @@
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="0dp"
         android:layout_weight="1"
-        android:id="@+id/attack_recycler"
         android:layout_height="match_parent"
-        android:background="@color/attack"/>
+        android:id="@+id/attack_recycler"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
         <androidx.recyclerview.widget.RecyclerView
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:id="@+id/defence_recycler"
             android:layout_height="match_parent"
-            android:background="@color/defend"/>
+            android:id="@+id/defence_recycler"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
     </LinearLayout>
     <Button
         android:id="@+id/start_attack"
         style="@style/BottomButton"
         android:enabled="false"
+        android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/start_attack" />

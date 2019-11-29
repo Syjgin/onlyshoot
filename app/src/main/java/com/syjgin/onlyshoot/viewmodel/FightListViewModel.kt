@@ -36,7 +36,7 @@ class FightListViewModel : BaseViewModel() {
 
     fun openFight(fight: Fight) {
         val bundle = Bundle()
-        bundle.putLong(BundleKeys.Fight.name, fight.id)
+        bundle.putSerializable(BundleKeys.Fight.name, fight)
         router.navigateTo(OnlyShootScreen(ScreenEnum.AddEditFight, bundle))
     }
 }

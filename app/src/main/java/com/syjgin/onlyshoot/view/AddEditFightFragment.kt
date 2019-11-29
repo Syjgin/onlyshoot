@@ -55,7 +55,7 @@ class AddEditFightFragment : BaseFragment<AddEditFightViewModel>(AddEditFightVie
         super.onViewCreated(view, savedInstanceState)
         viewModel?.getAttackFightData()?.observe(activity!!, Observer { displaySquad(it, true) })
         viewModel?.getDefendFightData()?.observe(activity!!, Observer { displaySquad(it, false) })
-        viewModel?.getSaveDialogLiveData()?.observe(this, Observer { displaySaveDialog() })
+        viewModel?.getSaveDialogLiveData()?.observe(this, Observer { displaySaveDialog(it) })
         defenders.layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
         attackers.layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
         defenders.adapter = defendersAdapter
@@ -115,7 +115,9 @@ class AddEditFightFragment : BaseFragment<AddEditFightViewModel>(AddEditFightVie
         load_defenders.setOnClickListener {viewModel?.loadSquad(false)}
     }
 
-    private fun displaySaveDialog() {
+    private fun displaySaveDialog(boolean: Boolean) {
+        if (!boolean)
+            return
         if (isDisplayingDialog)
             return
         isDisplayingDialog = true
@@ -140,10 +142,10 @@ class AddEditFightFragment : BaseFragment<AddEditFightViewModel>(AddEditFightVie
     private fun displaySquad(squad: Squad, isAttackers: Boolean) {
         if(isAttackers) {
             attackersAdapter.addData(squad.list)
-            attackers_description.text = squad.name
+            attackers_description?.text = squad.name
         } else {
             defendersAdapter.addData(squad.list)
-            defenders_description.text = squad.name
+            defenders_description?.text = squad.name
         }
     }
 

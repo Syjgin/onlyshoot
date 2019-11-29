@@ -20,12 +20,8 @@
         android:layout_height="@dimen/square_button"
         android:layout_marginStart="@dimen/content_offset"
         tools:background="#342312"
+        android:layout_marginEnd="@dimen/content_offset"
         tools:ignore="ContentDescription" />
-
-    <View
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1" />
 
     <TextView
         android:id="@+id/attacks"

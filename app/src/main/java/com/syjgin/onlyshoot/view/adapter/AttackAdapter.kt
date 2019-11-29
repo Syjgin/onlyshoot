@@ -12,11 +12,11 @@ import com.syjgin.onlyshoot.R
 import com.syjgin.onlyshoot.model.Attack
 import com.syjgin.onlyshoot.model.SquadUnit
 import com.syjgin.onlyshoot.navigation.BundleKeys
-import com.syjgin.onlyshoot.utils.ColorUtils
 import kotlinx.android.synthetic.main.item_attack_header.view.*
 import kotlinx.android.synthetic.main.item_single_attack.view.*
 
-class AttackAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class AttackAdapter(private val listener: AttackDirectionListener) :
+    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     companion object {
         const val Attacker: Int = 0
         const val Attack: Int = 1
@@ -36,9 +36,9 @@ class AttackAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         notifyDataSetChanged()
     }
 
-    fun addAttack(attack: Attack) {
+    fun addAttack(attack: Attack, color: Int) {
         attacks.add(attack)
-        colorsOfDefenders[attack.defenderId] = ColorUtils.randomColor()
+        colorsOfDefenders[attack.defenderId] = color
         recreateTypeTable()
         notifyDataSetChanged()
     }
@@ -57,7 +57,8 @@ class AttackAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                 val itemType = itemTypes[holder.adapterPosition]
                 val attacker = attackers[itemType.index]
                 val bundle = Bundle()
-                bundle.putSerializable(BundleKeys.Unit.name, attacker)
+                bundle.putLong(BundleKeys.Unit.name, attacker.id)
+                bundle.putInt(BundleKeys.AttackCount.name, freeAttacks[attacker.id]!!)
                 val intent = Intent()
                 intent.putExtras(bundle)
                 val item = ClipData.Item(intent)
@@ -84,6 +85,7 @@ class AttackAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                 val itemType = itemTypes[holder.adapterPosition]
                 val attack = attacks[itemType.index]
                 attacks.remove(attack)
+                listener.onRandomAttackCountIncreased(attack.count)
                 recreateTypeTable()
                 notifyDataSetChanged()
             }
@@ -108,6 +110,10 @@ class AttackAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             holder.itemView.defender_color.setBackgroundColor(colorsOfDefenders[attacks[itemType.index].defenderId]!!)
             holder.itemView.attacks.text = attacks[itemType.index].count.toString()
         }
+    }
+
+    fun getAttacks(): List<Attack> {
+        return attacks
     }
 
     private fun recreateTypeTable() {
