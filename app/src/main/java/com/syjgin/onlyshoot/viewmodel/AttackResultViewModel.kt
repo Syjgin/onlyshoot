@@ -25,6 +25,10 @@ class AttackResultViewModel : BaseViewModel() {
             val defenderIds = defendersSquad.map { it.id }
             val mutableAttacks = mutableListOf<Attack>()
             mutableAttacks.addAll(attacks)
+            val evasions = mutableMapOf<Long, Int>()
+            for (defender in defendersSquad) {
+                evasions[defender.id] = defender.evasionCount
+            }
             for (i in mutableAttacks.indices) {
                 val attack = mutableAttacks[i]
                 val attacker = database.unitDao().getById(attack.attackerId)!!
@@ -98,13 +102,14 @@ class AttackResultViewModel : BaseViewModel() {
                 var successAttackAmount = attack.count
                 val evasionDice = created100()
                 var successCount = (defender.evasion - evasionDice) / 10
-                if (successCount > defender.evasionCount)
-                    successCount = defender.evasionCount
                 if (successCount > 0) {
-                    successCount += 1
-                    successAttackAmount -= successCount
-                    for (j in 0..successCount) {
-                        allParts.removeAt(0)
+                    evasions[defender.id] = evasions[defender.id]!! - successCount
+                    if (evasions[defender.id]!! > 0) {
+                        successCount += 1
+                        successAttackAmount -= successCount
+                        for (j in 0..successCount) {
+                            allParts.removeAt(0)
+                        }
                     }
                 }
                 if (successAttackAmount == 0) {
