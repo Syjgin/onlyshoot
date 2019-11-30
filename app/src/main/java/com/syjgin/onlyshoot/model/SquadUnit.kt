@@ -19,7 +19,7 @@ data class SquadUnit(
     val damageModifier: Int,
     val damageType: DamageType,
     val attackCount: Int,
-    val hp: Int,
+    var hp: Int,
     val evasion: Int,
     val evasionCount: Int,
     val missPossibility: Int,

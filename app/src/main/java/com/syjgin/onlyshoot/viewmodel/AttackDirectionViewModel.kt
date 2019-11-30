@@ -17,11 +17,13 @@ class AttackDirectionViewModel : BaseViewModel() {
     private val attackersLiveData = MutableLiveData<Squad>()
     private val defendersLiveData = MutableLiveData<Squad>()
     private var attackersId: Long = NO_DATA
+    private var defendersId: Long = NO_DATA
     private var alreadyLoaded = false
 
     fun loadData(attackersId: Long, defendersId: Long) {
         if(!alreadyLoaded) {
             this.attackersId = attackersId
+            this.defendersId = defendersId
             viewModelScope.launch {
                 val attackersSquad = database.unitDao().getBySquad(attackersId)
                 attackersLiveData.postValue(Squad.createFromUnitList(attackersSquad, attackersId, ""))
@@ -44,6 +46,7 @@ class AttackDirectionViewModel : BaseViewModel() {
         val bundle = Bundle()
         val arrayList = ArrayList<Attack>(attacks)
         bundle.putParcelableArrayList(BundleKeys.Attacks.name, arrayList)
+        bundle.putLong(BundleKeys.DefendSquadId.name, defendersId)
         router.navigateTo(OnlyShootScreen(ScreenEnum.AttackResult, bundle))
     }
 

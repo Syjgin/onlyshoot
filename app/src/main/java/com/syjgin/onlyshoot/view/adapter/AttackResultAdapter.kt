@@ -67,6 +67,7 @@ class AttackResultAdapter : RecyclerView.Adapter<AttackResultAdapter.AttackResul
                 AttackResult.ResultState.Miss -> R.string.miss
                 AttackResult.ResultState.Evasion -> R.string.evasion
                 AttackResult.ResultState.Death -> R.string.death
+                AttackResult.ResultState.ArmorSave -> R.string.armor_save
             }
         )
     }

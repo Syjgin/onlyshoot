@@ -8,6 +8,7 @@ import com.syjgin.onlyshoot.R
 import com.syjgin.onlyshoot.model.Attack
 import com.syjgin.onlyshoot.model.AttackResult
 import com.syjgin.onlyshoot.navigation.BundleKeys
+import com.syjgin.onlyshoot.utils.DbUtils.NO_DATA
 import com.syjgin.onlyshoot.view.adapter.AttackResultAdapter
 import com.syjgin.onlyshoot.viewmodel.AttackResultViewModel
 import kotlinx.android.synthetic.main.fragment_attack_result.*
@@ -22,6 +23,7 @@ class AttackResultFragment : BaseFragment<AttackResultViewModel>(AttackResultVie
     }
 
     private var attacks: List<Attack>? = null
+    private var defendSquadId: Long = NO_DATA
     private val adapter = AttackResultAdapter()
 
     override fun fragmentTitle() = R.string.attack_result
@@ -30,6 +32,7 @@ class AttackResultFragment : BaseFragment<AttackResultViewModel>(AttackResultVie
 
     override fun parseArguments(args: Bundle) {
         attacks = args.getParcelableArrayList(BundleKeys.Attacks.name)
+        defendSquadId = args.getLong(BundleKeys.DefendSquadId.name)
     }
 
     override fun hasBackButton() = true
@@ -40,6 +43,8 @@ class AttackResultFragment : BaseFragment<AttackResultViewModel>(AttackResultVie
         viewModel?.getResultLiveData()?.observe(this, Observer {
             handleAttackResults(it)
         })
+        if (attacks != null)
+            viewModel?.load(attacks!!, defendSquadId)
     }
 
     private fun handleAttackResults(results: List<AttackResult>) {

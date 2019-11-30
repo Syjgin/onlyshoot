@@ -1,8 +1,7 @@
 package com.syjgin.onlyshoot
 
+import org.junit.Assert.assertEquals
 import org.junit.Test
-
-import org.junit.Assert.*
 
 /**
  * Example local unit test, which will execute on the development machine (host).
@@ -12,6 +11,10 @@ import org.junit.Assert.*
 class ExampleUnitTest {
     @Test
     fun addition_isCorrect() {
-        assertEquals(4, 2 + 2)
+        val d100 = 25
+        val dozens = d100 / 10
+        val units = d100 % 10
+        val bodyPartIndex = units * 10 + dozens
+        assertEquals(52, bodyPartIndex)
     }
 }
