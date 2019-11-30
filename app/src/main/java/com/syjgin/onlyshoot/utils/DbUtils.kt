@@ -1,6 +1,5 @@
 package com.syjgin.onlyshoot.utils
 
-import android.util.Log
 import com.syjgin.onlyshoot.model.Database
 import com.syjgin.onlyshoot.model.SquadUnit
 import kotlinx.coroutines.CoroutineScope
@@ -47,7 +46,6 @@ object DbUtils {
             } else {
                 checkValue = currentUnitName
             }
-            Log.d("DbUtils", checkValue)
             if (checkValue == targetName) {
                 sameNameCount++
             }

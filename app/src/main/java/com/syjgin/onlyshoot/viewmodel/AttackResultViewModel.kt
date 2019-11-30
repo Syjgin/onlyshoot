@@ -111,6 +111,7 @@ class AttackResultViewModel : BaseViewModel() {
                 allParts.addAll(getAttackParts(firstAttackPart, attack.count))
                 Log.d("ATTCKS", "all attack body parts: $allParts")
                 var successAttackAmount = attack.count
+                Log.d("ATTCKS", "attack count: $successAttackAmount")
                 val evasionDice = created100()
                 var successCount = (defender.evasion - evasionDice) / 10
                 Log.d("ATTCKS", "evasion success count: $successCount")
@@ -161,57 +162,55 @@ class AttackResultViewModel : BaseViewModel() {
                 Log.d("ATTCKS", "total armor: $totalArmor")
                 Log.d("ATTCKS", "total damage without armor: $totalDamageWithoutArmor")
                 Log.d("ATTCKS", "total damage: $totalDamage")
-                if (totalDamage >= attacker.rage || totalDamageWithoutArmor >= attacker.rage) {
-                    val canUseRage = attacker.canUseRage && totalDamage >= attacker.rage
+                if ((totalDamage >= attacker.rage || totalDamageWithoutArmor >= attacker.rage) && attacker.canUseRage) {
                     Log.d("ATTCKS", "rage calculation")
-                    if (canUseRage) {
+                    if (totalDamage >= attacker.rage) {
+                        Log.d("ATTCKS", "can use rage")
                         defender.hp -= totalDamage
-                        if (totalDamage > 0) {
-                            if (defender.deathFromRage) {
-                                Log.d("ATTCKS", "death from rage")
-                                val result = AttackResult(
-                                    attacker.name,
-                                    defender.name,
-                                    totalDamage,
-                                    "",
-                                    defender.hp,
-                                    AttackResult.ResultState.Death,
-                                    allParts
-                                )
-                                results.add(result)
+                        if (defender.deathFromRage) {
+                            Log.d("ATTCKS", "death from rage")
+                            val result = AttackResult(
+                                attacker.name,
+                                defender.name,
+                                totalDamage,
+                                "",
+                                defender.hp,
+                                AttackResult.ResultState.Death,
+                                allParts
+                            )
+                            results.add(result)
+                            database.unitDao().delete(defender)
+                            continue
+                        } else {
+                            val d5 = random.nextInt(1, 6)
+                            Log.d("ATTCKS", "d5 crit: $d5")
+                            defender.hp -= d5
+                            val crit = CritDescription.generateCrit(
+                                OnlyShootApp.getInstance().applicationContext,
+                                d5,
+                                allParts[0],
+                                attacker.damageType
+                            )
+                            val result = AttackResult(
+                                attacker.name,
+                                defender.name,
+                                d5,
+                                crit.description,
+                                defender.hp,
+                                if (crit.isDeath) AttackResult.ResultState.Death else AttackResult.ResultState.Hit,
+                                allParts
+                            )
+                            results.add(result)
+                            if (crit.isDeath) {
+                                Log.d("ATTCKS", "defender dead")
                                 database.unitDao().delete(defender)
-                                continue
                             } else {
-                                val d5 = random.nextInt(1, 6)
-                                Log.d("ATTCKS", "d5 crit: $d5")
-                                defender.hp -= d5
-                                val crit = CritDescription.generateCrit(
-                                    OnlyShootApp.getInstance().applicationContext,
-                                    d5,
-                                    allParts[0],
-                                    attacker.damageType
-                                )
-                                val result = AttackResult(
-                                    attacker.name,
-                                    defender.name,
-                                    d5,
-                                    crit.description,
-                                    defender.hp,
-                                    if (crit.isDeath) AttackResult.ResultState.Death else AttackResult.ResultState.Hit,
-                                    allParts
-                                )
-                                results.add(result)
-                                if (crit.isDeath) {
-                                    Log.d("ATTCKS", "defender dead")
-                                    database.unitDao().delete(defender)
-                                } else {
-                                    Log.d("ATTCKS", "defender hp: ${defender.hp}")
-                                    database.unitDao().insert(defender)
-                                }
-                                continue
+                                Log.d("ATTCKS", "defender hp: ${defender.hp}")
+                                database.unitDao().insert(defender)
                             }
+                            continue
                         }
-                    } else if (attacker.canUseRage && totalDamageWithoutArmor >= attacker.rage) {
+                    } else if (totalDamageWithoutArmor >= attacker.rage) {
                         defender.hp -= 1
                         Log.d("ATTCKS", "rage with armor save")
                         if (defender.hp < 0) {
@@ -244,20 +243,6 @@ class AttackResultViewModel : BaseViewModel() {
                                 Log.d("ATTCKS", "defender hp: ${defender.hp}")
                                 database.unitDao().insert(defender)
                             }
-                            continue
-                        } else {
-                            val result = AttackResult(
-                                attacker.name,
-                                defender.name,
-                                1,
-                                "",
-                                defender.hp,
-                                AttackResult.ResultState.Hit,
-                                allParts
-                            )
-                            results.add(result)
-                            Log.d("ATTCKS", "defender hp: ${defender.hp}")
-                            database.unitDao().insert(defender)
                             continue
                         }
                     }
