@@ -29,8 +29,8 @@ class AddEditUnitViewModel : BaseViewModel() {
             if(squadUnit != null) {
                 archetypeUnitId = squadUnit.parentId
                 unitName = squadUnit.name
+                unitLiveData.postValue(squadUnit)
             }
-            unitLiveData.postValue(squadUnit)
         }
     }
 

@@ -114,7 +114,7 @@ class AddEditFightViewModel : BaseViewModel() {
     fun openUnit(squadUnit: SquadUnit) {
         val bundle = Bundle()
         bundle.putBoolean(BundleKeys.AddFlavor.name, false)
-        bundle.putSerializable(BundleKeys.Unit.name, squadUnit)
+        bundle.putLong(BundleKeys.Unit.name, squadUnit.id)
         router.navigateTo(OnlyShootScreen(ScreenEnum.AddEditUnit, bundle))
     }
 

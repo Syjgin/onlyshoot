@@ -108,7 +108,9 @@ class AttackResultViewModel : BaseViewModel() {
                         successCount += 1
                         successAttackAmount -= successCount
                         for (j in 0..successCount) {
-                            allParts.removeAt(0)
+                            if (allParts.isNotEmpty()) {
+                                allParts.removeAt(0)
+                            }
                         }
                     }
                 }
