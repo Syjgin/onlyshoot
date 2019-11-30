@@ -151,8 +151,12 @@ class AttackResultViewModel : BaseViewModel() {
                 if (totalArmor < 0)
                     totalArmor = 0
                 for (j in 0..successAttackAmount) {
-                    totalDamageWithoutArmor += (attacker.damage + attacker.damageModifier)
-                    totalDamage += (attacker.damage + attacker.damageModifier - totalArmor)
+                    var currentDamage = 0
+                    for (k in 0..attacker.damage) {
+                        currentDamage += random.nextInt(1, 11)
+                    }
+                    totalDamageWithoutArmor += (currentDamage + attacker.damageModifier)
+                    totalDamage += (currentDamage + attacker.damageModifier - totalArmor)
                 }
                 Log.d("ATTCKS", "total armor: $totalArmor")
                 Log.d("ATTCKS", "total damage without armor: $totalDamageWithoutArmor")

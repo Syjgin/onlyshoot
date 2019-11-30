@@ -1,5 +1,6 @@
 package com.syjgin.onlyshoot.utils
 
+import android.util.Log
 import com.syjgin.onlyshoot.model.Database
 import com.syjgin.onlyshoot.model.SquadUnit
 import kotlinx.coroutines.CoroutineScope
@@ -27,7 +28,27 @@ object DbUtils {
         var sameNameCount = 0
         for (currentUnitName in existingNames) {
             val splitted = currentUnitName.split(" ")
-            if (splitted[0] == targetName) {
+            val isCountainsNumber = try {
+                splitted[splitted.size - 1].toInt()
+                true
+            } catch (e: Throwable) {
+                false
+            }
+            var checkValue = ""
+            if (isCountainsNumber) {
+                for (i in splitted.indices) {
+                    if (i != splitted.size - 1) {
+                        if (checkValue.isNotEmpty()) {
+                            checkValue += " "
+                        }
+                        checkValue += splitted[i]
+                    }
+                }
+            } else {
+                checkValue = currentUnitName
+            }
+            Log.d("DbUtils", checkValue)
+            if (checkValue == targetName) {
                 sameNameCount++
             }
         }
