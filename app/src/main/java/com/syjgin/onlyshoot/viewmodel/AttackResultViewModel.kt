@@ -114,6 +114,10 @@ class AttackResultViewModel : BaseViewModel() {
                 Log.d("ATTCKS", "attack count: $successAttackAmount")
                 val evasionDice = created100()
                 var successCount = (defender.evasion - evasionDice) / 10
+                if (successCount > successAttackAmount) {
+                    successCount = successAttackAmount
+                }
+                Log.d("ATTCKS", "previous evasion: ${evasions[defender.id]}")
                 Log.d("ATTCKS", "evasion success count: $successCount")
                 if (successCount > 0) {
                     evasions[defender.id] = evasions[defender.id]!! - successCount
@@ -124,6 +128,7 @@ class AttackResultViewModel : BaseViewModel() {
                     if (evasions[defender.id]!! > 0) {
                         successCount += 1
                         successAttackAmount -= successCount
+                        Log.d("ATTCKS", "success attack amount after evasion: $successAttackAmount")
                         for (j in 0..successCount) {
                             if (allParts.isNotEmpty()) {
                                 allParts.removeAt(0)
@@ -131,7 +136,7 @@ class AttackResultViewModel : BaseViewModel() {
                         }
                     }
                 }
-                if (successAttackAmount == 0) {
+                if (successAttackAmount <= 0) {
                     Log.d("ATTCKS", "all attacks evaded")
                     val result = AttackResult(
                         attacker.name,
@@ -151,10 +156,13 @@ class AttackResultViewModel : BaseViewModel() {
                     defender.usualArmor - attacker.armorPenetration + defender.proofArmor
                 if (totalArmor < 0)
                     totalArmor = 0
-                for (j in 0..successAttackAmount) {
+                for (j in 0 until successAttackAmount) {
+                    Log.d("ATTCKS", "calculating attack: $j")
                     var currentDamage = 0
-                    for (k in 0..attacker.damage) {
+                    Log.d("ATTCKS", "damage d10 count: ${attacker.damage}")
+                    for (k in 0 until attacker.damage) {
                         currentDamage += random.nextInt(1, 11)
+                        Log.d("ATTCKS", "current damage: $currentDamage")
                     }
                     totalDamageWithoutArmor += (currentDamage + attacker.damageModifier)
                     totalDamage += (currentDamage + attacker.damageModifier - totalArmor)
@@ -179,7 +187,7 @@ class AttackResultViewModel : BaseViewModel() {
                                 allParts
                             )
                             results.add(result)
-                            database.unitDao().delete(defender)
+                            database.unitDao().delete(defender.id)
                             continue
                         } else {
                             val d5 = random.nextInt(1, 6)
@@ -203,7 +211,7 @@ class AttackResultViewModel : BaseViewModel() {
                             results.add(result)
                             if (crit.isDeath) {
                                 Log.d("ATTCKS", "defender dead")
-                                database.unitDao().delete(defender)
+                                database.unitDao().delete(defender.id)
                             } else {
                                 Log.d("ATTCKS", "defender hp: ${defender.hp}")
                                 database.unitDao().insert(defender)
@@ -238,7 +246,7 @@ class AttackResultViewModel : BaseViewModel() {
                             results.add(result)
                             if (crit.isDeath) {
                                 Log.d("ATTCKS", "defender dead")
-                                database.unitDao().delete(defender)
+                                database.unitDao().delete(defender.id)
                             } else {
                                 Log.d("ATTCKS", "defender hp: ${defender.hp}")
                                 database.unitDao().insert(defender)
@@ -273,7 +281,7 @@ class AttackResultViewModel : BaseViewModel() {
                         results.add(result)
                         if (crit.isDeath) {
                             Log.d("ATTCKS", "defender dead")
-                            database.unitDao().delete(defender)
+                            database.unitDao().delete(defender.id)
                         } else {
                             Log.d("ATTCKS", "defender hp: ${defender.hp}")
                             database.unitDao().insert(defender)

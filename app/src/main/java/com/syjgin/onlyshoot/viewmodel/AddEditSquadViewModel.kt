@@ -76,7 +76,7 @@ class AddEditSquadViewModel : BaseViewModel() {
 
     fun removeUnit(squadUnit: SquadUnit) {
         viewModelScope.launch {
-            database.unitDao().delete(squadUnit)
+            database.unitDao().delete(squadUnit.id)
         }
     }
 

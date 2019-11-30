@@ -26,26 +26,7 @@ object DbUtils {
     fun getNextUnitName(targetName: String, existingNames: List<String>): String {
         var sameNameCount = 0
         for (currentUnitName in existingNames) {
-            val splitted = currentUnitName.split(" ")
-            val isCountainsNumber = try {
-                splitted[splitted.size - 1].toInt()
-                true
-            } catch (e: Throwable) {
-                false
-            }
-            var checkValue = ""
-            if (isCountainsNumber) {
-                for (i in splitted.indices) {
-                    if (i != splitted.size - 1) {
-                        if (checkValue.isNotEmpty()) {
-                            checkValue += " "
-                        }
-                        checkValue += splitted[i]
-                    }
-                }
-            } else {
-                checkValue = currentUnitName
-            }
+            val checkValue = currentUnitName.replace(Regex("\\d"), "").removeSuffix(" ")
             if (checkValue == targetName) {
                 sameNameCount++
             }
@@ -53,7 +34,7 @@ object DbUtils {
         return if (sameNameCount == 0) targetName else String.format(
             "%s %d",
             targetName,
-            sameNameCount
+            sameNameCount + 1
         )
     }
 

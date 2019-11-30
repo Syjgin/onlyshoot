@@ -1,7 +1,10 @@
 package com.syjgin.onlyshoot.model
 
 import androidx.lifecycle.LiveData
-import androidx.room.*
+import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
+import androidx.room.Query
 
 @Dao
 interface UnitDao {
@@ -16,6 +19,7 @@ interface UnitDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(fight: SquadUnit)
-    @Delete
-    suspend fun delete(fight: SquadUnit)
+
+    @Query("DELETE FROM SquadUnit WHERE id = :id")
+    suspend fun delete(id: Long)
 }
