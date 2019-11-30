@@ -185,7 +185,9 @@ class AttackResultViewModel : BaseViewModel() {
                     } else if (attacker.canUseRage && totalDamageWithoutArmor >= attacker.rage) {
                         defender.hp -= 1
                         if (defender.hp < 0) {
-                            val hpBeyound = defender.hp * -1
+                            var hpBeyound = (defender.hp * -1) - defender.criticalHitAvoidance
+                            if (hpBeyound <= 0)
+                                hpBeyound = 1
                             val crit = CritDescription.generateCrit(
                                 OnlyShootApp.getInstance().applicationContext,
                                 hpBeyound,
@@ -226,7 +228,9 @@ class AttackResultViewModel : BaseViewModel() {
                 } else if (totalDamage > 0) {
                     defender.hp -= 1
                     if (defender.hp < 0) {
-                        val hpBeyound = defender.hp * -1
+                        var hpBeyound = (defender.hp * -1) - defender.criticalHitAvoidance
+                        if (hpBeyound <= 0)
+                            hpBeyound = 1
                         val crit = CritDescription.generateCrit(
                             OnlyShootApp.getInstance().applicationContext,
                             hpBeyound,

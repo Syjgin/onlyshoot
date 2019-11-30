@@ -16,7 +16,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-            <EditText
+
+            <androidx.appcompat.widget.AppCompatEditText
                 style="@style/CaptionFieldTheme"
                 tools:text="text"
                 android:inputType="textCapSentences"
@@ -32,7 +33,8 @@
                 android:layout_height="wrap_content"
                 style="@style/TextFieldTheme"
                 android:text="@string/attack"/>
-            <EditText
+
+            <androidx.appcompat.widget.AppCompatEditText
                 style="@style/TextFieldTheme"
                 android:inputType="numberDecimal"
                 android:id="@+id/attack_skill"
@@ -40,7 +42,8 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/attack_skill_amount"
                 tools:ignore="Autofill,LabelFor" />
-            <EditText
+
+            <androidx.appcompat.widget.AppCompatEditText
                 style="@style/TextFieldTheme"
                 android:inputType="numberDecimal"
                 android:id="@+id/attack_modifier"
@@ -55,7 +58,8 @@
                 android:layout_marginBottom="@dimen/content_offset"
                 android:layout_marginTop="@dimen/content_offset"
                 android:text="@string/Defence"/>
-            <EditText
+
+            <androidx.appcompat.widget.AppCompatEditText
                 style="@style/TextFieldTheme"
                 android:inputType="numberDecimal"
                 android:id="@+id/normal_armor"
@@ -63,7 +67,8 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/normal_armor"
                 tools:ignore="Autofill,LabelFor" />
-            <EditText
+
+            <androidx.appcompat.widget.AppCompatEditText
                 style="@style/TextFieldTheme"
                 android:inputType="numberDecimal"
                 android:id="@+id/proof_armor"
@@ -78,7 +83,8 @@
                 android:layout_marginBottom="@dimen/content_offset"
                 android:layout_marginTop="@dimen/content_offset"
                 android:text="@string/damage"/>
-            <EditText
+
+            <androidx.appcompat.widget.AppCompatEditText
                 style="@style/TextFieldTheme"
                 android:inputType="numberDecimal"
                 android:id="@+id/damage_amount"
@@ -86,7 +92,8 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/damage_amount"
                 tools:ignore="Autofill,LabelFor" />
-            <EditText
+
+            <androidx.appcompat.widget.AppCompatEditText
                 style="@style/TextFieldTheme"
                 android:inputType="numberDecimal"
                 android:id="@+id/damage_modifier"
@@ -127,7 +134,8 @@
                     android:id="@+id/energy"
                     android:text="@string/energy"/>
             </RadioGroup>
-            <EditText
+
+            <androidx.appcompat.widget.AppCompatEditText
                 style="@style/TextFieldTheme"
                 android:inputType="numberDecimal"
                 android:id="@+id/armor_penetration_attack"
@@ -136,7 +144,8 @@
                 android:hint="@string/armor_penetration_attack"
                 tools:ignore="Autofill,LabelFor"
                 android:layout_marginBottom="@dimen/content_offset"/>
-            <EditText
+
+            <androidx.appcompat.widget.AppCompatEditText
                 style="@style/TextFieldTheme"
                 android:inputType="numberDecimal"
                 android:id="@+id/attack_amount"
@@ -145,7 +154,8 @@
                 android:hint="@string/attack_amount"
                 tools:ignore="Autofill,LabelFor"
                 android:layout_marginBottom="@dimen/content_offset"/>
-            <EditText
+
+            <androidx.appcompat.widget.AppCompatEditText
                 style="@style/TextFieldTheme"
                 android:inputType="numberDecimal"
                 android:id="@+id/hp"
@@ -160,7 +170,8 @@
                 android:layout_height="wrap_content"
                 style="@style/TextFieldTheme"
                 android:text="@string/evasion"/>
-            <EditText
+
+            <androidx.appcompat.widget.AppCompatEditText
                 style="@style/TextFieldTheme"
                 android:inputType="numberDecimal"
                 android:id="@+id/evasion_skill"
@@ -168,7 +179,8 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/evasion_skill_amount"
                 tools:ignore="Autofill,LabelFor"/>
-            <EditText
+
+            <androidx.appcompat.widget.AppCompatEditText
                 style="@style/TextFieldTheme"
                 android:inputType="numberDecimal"
                 android:id="@+id/evasion_amount"
@@ -177,7 +189,8 @@
                 android:hint="@string/evasion_attack_amount"
                 tools:ignore="Autofill,LabelFor"
                 android:layout_marginBottom="@dimen/content_offset"/>
-            <EditText
+
+            <androidx.appcompat.widget.AppCompatEditText
                 style="@style/TextFieldTheme"
                 android:inputType="numberDecimal"
                 android:id="@+id/misfire"
@@ -192,7 +205,8 @@
                 android:layout_height="wrap_content"
                 style="@style/TextFieldTheme"
                 android:text="@string/critical_hit"/>
-            <EditText
+
+            <androidx.appcompat.widget.AppCompatEditText
                 style="@style/TextFieldTheme"
                 android:inputType="numberDecimal"
                 android:id="@+id/critical_ignorance"
@@ -200,7 +214,8 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/critical_hit_ignorance"
                 tools:ignore="Autofill,LabelFor"/>
-            <EditText
+
+            <androidx.appcompat.widget.AppCompatEditText
                 style="@style/TextFieldTheme"
                 android:inputType="numberDecimal"
                 android:id="@+id/critical_modifier"
@@ -215,7 +230,8 @@
                 android:layout_height="wrap_content"
                 style="@style/TextFieldTheme"
                 android:text="@string/righteous_anger"/>
-            <EditText
+
+            <androidx.appcompat.widget.AppCompatEditText
                 style="@style/TextFieldTheme"
                 android:inputType="numberDecimal"
                 android:id="@+id/anger_amount"

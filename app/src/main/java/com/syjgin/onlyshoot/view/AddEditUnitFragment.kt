@@ -154,22 +154,22 @@ class AddEditUnitFragment : BaseFragment<AddEditUnitViewModel>(AddEditUnitViewMo
     }
 
     private fun changeButtonState() {
-        save_unit.isEnabled = title_text.text.isNotEmpty() &&
-                attack_skill.text.isNotEmpty() &&
-                attack_modifier.text.isNotEmpty() &&
-                normal_armor.text.isNotEmpty() &&
-                proof_armor.text.isNotEmpty() &&
-                damage_amount.text.isNotEmpty() &&
+        save_unit.isEnabled = title_text.text?.isNotEmpty() ?: false &&
+                attack_skill.text?.isNotEmpty() ?: false &&
+                attack_modifier.text?.isNotEmpty() ?: false &&
+                normal_armor.text?.isNotEmpty() ?: false &&
+                proof_armor.text?.isNotEmpty() ?: false &&
+                damage_amount.text?.isNotEmpty() ?: false &&
                 (explosion.isChecked || cut.isChecked || strike.isChecked || energy.isChecked) &&
-                armor_penetration_attack.text.isNotEmpty() &&
-                attack_amount.text.isNotEmpty() &&
-                evasion_skill.text.isNotEmpty() &&
-                attack_amount.text.isNotEmpty() &&
-                misfire.text.isNotEmpty() &&
-                critical_ignorance.text.isNotEmpty() &&
-                critical_modifier.text.isNotEmpty() &&
-                anger_amount.text.isNotEmpty() &&
-                hp.text.isNotEmpty()
+                armor_penetration_attack.text?.isNotEmpty() ?: false &&
+                attack_amount.text?.isNotEmpty() ?: false &&
+                evasion_skill.text?.isNotEmpty() ?: false &&
+                attack_amount.text?.isNotEmpty() ?: false &&
+                misfire.text?.isNotEmpty() ?: false &&
+                critical_ignorance.text?.isNotEmpty() ?: false &&
+                critical_modifier.text?.isNotEmpty() ?: false &&
+                anger_amount.text?.isNotEmpty() ?: false &&
+                hp.text?.isNotEmpty() ?: false
     }
 
     private fun loadUnit(squadUnit: SquadUnit) {
