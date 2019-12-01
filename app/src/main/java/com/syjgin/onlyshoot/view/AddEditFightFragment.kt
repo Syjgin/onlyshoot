@@ -85,6 +85,8 @@ class AddEditFightFragment : BaseFragment<AddEditFightViewModel>(AddEditFightVie
         if(fight != null) {
             setupExisting()
             viewModel?.renderFight(fight!!)
+        } else {
+            viewModel?.updateSquads()
         }
     }
 

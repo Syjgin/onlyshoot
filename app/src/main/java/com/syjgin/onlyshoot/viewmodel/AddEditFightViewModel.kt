@@ -46,8 +46,7 @@ class AddEditFightViewModel : BaseViewModel() {
         isEditMode = true
         attackersId = fight.firstSquadId
         defendersId = fight.secondSquadId
-        refreshAttackers()
-        refreshDefenders()
+        updateSquads()
     }
 
     fun setSquadAndReturn(squadId: Long, attackers: Boolean) {
@@ -160,20 +159,24 @@ class AddEditFightViewModel : BaseViewModel() {
 
     private fun refreshDefenders() {
         viewModelScope.launch {
+            val squadDescription = database.squadDescriptionDao().getById(defendersId)
             defendersSquad = Squad.createFromUnitList(
                 database.unitDao().getBySquad(defendersId),
                 defendersId,
-                database.squadDescriptionDao().getById(defendersId)!!.name)
+                squadDescription?.name ?: ""
+            )
             defendLiveData.postValue(defendersSquad)
         }
     }
 
     private fun refreshAttackers() {
         viewModelScope.launch {
+            val squadDescription = database.squadDescriptionDao().getById(attackersId)
             attackersSquad = Squad.createFromUnitList(
                 database.unitDao().getBySquad(attackersId),
                 attackersId,
-                database.squadDescriptionDao().getById(attackersId)!!.name)
+                squadDescription?.name ?: ""
+            )
             attackLiveData.postValue(attackersSquad)
         }
     }
@@ -201,5 +204,14 @@ class AddEditFightViewModel : BaseViewModel() {
         defendLiveData.postValue(Squad(listOf(), false, ""))
         saveDialogLiveEvent.postValue(false)
         router.exit()
+    }
+
+    fun updateSquads() {
+        Handler(Looper.getMainLooper()).postDelayed({
+            if (attackersId != NO_DATA)
+                refreshAttackers()
+            if (defendersId != NO_DATA)
+                refreshDefenders()
+        }, REFRESH_DELAY)
     }
 }

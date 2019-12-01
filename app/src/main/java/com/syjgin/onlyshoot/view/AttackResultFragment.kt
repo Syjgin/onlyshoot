@@ -1,6 +1,9 @@
 package com.syjgin.onlyshoot.view
 
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
@@ -31,6 +34,20 @@ class AttackResultFragment : BaseFragment<AttackResultViewModel>(AttackResultVie
 
     override fun fragmentLayout() = R.layout.fragment_attack_result
 
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.info_menu, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.info) {
+            log_container.visibility = View.VISIBLE
+            close_log.visibility = View.VISIBLE
+            attack_result.visibility = View.GONE
+            return true
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
     override fun parseArguments(args: Bundle) {
         attacks = args.getParcelableArrayList(BundleKeys.Attacks.name)
         defendSquadId = args.getLong(BundleKeys.DefendSquadId.name)
@@ -41,8 +58,16 @@ class AttackResultFragment : BaseFragment<AttackResultViewModel>(AttackResultVie
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         attack_result.adapter = adapter
+        close_log.setOnClickListener {
+            log_container.visibility = View.GONE
+            attack_result.visibility = View.VISIBLE
+            close_log.visibility = View.GONE
+        }
         viewModel?.getResultLiveData()?.observe(this, Observer {
             handleAttackResults(it)
+        })
+        viewModel?.getLogLiveData()?.observe(this, Observer {
+            log.text = it
         })
         if (attacks != null)
             viewModel?.load(attacks!!, defendSquadId)
