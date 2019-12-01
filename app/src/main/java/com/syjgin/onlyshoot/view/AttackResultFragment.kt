@@ -2,6 +2,7 @@ package com.syjgin.onlyshoot.view
 
 import android.os.Bundle
 import android.view.View
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.syjgin.onlyshoot.R
@@ -45,6 +46,11 @@ class AttackResultFragment : BaseFragment<AttackResultViewModel>(AttackResultVie
         })
         if (attacks != null)
             viewModel?.load(attacks!!, defendSquadId)
+        requireActivity().onBackPressedDispatcher.addCallback(object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                viewModel?.goBack()
+            }
+        })
     }
 
     private fun handleAttackResults(results: List<AttackResult>) {

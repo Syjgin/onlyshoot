@@ -77,7 +77,6 @@ class AddEditFightFragment : BaseFragment<AddEditFightViewModel>(AddEditFightVie
             override fun handleOnBackPressed() {
                 viewModel?.goBack()
             }
-
         })
     }
 

@@ -18,4 +18,8 @@ class OnlyShootScreen(private val screen: ScreenEnum, private val bundle: Bundle
             ScreenEnum.SelectUnit -> SelectUnitFragment.createFragment(bundle)
         }
     }
+
+    override fun getScreenKey(): String {
+        return screen.name
+    }
 }

@@ -8,6 +8,8 @@ import com.syjgin.onlyshoot.di.OnlyShootApp
 import com.syjgin.onlyshoot.model.Attack
 import com.syjgin.onlyshoot.model.AttackResult
 import com.syjgin.onlyshoot.model.CritDescription
+import com.syjgin.onlyshoot.navigation.OnlyShootScreen
+import com.syjgin.onlyshoot.navigation.ScreenEnum
 import kotlinx.coroutines.launch
 import kotlin.random.Random
 
@@ -511,5 +513,9 @@ class AttackResultViewModel : BaseViewModel() {
 
     fun getResultLiveData(): LiveData<List<AttackResult>> {
         return resultData
+    }
+
+    override fun goBack() {
+        router.backTo(OnlyShootScreen(ScreenEnum.AddEditFight))
     }
 }
