@@ -60,7 +60,13 @@ class AddEditFightFragment : BaseFragment<AddEditFightViewModel>(AddEditFightVie
         attackers.layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
         defenders.adapter = defendersAdapter
         attackers.adapter = attackersAdapter
-        if(fight == null) {
+        load_attackers.setOnClickListener { viewModel?.loadSquad(true) }
+        load_defenders.setOnClickListener { viewModel?.loadSquad(false) }
+        load_attack_archetype.setOnClickListener { viewModel?.loadUnitFromArchetype(true) }
+        load_defence_archetype.setOnClickListener { viewModel?.loadUnitFromArchetype(false) }
+        load_attack_unit.setOnClickListener { viewModel?.loadUnit(true) }
+        load_defence_unit.setOnClickListener { viewModel?.loadUnit(false) }
+        if (attackersAdapter.itemCount == 0 || defendersAdapter.itemCount == 0) {
             setupLoading()
         }
         attack.setOnClickListener {
@@ -103,17 +109,25 @@ class AddEditFightFragment : BaseFragment<AddEditFightViewModel>(AddEditFightVie
     }
 
     private fun setupExisting() {
-        load_attackers.text = getString(R.string.add_unit)
-        load_defenders.text = getString(R.string.add_unit)
-        load_attackers.setOnClickListener {viewModel?.loadUnit(true)}
-        load_defenders.setOnClickListener {viewModel?.loadUnit(false)}
+        if (load_attackers == null)
+            return
+        load_attackers.visibility = View.GONE
+        load_defenders.visibility = View.GONE
+        load_attack_archetype.visibility = View.VISIBLE
+        load_attack_unit.visibility = View.VISIBLE
+        load_defence_archetype.visibility = View.VISIBLE
+        load_defence_unit.visibility = View.VISIBLE
     }
 
     private fun setupLoading() {
-        load_attackers.text = getString(R.string.load_attackers)
-        load_defenders.text = getString(R.string.load_defenders)
-        load_attackers.setOnClickListener {viewModel?.loadSquad(true)}
-        load_defenders.setOnClickListener {viewModel?.loadSquad(false)}
+        if (load_attackers == null)
+            return
+        load_attackers.visibility = View.VISIBLE
+        load_defenders.visibility = View.VISIBLE
+        load_attack_archetype.visibility = View.GONE
+        load_attack_unit.visibility = View.GONE
+        load_defence_archetype.visibility = View.GONE
+        load_defence_unit.visibility = View.GONE
     }
 
     private fun displaySaveDialog(boolean: Boolean) {
@@ -147,6 +161,9 @@ class AddEditFightFragment : BaseFragment<AddEditFightViewModel>(AddEditFightVie
         } else {
             defendersAdapter.addData(squad.list)
             defenders_description?.text = squad.name
+        }
+        if (attackersAdapter.itemCount > 0 && defendersAdapter.itemCount > 0) {
+            setupExisting()
         }
     }
 

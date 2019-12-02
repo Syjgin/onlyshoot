@@ -49,7 +49,7 @@
     <string name="righteous_anger">Праведный гнев</string>
     <string name="righteous_anger_amount">Величина праведного гнева</string>
     <string name="anger_default">10</string>
-    <string name="can_use_anger">МОжет использовать праведный гнев</string>
+    <string name="can_use_anger">Может использовать праведный гнев</string>
     <string name="can_die_from_anger">Может умереть от праведного гнева</string>
     <string name="archetype">архетип</string>
     <string name="add_archetype">Добавить архетип</string>

@@ -10,8 +10,8 @@
     android:id="@+id/attackers"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-        android:paddingTop="@dimen/square_button"
-        android:paddingBottom="@dimen/square_button"
+        android:paddingTop="@dimen/large_offset"
+        android:paddingBottom="@dimen/large_offset"
     android:layout_alignBottom="@+id/border"
     />
     <Button
@@ -23,6 +23,56 @@
         android:layout_above="@+id/border"
         android:id="@+id/load_attackers"
         android:textAllCaps="true"
+        style="@style/TextFieldTheme" />
+
+    <Button
+        android:id="@+id/load_attack_unit"
+        style="@style/TextFieldTheme"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/border"
+        android:layout_marginStart="@dimen/content_offset"
+        android:layout_marginBottom="@dimen/large_offset"
+        android:text="@string/add_unit"
+        android:textAllCaps="true"
+        android:visibility="gone" />
+
+    <Button
+        android:id="@+id/load_attack_archetype"
+        style="@style/TextFieldTheme"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/border"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="@dimen/content_offset"
+        android:layout_marginBottom="@dimen/large_offset"
+        android:text="@string/add_archetype"
+        android:textAllCaps="true"
+        android:visibility="gone" />
+
+    <Button
+        android:id="@+id/load_defence_unit"
+        style="@style/TextFieldTheme"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/border"
+        android:layout_marginStart="@dimen/content_offset"
+        android:layout_marginTop="@dimen/large_offset"
+        android:text="@string/add_unit"
+        android:textAllCaps="true"
+        android:visibility="gone" />
+
+    <Button
+        android:id="@+id/load_defence_archetype"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/border"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="@dimen/large_offset"
+        android:layout_marginEnd="@dimen/content_offset"
+        android:text="@string/add_archetype"
+        android:textAllCaps="true"
+        android:visibility="gone"
         style="@style/TextFieldTheme"/>
     <Button
         android:layout_width="wrap_content"
@@ -46,8 +96,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_alignTop="@+id/border"
-        android:paddingTop="@dimen/square_button"
-        android:paddingBottom="@dimen/square_button"
+        android:paddingTop="@dimen/large_offset"
+        android:paddingBottom="@dimen/large_offset"
     />
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:layout_width="wrap_content"
