@@ -105,9 +105,15 @@ class AddEditFightViewModel : BaseViewModel() {
 
     fun loadUnit(attackers: Boolean) {
         val bundle = Bundle()
-        bundle.putBoolean(BundleKeys.SelectAttackers.name, attackers)
+        bundle.putLong(BundleKeys.SquadId.name, if (attackers) attackersId else defendersId)
         bundle.putBoolean(BundleKeys.AddFlavor.name, true)
         router.navigateTo(OnlyShootScreen(ScreenEnum.AddEditUnit, bundle))
+    }
+
+    fun loadUnitFromArchetype(attackers: Boolean) {
+        val bundle = Bundle()
+        bundle.putLong(BundleKeys.SquadId.name, if (attackers) attackersId else defendersId)
+        router.navigateTo(OnlyShootScreen(ScreenEnum.SelectUnit, bundle))
     }
 
     fun openUnit(squadUnit: SquadUnit) {
