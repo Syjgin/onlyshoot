@@ -43,10 +43,6 @@ class SquadUnitListAdapter(private val listener: SquadListClickListener, private
                 holder.itemView.context.getString(R.string.damage_template),
                 currentUnit.damage
             )
-            holder.itemView.armor.text = String.format(
-                holder.itemView.context.getString(R.string.armor_template),
-                currentUnit.usualArmor
-            )
         }
     }
 

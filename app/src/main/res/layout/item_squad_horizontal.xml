@@ -40,13 +40,6 @@
             style="@style/TextFieldTheme"
             android:layout_marginBottom="@dimen/field_offset"
             android:id="@+id/damage"/>
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            tools:text="Armor: "
-            style="@style/TextFieldTheme"
-            android:layout_marginBottom="@dimen/field_offset"
-            android:id="@+id/armor"/>
     </LinearLayout>
     <LinearLayout
         android:layout_width="wrap_content"

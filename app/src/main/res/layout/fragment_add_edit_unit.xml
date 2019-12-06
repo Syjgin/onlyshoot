@@ -73,17 +73,34 @@
                 tools:ignore="Autofill,LabelFor" />
             </com.google.android.material.textfield.TextInputLayout>
 
+            <TextView
+                style="@style/TextFieldTheme"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/content_offset"
+                android:layout_marginBottom="@dimen/content_offset"
+                android:text="@string/Defence" />
+
+            <TextView
+                style="@style/TextFieldSubTheme"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/content_offset"
+                android:layout_marginBottom="@dimen/content_offset"
+                android:text="@string/head" />
+
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/normal_armor_head"
                     style="@style/TextFieldTheme"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/content_offset"
-                    android:layout_marginBottom="@dimen/content_offset"
-                    android:text="@string/Defence" />
+                    android:hint="@string/normal_armor"
+                    android:inputType="numberDecimal"
+                    tools:ignore="Autofill,LabelFor" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -91,13 +108,35 @@
                 android:layout_height="wrap_content">
 
                 <androidx.appcompat.widget.AppCompatEditText
-                style="@style/TextFieldTheme"
-                android:inputType="numberDecimal"
-                android:id="@+id/normal_armor"
+                    android:id="@+id/proof_armor_head"
+                    style="@style/TextFieldTheme"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/proof_armor"
+                    android:inputType="numberDecimal"
+                    tools:ignore="Autofill,LabelFor" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                style="@style/TextFieldSubTheme"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/normal_armor"
-                tools:ignore="Autofill,LabelFor" />
+                android:layout_marginTop="@dimen/content_offset"
+                android:layout_marginBottom="@dimen/content_offset"
+                android:text="@string/torso" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/normal_armor_torso"
+                    style="@style/TextFieldTheme"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/normal_armor"
+                    android:inputType="numberDecimal"
+                    tools:ignore="Autofill,LabelFor" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -105,7 +144,79 @@
                 android:layout_height="wrap_content">
 
                 <androidx.appcompat.widget.AppCompatEditText
-                    android:id="@+id/proof_armor"
+                    android:id="@+id/proof_armor_torso"
+                    style="@style/TextFieldTheme"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/proof_armor"
+                    android:inputType="numberDecimal"
+                    tools:ignore="Autofill,LabelFor" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                style="@style/TextFieldSubTheme"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/content_offset"
+                android:layout_marginBottom="@dimen/content_offset"
+                android:text="@string/hands" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/normal_armor_hands"
+                    style="@style/TextFieldTheme"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/normal_armor"
+                    android:inputType="numberDecimal"
+                    tools:ignore="Autofill,LabelFor" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/proof_armor_hands"
+                    style="@style/TextFieldTheme"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/proof_armor"
+                    android:inputType="numberDecimal"
+                    tools:ignore="Autofill,LabelFor" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                style="@style/TextFieldSubTheme"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/content_offset"
+                android:layout_marginBottom="@dimen/content_offset"
+                android:text="@string/legs" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/normal_armor_legs"
+                    style="@style/TextFieldTheme"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/normal_armor"
+                    android:inputType="numberDecimal"
+                    tools:ignore="Autofill,LabelFor" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/proof_armor_legs"
                     style="@style/TextFieldTheme"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -289,6 +400,7 @@
                 <androidx.appcompat.widget.AppCompatEditText
                     android:id="@+id/misfire"
                     style="@style/TextFieldTheme"
+                    android:text="@string/default_misfire"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/misfire_possibility"

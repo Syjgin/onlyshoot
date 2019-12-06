@@ -14,7 +14,6 @@
     <string name="load_defenders">Load defenders</string>
     <string name="hp_template">HP: %s</string>
     <string name="attack_template">Attack: %s</string>
-    <string name="armor_template">Armor: %s</string>
     <string name="damage_template">Damage, d10: %s</string>
     <string name="no_data_for_attack">Add squads data before attack</string>
     <string name="save_fight">Enter the name for this fight, if you want to save it</string>
@@ -64,6 +63,7 @@
     <string name="torso">torso</string>
     <string name="right_hand">right hand</string>
     <string name="left_hand">left hand</string>
+    <string name="hands">hands</string>
     <string name="right_leg">right leg</string>
     <string name="left_leg">left leg</string>
     <string name="misfire">misfire</string>
@@ -456,4 +456,6 @@ Stunned for 1d10 Rounds, and suffers Blood Loss. He now has only one leg.</strin
     <string name="rend_leg_9">With a meaty chop, the leg comes away at the hip. The target pitches to the ground howling in agony before dying.</string>
     <string name="rend_leg_10">With a meaty chop, the leg comes away at the hip. The target pitches to the ground howling in agony before dying. As above, except that the tide of blood is so intense that, for the remainder of the battle, anyone making a Run or
 Charge Action within six metres of the target must make a Challenging (+0) Agility Test or be knocked Prone.</string>
+    <string name="legs">legs</string>
+    <string name="default_misfire" translatable="false">96</string>
 </resources>

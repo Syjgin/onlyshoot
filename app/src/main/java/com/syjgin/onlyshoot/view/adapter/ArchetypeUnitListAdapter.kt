@@ -63,10 +63,6 @@ class ArchetypeUnitListAdapter(private val listener: ArchetypeListClickListener)
             holder.itemView.context.getString(R.string.damage_template),
             currentUnit.damage
         )
-        holder.itemView.armor.text = String.format(
-            holder.itemView.context.getString(R.string.armor_template),
-            currentUnit.usualArmor
-        )
         val count = countMap[data[position]]
         holder.itemView.count.text = count?.toString() ?: "0"
     }

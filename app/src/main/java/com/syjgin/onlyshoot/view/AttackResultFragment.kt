@@ -40,9 +40,13 @@ class AttackResultFragment : BaseFragment<AttackResultViewModel>(AttackResultVie
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.info) {
-            log_container.visibility = View.VISIBLE
-            close_log.visibility = View.VISIBLE
-            attack_result.visibility = View.GONE
+            if (log_container.visibility == View.GONE) {
+                log_container.visibility = View.VISIBLE
+                attack_result.visibility = View.GONE
+            } else {
+                log_container.visibility = View.GONE
+                attack_result.visibility = View.VISIBLE
+            }
             return true
         }
         return super.onOptionsItemSelected(item)
@@ -58,11 +62,6 @@ class AttackResultFragment : BaseFragment<AttackResultViewModel>(AttackResultVie
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         attack_result.adapter = adapter
-        close_log.setOnClickListener {
-            log_container.visibility = View.GONE
-            attack_result.visibility = View.VISIBLE
-            close_log.visibility = View.GONE
-        }
         viewModel?.getResultLiveData()?.observe(this, Observer {
             handleAttackResults(it)
         })

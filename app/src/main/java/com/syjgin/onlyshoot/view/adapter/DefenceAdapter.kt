@@ -33,7 +33,7 @@ class DefenceAdapter(private val attackDirectionListener: AttackDirectionListene
                 false
             )
         )
-        holder.itemView.setOnDragListener { v, event ->
+        holder.itemView.setOnDragListener { _, event ->
             if (event.action == ACTION_DROP) {
                 val clipdata = event.clipData
                 val intent = clipdata.getItemAt(0).intent

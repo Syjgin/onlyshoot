@@ -13,8 +13,14 @@ data class SquadUnit(
     val attack: Int,
     val attackModifier: Int,
     val armorPenetration: Int,
-    val usualArmor: Int,
-    val proofArmor: Int,
+    val usualArmorHead: Int,
+    val proofArmorHead: Int,
+    val usualArmorTorso: Int,
+    val proofArmorTorso: Int,
+    val usualArmorHands: Int,
+    val proofArmorHands: Int,
+    val usualArmorLegs: Int,
+    val proofArmorLegs: Int,
     val damage: Int,
     val damageModifier: Int,
     val damageType: DamageType,
@@ -37,9 +43,21 @@ data class SquadUnit(
                 return false
             if(squadUnit1.armorPenetration != squadUnit2.armorPenetration)
                 return false
-            if(squadUnit1.usualArmor != squadUnit2.usualArmor)
+            if (squadUnit1.usualArmorHead != squadUnit2.usualArmorHead)
                 return false
-            if(squadUnit1.proofArmor != squadUnit2.proofArmor)
+            if (squadUnit1.proofArmorHead != squadUnit2.proofArmorHead)
+                return false
+            if (squadUnit1.usualArmorTorso != squadUnit2.usualArmorTorso)
+                return false
+            if (squadUnit1.proofArmorTorso != squadUnit2.proofArmorTorso)
+                return false
+            if (squadUnit1.usualArmorHands != squadUnit2.usualArmorHands)
+                return false
+            if (squadUnit1.proofArmorHands != squadUnit2.proofArmorHands)
+                return false
+            if (squadUnit1.usualArmorLegs != squadUnit2.usualArmorLegs)
+                return false
+            if (squadUnit1.proofArmorLegs != squadUnit2.proofArmorLegs)
                 return false
             if(squadUnit1.damage != squadUnit2.damage)
                 return false

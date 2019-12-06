@@ -25,9 +25,10 @@ object DbUtils {
 
     fun getNextUnitName(targetName: String, existingNames: List<String>): String {
         var sameNameCount = 0
+        val name2check = targetName.replace(Regex("\\d"), "").replace(" ", "")
         for (currentUnitName in existingNames) {
-            val checkValue = currentUnitName.replace(Regex("\\d"), "").removeSuffix(" ")
-            if (checkValue == targetName) {
+            val checkValue = currentUnitName.replace(Regex("\\d"), "").replace(" ", "")
+            if (checkValue == name2check) {
                 sameNameCount++
             }
         }

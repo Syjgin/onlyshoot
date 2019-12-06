@@ -206,6 +206,8 @@ class AddEditFightViewModel : BaseViewModel() {
     }
 
     private fun exit() {
+        attackersId = NO_DATA
+        defendersId = NO_DATA
         attackLiveData.postValue(Squad(listOf(), true, ""))
         defendLiveData.postValue(Squad(listOf(), false, ""))
         saveDialogLiveEvent.postValue(false)

@@ -172,10 +172,6 @@ class AttackResultViewModel : BaseViewModel() {
                 }
                 var totalDamage = 0
                 var totalDamageWithoutArmor = 0
-                var totalArmor =
-                    defender.usualArmor - attacker.armorPenetration + defender.proofArmor
-                if (totalArmor < 0)
-                    totalArmor = 0
                 for (j in 0 until successAttackAmount) {
                     Log.d("ATTCKS", "calculating attack: $j")
                     log.append("\ncalculating attack: $j")
@@ -187,11 +183,32 @@ class AttackResultViewModel : BaseViewModel() {
                         Log.d("ATTCKS", "current damage: $currentDamage")
                         log.append("\ncurrent damage: $currentDamage")
                     }
+                    val currentPart = allParts[j]
+                    val usualArmor = when (currentPart) {
+                        AttackResult.BodyPart.Head -> defender.usualArmorHead
+                        AttackResult.BodyPart.Torso -> defender.usualArmorTorso
+                        AttackResult.BodyPart.RightHand -> defender.usualArmorHands
+                        AttackResult.BodyPart.LeftHand -> defender.usualArmorHands
+                        AttackResult.BodyPart.RightLeg -> defender.usualArmorLegs
+                        AttackResult.BodyPart.LeftLeg -> defender.usualArmorLegs
+                    }
+                    val proofArmor = when (currentPart) {
+                        AttackResult.BodyPart.Head -> defender.proofArmorHead
+                        AttackResult.BodyPart.Torso -> defender.proofArmorTorso
+                        AttackResult.BodyPart.RightHand -> defender.proofArmorHands
+                        AttackResult.BodyPart.LeftHand -> defender.proofArmorHands
+                        AttackResult.BodyPart.RightLeg -> defender.proofArmorLegs
+                        AttackResult.BodyPart.LeftLeg -> defender.proofArmorLegs
+                    }
+                    var totalArmor =
+                        usualArmor - attacker.armorPenetration + proofArmor
+                    if (totalArmor < 0)
+                        totalArmor = 0
                     totalDamageWithoutArmor += (currentDamage + attacker.damageModifier)
                     totalDamage += (currentDamage + attacker.damageModifier - totalArmor)
+                    Log.d("ATTCKS", "total armor for attack into ${allParts[j]}: $totalArmor")
+                    log.append("\ntotal armor for attack into ${allParts[j]}: $totalArmor")
                 }
-                Log.d("ATTCKS", "total armor: $totalArmor")
-                log.append("\ntotal armor: $totalArmor")
                 Log.d("ATTCKS", "total damage without armor: $totalDamageWithoutArmor")
                 log.append("\ntotal damage without armor: $totalDamageWithoutArmor")
                 Log.d("ATTCKS", "total damage: $totalDamage")
