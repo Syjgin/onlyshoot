@@ -9,13 +9,13 @@ import androidx.lifecycle.viewModelScope
 import com.syjgin.onlyshoot.di.OnlyShootApp
 import com.syjgin.onlyshoot.model.Fight
 import com.syjgin.onlyshoot.model.Squad
-import com.syjgin.onlyshoot.model.SquadUnit
 import com.syjgin.onlyshoot.navigation.BundleKeys
 import com.syjgin.onlyshoot.navigation.OnlyShootScreen
 import com.syjgin.onlyshoot.navigation.ScreenEnum
 import com.syjgin.onlyshoot.utils.DbUtils
 import com.syjgin.onlyshoot.utils.DbUtils.NO_DATA
 import kotlinx.coroutines.launch
+import kotlin.random.Random
 
 class AddEditFightViewModel : BaseViewModel() {
     companion object {
@@ -116,18 +116,19 @@ class AddEditFightViewModel : BaseViewModel() {
         router.navigateTo(OnlyShootScreen(ScreenEnum.SelectUnit, bundle))
     }
 
-    fun openUnit(squadUnit: SquadUnit) {
+    fun openGroup(groupName: String, isAttackers: Boolean) {
         val bundle = Bundle()
         bundle.putBoolean(BundleKeys.AddFlavor.name, false)
-        bundle.putLong(BundleKeys.Unit.name, squadUnit.id)
-        router.navigateTo(OnlyShootScreen(ScreenEnum.AddEditUnit, bundle))
+        bundle.putString(BundleKeys.GroupName.name, groupName)
+        bundle.putLong(BundleKeys.SquadId.name, if (isAttackers) attackersId else defendersId)
+        router.navigateTo(OnlyShootScreen(ScreenEnum.AddEditSquad, bundle))
     }
 
-    fun duplicateUnit(squadUnit: SquadUnit, isAttackers: Boolean) {
+    fun duplicateUnit(archetypeId: Long, isAttackers: Boolean) {
         DbUtils.duplicateUnit(
             viewModelScope,
             database,
-            squadUnit,
+            archetypeId,
             if (isAttackers) attackersId else defendersId
         ) {
             if(isAttackers) {
@@ -166,9 +167,10 @@ class AddEditFightViewModel : BaseViewModel() {
     private fun refreshDefenders() {
         viewModelScope.launch {
             val squadDescription = database.squadDescriptionDao().getById(defendersId)
-            defendersSquad = Squad.createFromUnitList(
-                database.unitDao().getBySquad(defendersId),
-                defendersId,
+            val groupList = DbUtils.getGroupListBySquad(database.unitDao().getBySquad(attackersId))
+            defendersSquad = Squad(
+                groupList,
+                false,
                 squadDescription?.name ?: ""
             )
             defendLiveData.postValue(defendersSquad)
@@ -178,19 +180,29 @@ class AddEditFightViewModel : BaseViewModel() {
     private fun refreshAttackers() {
         viewModelScope.launch {
             val squadDescription = database.squadDescriptionDao().getById(attackersId)
-            attackersSquad = Squad.createFromUnitList(
-                database.unitDao().getBySquad(attackersId),
-                attackersId,
+            val groupList = DbUtils.getGroupListBySquad(database.unitDao().getBySquad(attackersId))
+            attackersSquad = Squad(
+                groupList,
+                true,
                 squadDescription?.name ?: ""
             )
             attackLiveData.postValue(attackersSquad)
         }
     }
 
-    fun removeUnit(squadUnit: SquadUnit, attackers: Boolean) {
+    fun removeUnit(groupName: String, attackers: Boolean) {
         viewModelScope.launch {
-            squadUnit.squadId = NO_DATA
-            database.unitDao().insert(squadUnit)
+            val squadId = if (attackers) attackersId else defendersId
+            val squad = database.unitDao().getBySquad(squadId)
+            var unit2remove = squad[Random(System.currentTimeMillis()).nextInt(squad.size)]
+            var minimalHp = Int.MAX_VALUE
+            for (squadUnit in squad) {
+                if (DbUtils.removeDigitsFrom(squadUnit.name) == groupName && squadUnit.hp < unit2remove.hp && squadUnit.hp < minimalHp) {
+                    minimalHp = squadUnit.hp
+                    unit2remove = squadUnit
+                }
+            }
+            database.unitDao().delete(unit2remove.id)
             if(attackers) {
                 refreshAttackers()
             } else {

@@ -7,9 +7,19 @@
     android:orientation="vertical">
     <EditText
         style="@style/CaptionFieldTheme"
-        tools:text="text"
+        android:layout_width="match_parent"
         android:inputType="textCapSentences"
         android:id="@+id/title_text"
+        android:layout_height="wrap_content"
+        android:hint="@string/squad_title"
+        android:padding="@dimen/content_offset"
+        tools:ignore="Autofill,LabelFor" />
+
+    <EditText
+        android:id="@+id/filter_text"
+        style="@style/CaptionFieldTheme"
+        android:hint="@string/filter_by_name"
+        android:inputType="textCapSentences"
         android:padding="@dimen/content_offset"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

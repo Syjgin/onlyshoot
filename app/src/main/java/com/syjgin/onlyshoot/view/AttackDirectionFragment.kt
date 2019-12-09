@@ -103,13 +103,13 @@ class AttackDirectionFragment :
     }
 
     private fun handleAttackers(squad: Squad) {
-        attackAdapter.addAttackers(squad.list)
+        //attackAdapter.addAttackers(squad.list)
         remainAttacks = attackAdapter.getFreeAttacksCount()
         updateRandomAttacksCount()
     }
 
     private fun handleDefenders(squad: Squad) {
-        defenceAdapter.addDefenders(squad.list)
+        //defenceAdapter.addDefenders(squad.list)
     }
 
     private fun updateRandomAttacksCount() {

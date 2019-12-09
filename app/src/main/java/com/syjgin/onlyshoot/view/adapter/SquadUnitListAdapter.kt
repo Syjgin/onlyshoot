@@ -7,12 +7,24 @@ import androidx.recyclerview.widget.RecyclerView
 import com.syjgin.onlyshoot.R
 import com.syjgin.onlyshoot.model.SquadUnit
 import kotlinx.android.synthetic.main.item_squad_horizontal.view.*
+import java.util.*
 
-class SquadUnitListAdapter(private val listener: SquadListClickListener, private val isAttackers: Boolean, private val isHorizontal : Boolean) : RecyclerView.Adapter<SquadUnitListAdapter.SquadUnitViewHolder>() {
+class SquadUnitListAdapter(
+    private val listener: SquadListClickListener,
+    private val isAttackers: Boolean
+) : RecyclerView.Adapter<SquadUnitListAdapter.SquadUnitViewHolder>() {
     private val data = mutableListOf<SquadUnit>()
+    private val filteredData = mutableListOf<SquadUnit>()
+    private var filter = ""
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SquadUnitViewHolder {
-        val holder = SquadUnitViewHolder(LayoutInflater.from(parent.context).inflate(if(isHorizontal) R.layout.item_squad_horizontal else R.layout.item_squad_unit, parent, false))
+        val holder = SquadUnitViewHolder(
+            LayoutInflater.from(parent.context).inflate(
+                R.layout.item_squad_horizontal,
+                parent,
+                false
+            )
+        )
         holder.itemView.setOnClickListener {
             listener.selectUnit(data[holder.adapterPosition])
         }
@@ -25,30 +37,42 @@ class SquadUnitListAdapter(private val listener: SquadListClickListener, private
         return holder
     }
 
-    override fun getItemCount() = data.size
+    override fun getItemCount() = if (filter.isEmpty()) data.size else filteredData.size
 
     override fun onBindViewHolder(holder: SquadUnitViewHolder, position: Int) {
-        val currentUnit = data[position]
+        val currentUnit = if (filter.isEmpty()) data[position] else filteredData[position]
         holder.itemView.caption.text = currentUnit.name
-        if (isHorizontal) {
-            holder.itemView.hp.text = String.format(
-                holder.itemView.context.getString(R.string.hp_template),
-                currentUnit.hp
-            )
-            holder.itemView.attack.text = String.format(
-                holder.itemView.context.getString(R.string.attack_template),
-                currentUnit.attack
-            )
-            holder.itemView.damage.text = String.format(
-                holder.itemView.context.getString(R.string.damage_template),
-                currentUnit.damage
-            )
+        holder.itemView.hp.text = String.format(
+            holder.itemView.context.getString(R.string.hp_template),
+            currentUnit.hp
+        )
+        holder.itemView.attack.text = String.format(
+            holder.itemView.context.getString(R.string.attack_template),
+            currentUnit.attack
+        )
+        holder.itemView.damage.text = String.format(
+            holder.itemView.context.getString(R.string.damage_template),
+            currentUnit.damage
+        )
+    }
+
+    fun setFilter(filter: String) {
+        if (this.filter == "" && filter == "")
+            return
+        this.filter = filter
+        filteredData.clear()
+        for (squadUnit in data) {
+            if (squadUnit.name.toLowerCase(Locale.getDefault()).contains(filter.toLowerCase(Locale.getDefault()))) {
+                filteredData.add(squadUnit)
+            }
         }
+        notifyDataSetChanged()
     }
 
     fun addData(newData: List<SquadUnit>) {
         data.clear()
         data.addAll(newData)
+        setFilter(filter)
         notifyDataSetChanged()
     }
 

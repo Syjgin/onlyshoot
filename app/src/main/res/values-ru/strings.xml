@@ -33,7 +33,6 @@
     <string name="damage_modifier">Модификатор урона</string>
     <string name="damage_type">Тип урона</string>
     <string name="explosion">Взрыв</string>
-    <string name="hands">руки</string>
     <string name="cut">Резаный</string>
     <string name="strike">Удар</string>
     <string name="energy">Энергия</string>
@@ -444,5 +443,6 @@
     <string name="rend_leg_9">Звук разрубаемого мяса – и нога отделяется от тела персонажа, а он падает наземь, оглашая всѐ вокруг предсмертными воплями.</string>
     <string name="rend_leg_10">Звук разрубаемого мяса – и нога отделяется от тела персонажа, а он падает наземь, оглашая всѐ вокруг предсмертными воплями.Происходит описанное выше, но из ран натекает столько кровищи, что любой, кто до конца боя попытается бежать или совершить натиск в пределах шести метров от трупа, должен будет пройти средний (+0) тест Ловкости или быть сбитым с ног.
 </string>
-    <string name="legs">ноги</string>
+    <string name="squad_title">Название отряда</string>
+    <string name="filter_by_name">Фильтр по имени</string>
 </resources>

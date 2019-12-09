@@ -30,7 +30,8 @@ class AddEditSquadFragment : BaseFragment<AddEditSquadViewModel>(AddEditSquadVie
 
     private var squadId : Long = NO_DATA
     private var isEditMode = false
-    private val adapter = SquadUnitListAdapter(this, false, isHorizontal = true)
+    private var filter = ""
+    private val adapter = SquadUnitListAdapter(this, false)
 
     override fun fragmentTitle(): Int {
         return AddEditUtils.getAddEditFragmentTitle(arguments, R.string.add_squad, R.string.edit_squad)
@@ -42,6 +43,7 @@ class AddEditSquadFragment : BaseFragment<AddEditSquadViewModel>(AddEditSquadVie
         isEditMode = !args.getBoolean(BundleKeys.AddFlavor.name)
         if(isEditMode)
             squadId = args.getLong(BundleKeys.SquadId.name)
+        filter = args.getString(BundleKeys.GroupName.name, "")
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -66,6 +68,15 @@ class AddEditSquadFragment : BaseFragment<AddEditSquadViewModel>(AddEditSquadVie
         super.onViewCreated(view, savedInstanceState)
         save_squad.setOnClickListener {
             viewModel?.saveSquad(title_text.text.toString())
+        }
+        if (isEditMode) {
+            filter_text.addTextChangedListener {
+                filter = it.toString()
+                adapter.setFilter(filter)
+            }
+            filter_text.setText(filter)
+        } else {
+            filter_text.visibility = View.GONE
         }
         squad_recycler_view.adapter = adapter
         title_text.addTextChangedListener {

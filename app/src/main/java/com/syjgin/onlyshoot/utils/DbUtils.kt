@@ -2,6 +2,7 @@ package com.syjgin.onlyshoot.utils
 
 import com.syjgin.onlyshoot.model.Database
 import com.syjgin.onlyshoot.model.SquadUnit
+import com.syjgin.onlyshoot.model.UnitGroup
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import java.math.BigInteger
@@ -25,9 +26,9 @@ object DbUtils {
 
     fun getNextUnitName(targetName: String, existingNames: List<String>): String {
         var sameNameCount = 0
-        val name2check = targetName.replace(Regex("\\d"), "").replace(" ", "")
+        val name2check = targetName.removeDigits()
         for (currentUnitName in existingNames) {
-            val checkValue = currentUnitName.replace(Regex("\\d"), "").replace(" ", "")
+            val checkValue = currentUnitName.removeDigits()
             if (checkValue == name2check) {
                 sameNameCount++
             }
@@ -39,15 +40,50 @@ object DbUtils {
         )
     }
 
+    private fun String.removeDigits(): String {
+        var result = this
+        result = result.replace(Regex("\\d"), "")
+        while (result.endsWith(" ")) {
+            result = result.removeSuffix(" ")
+        }
+        return result
+    }
+
+    fun removeDigitsFrom(src: String): String {
+        return src.removeDigits()
+    }
+
+    fun getGroupListBySquad(squad: List<SquadUnit>): List<UnitGroup> {
+        val unitMap = mutableMapOf<String, List<SquadUnit>>()
+        for (squadUnit in squad) {
+            val removedDigitsName = squadUnit.name.removeDigits()
+            if (!unitMap.containsKey(removedDigitsName)) {
+                unitMap[removedDigitsName] = listOf(squadUnit)
+            } else {
+                val prevValue = unitMap[removedDigitsName]!!
+                val mutableSquad = mutableListOf<SquadUnit>()
+                mutableSquad.addAll(prevValue)
+                mutableSquad.add(squadUnit)
+                unitMap[removedDigitsName] = mutableSquad
+            }
+        }
+        val result = mutableListOf<UnitGroup>()
+        for (entry in unitMap.entries) {
+            val unitGroup = UnitGroup(entry.key, entry.value.size, entry.value[0].parentId)
+            result.add(unitGroup)
+        }
+        return result
+    }
+
     fun duplicateUnit(
         viewModelScope: CoroutineScope,
         database: Database,
-        squadUnit: SquadUnit,
+        archetypeId: Long,
         squadId: Long,
         callback: (() -> Unit)? = null
     ) {
         viewModelScope.launch {
-            val targetUnit = database.archetypeDao().getById(squadUnit.parentId)
+            val targetUnit = database.archetypeDao().getById(archetypeId)
             val squad = database.unitDao().getBySquad(squadId)
             val names = mutableListOf<String>()
             for(currentUnit in squad) {

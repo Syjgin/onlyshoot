@@ -12,16 +12,15 @@ import androidx.recyclerview.widget.RecyclerView
 import com.syjgin.onlyshoot.R
 import com.syjgin.onlyshoot.model.Fight
 import com.syjgin.onlyshoot.model.Squad
-import com.syjgin.onlyshoot.model.SquadUnit
 import com.syjgin.onlyshoot.navigation.BundleKeys
 import com.syjgin.onlyshoot.utils.AddEditUtils
 import com.syjgin.onlyshoot.utils.DialogUtils
-import com.syjgin.onlyshoot.view.adapter.SquadUnitListAdapter
+import com.syjgin.onlyshoot.view.adapter.SquadGroupListAdapter
 import com.syjgin.onlyshoot.viewmodel.AddEditFightViewModel
 import kotlinx.android.synthetic.main.fragment_add_edit_fight.*
 
 class AddEditFightFragment : BaseFragment<AddEditFightViewModel>(AddEditFightViewModel::class.java),
-    SquadUnitListAdapter.SquadListClickListener {
+    SquadGroupListAdapter.SquadListClickListener {
     companion object {
         fun createFragment(bundle: Bundle?) : Fragment {
             val fragment = AddEditFightFragment()
@@ -31,8 +30,8 @@ class AddEditFightFragment : BaseFragment<AddEditFightViewModel>(AddEditFightVie
     }
 
     private var fight: Fight? = null
-    private val attackersAdapter = SquadUnitListAdapter(this, true, isHorizontal = false)
-    private val defendersAdapter = SquadUnitListAdapter(this, false, isHorizontal = false)
+    private val attackersAdapter = SquadGroupListAdapter(this, true)
+    private val defendersAdapter = SquadGroupListAdapter(this, false)
     private var isDisplayingDialog = false
 
     override fun fragmentTitle(): Int {
@@ -96,16 +95,16 @@ class AddEditFightFragment : BaseFragment<AddEditFightViewModel>(AddEditFightVie
         }
     }
 
-    override fun selectUnit(squadUnit : SquadUnit) {
-        viewModel?.openUnit(squadUnit)
+    override fun selectGroup(groupName: String, isAttackers: Boolean) {
+        viewModel?.openGroup(groupName, isAttackers)
     }
 
-    override fun addUnit(squadUnit: SquadUnit, isAttackers: Boolean) {
-        viewModel?.duplicateUnit(squadUnit, isAttackers)
+    override fun addUnit(archetypeId: Long, isAttackers: Boolean) {
+        viewModel?.duplicateUnit(archetypeId, isAttackers)
     }
 
-    override fun removeUnit(squadUnit: SquadUnit, isAttackers: Boolean) {
-        viewModel?.removeUnit(squadUnit, isAttackers)
+    override fun removeUnit(groupName: String, isAttackers: Boolean) {
+        viewModel?.removeUnit(groupName, isAttackers)
     }
 
     private fun setupExisting() {
