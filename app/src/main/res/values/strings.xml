@@ -26,8 +26,8 @@
     <string name="attack_skill_modifier">Attack skill modifier</string>
     <string name="armor_penetration_attack">Armor penetration</string>
     <string name="Defence">Defence</string>
-    <string name="normal_armor">Normal armor</string>
-    <string name="proof_armor">Proof armor</string>
+    <string name="normal_armor">Normal</string>
+    <string name="proof_armor">Proof</string>
     <string name="damage">Damage</string>
     <string name="damage_amount">Damage amount, d10</string>
     <string name="damage_modifier">Damage modifier</string>

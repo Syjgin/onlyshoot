@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="square_button">50dp</dimen>
+    <dimen name="border">1dp</dimen>
     <dimen name="content_offset">20dp</dimen>
+    <dimen name="twin_content_offset">40dp</dimen>
     <dimen name="large_offset">30dp</dimen>
     <dimen name="field_offset">12dp</dimen>
     <dimen name="normal_size">14sp</dimen>
@@ -10,4 +12,7 @@
     <dimen name="digit_size">21sp</dimen>
     <dimen name="unit_card_size">100dp</dimen>
     <dimen name="max_string">200dp</dimen>
+    <dimen name="body_bg">400dp</dimen>
+    <dimen name="armor_input_width">120dp</dimen>
+    <dimen name="torso_offset">130dp</dimen>
 </resources>

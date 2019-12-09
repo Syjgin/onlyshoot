@@ -26,8 +26,8 @@
     <string name="attack_skill_modifier">Модификатор навыка</string>
     <string name="armor_penetration_attack">Пробитие брони</string>
     <string name="Defence">Защита</string>
-    <string name="normal_armor">Обычная броня</string>
-    <string name="proof_armor">Непробиваемая броня</string>
+    <string name="normal_armor">Обычная</string>
+    <string name="proof_armor">Непробиваемая</string>
     <string name="damage">Урон</string>
     <string name="damage_amount">Уровень урона, d10</string>
     <string name="damage_modifier">Модификатор урона</string>

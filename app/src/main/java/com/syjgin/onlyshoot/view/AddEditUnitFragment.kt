@@ -74,10 +74,14 @@ class AddEditUnitFragment : BaseFragment<AddEditUnitViewModel>(AddEditUnitViewMo
             proof_armor_head,
             normal_armor_torso,
             proof_armor_torso,
-            normal_armor_hands,
-            proof_armor_hands,
-            normal_armor_legs,
-            proof_armor_legs,
+            normal_armor_left_hand,
+            proof_armor_left_hand,
+            normal_armor_right_hand,
+            proof_armor_right_hand,
+            normal_armor_left_leg,
+            proof_armor_left_leg,
+            normal_armor_right_leg,
+            proof_armor_right_leg,
             damage_amount,
             armor_penetration_attack,
             attack_amount,
@@ -144,10 +148,14 @@ class AddEditUnitFragment : BaseFragment<AddEditUnitViewModel>(AddEditUnitViewMo
             proof_armor_head.text.toString().toInt(),
             normal_armor_torso.text.toString().toInt(),
             proof_armor_torso.text.toString().toInt(),
-            normal_armor_hands.text.toString().toInt(),
-            proof_armor_hands.text.toString().toInt(),
-            normal_armor_legs.text.toString().toInt(),
-            proof_armor_legs.text.toString().toInt(),
+            normal_armor_left_hand.text.toString().toInt(),
+            proof_armor_left_hand.text.toString().toInt(),
+            normal_armor_right_hand.text.toString().toInt(),
+            proof_armor_right_hand.text.toString().toInt(),
+            normal_armor_left_leg.text.toString().toInt(),
+            proof_armor_left_leg.text.toString().toInt(),
+            normal_armor_right_leg.text.toString().toInt(),
+            proof_armor_right_leg.text.toString().toInt(),
             damage_amount.text.toString().toInt(),
             damage_modifier.text.toString().toInt(),
             damageType,
@@ -173,10 +181,14 @@ class AddEditUnitFragment : BaseFragment<AddEditUnitViewModel>(AddEditUnitViewMo
                 proof_armor_head.text?.isNotEmpty() ?: false &&
                 normal_armor_torso.text?.isNotEmpty() ?: false &&
                 proof_armor_torso.text?.isNotEmpty() ?: false &&
-                normal_armor_hands.text?.isNotEmpty() ?: false &&
-                proof_armor_hands.text?.isNotEmpty() ?: false &&
-                normal_armor_legs.text?.isNotEmpty() ?: false &&
-                proof_armor_legs.text?.isNotEmpty() ?: false &&
+                normal_armor_left_hand.text?.isNotEmpty() ?: false &&
+                proof_armor_left_hand.text?.isNotEmpty() ?: false &&
+                normal_armor_right_hand.text?.isNotEmpty() ?: false &&
+                proof_armor_right_hand.text?.isNotEmpty() ?: false &&
+                normal_armor_left_leg.text?.isNotEmpty() ?: false &&
+                proof_armor_left_leg.text?.isNotEmpty() ?: false &&
+                normal_armor_right_leg.text?.isNotEmpty() ?: false &&
+                proof_armor_right_leg.text?.isNotEmpty() ?: false &&
                 damage_amount.text?.isNotEmpty() ?: false &&
                 (explosion.isChecked || cut.isChecked || strike.isChecked || energy.isChecked) &&
                 armor_penetration_attack.text?.isNotEmpty() ?: false &&
@@ -198,10 +210,14 @@ class AddEditUnitFragment : BaseFragment<AddEditUnitViewModel>(AddEditUnitViewMo
         proof_armor_head.setText(squadUnit.proofArmorHead.toString())
         normal_armor_torso.setText(squadUnit.usualArmorTorso.toString())
         proof_armor_torso.setText(squadUnit.proofArmorTorso.toString())
-        normal_armor_hands.setText(squadUnit.usualArmorHands.toString())
-        proof_armor_hands.setText(squadUnit.proofArmorHands.toString())
-        normal_armor_legs.setText(squadUnit.usualArmorLegs.toString())
-        proof_armor_legs.setText(squadUnit.proofArmorLegs.toString())
+        normal_armor_left_hand.setText(squadUnit.usualArmorLeftHand.toString())
+        proof_armor_left_hand.setText(squadUnit.proofArmorLeftHand.toString())
+        normal_armor_right_hand.setText(squadUnit.usualArmorRightHand.toString())
+        proof_armor_right_hand.setText(squadUnit.proofArmorRightHand.toString())
+        normal_armor_left_leg.setText(squadUnit.usualArmorLeftLeg.toString())
+        proof_armor_left_leg.setText(squadUnit.proofArmorLeftLeg.toString())
+        normal_armor_right_leg.setText(squadUnit.usualArmorRightLeg.toString())
+        proof_armor_right_leg.setText(squadUnit.proofArmorRightLeg.toString())
         damage_amount.setText(squadUnit.damage.toString())
         damage_modifier.setText(squadUnit.damageModifier.toString())
         when(squadUnit.damageType) {

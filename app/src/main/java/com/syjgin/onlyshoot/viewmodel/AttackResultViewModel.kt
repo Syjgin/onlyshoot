@@ -187,18 +187,18 @@ class AttackResultViewModel : BaseViewModel() {
                     val usualArmor = when (currentPart) {
                         AttackResult.BodyPart.Head -> defender.usualArmorHead
                         AttackResult.BodyPart.Torso -> defender.usualArmorTorso
-                        AttackResult.BodyPart.RightHand -> defender.usualArmorHands
-                        AttackResult.BodyPart.LeftHand -> defender.usualArmorHands
-                        AttackResult.BodyPart.RightLeg -> defender.usualArmorLegs
-                        AttackResult.BodyPart.LeftLeg -> defender.usualArmorLegs
+                        AttackResult.BodyPart.RightHand -> defender.usualArmorRightHand
+                        AttackResult.BodyPart.LeftHand -> defender.usualArmorLeftHand
+                        AttackResult.BodyPart.RightLeg -> defender.usualArmorRightLeg
+                        AttackResult.BodyPart.LeftLeg -> defender.usualArmorLeftLeg
                     }
                     val proofArmor = when (currentPart) {
                         AttackResult.BodyPart.Head -> defender.proofArmorHead
                         AttackResult.BodyPart.Torso -> defender.proofArmorTorso
-                        AttackResult.BodyPart.RightHand -> defender.proofArmorHands
-                        AttackResult.BodyPart.LeftHand -> defender.proofArmorHands
-                        AttackResult.BodyPart.RightLeg -> defender.proofArmorLegs
-                        AttackResult.BodyPart.LeftLeg -> defender.proofArmorLegs
+                        AttackResult.BodyPart.RightHand -> defender.proofArmorRightHand
+                        AttackResult.BodyPart.LeftHand -> defender.proofArmorLeftHand
+                        AttackResult.BodyPart.RightLeg -> defender.proofArmorRightLeg
+                        AttackResult.BodyPart.LeftLeg -> defender.proofArmorLeftLeg
                     }
                     var totalArmor =
                         usualArmor - attacker.armorPenetration + proofArmor

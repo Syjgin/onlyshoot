@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -81,162 +82,298 @@
                 android:layout_marginBottom="@dimen/content_offset"
                 android:text="@string/Defence" />
 
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/body_bg"
+                    android:layout_marginEnd="@dimen/content_offset"
+                    android:paddingTop="@dimen/content_offset"
+                    app:srcCompat="@drawable/ic_human_outline_generic"
+                    tools:ignore="ContentDescription" />
+
+                <LinearLayout
+                    android:layout_width="@dimen/armor_input_width"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:background="@drawable/armor_bg"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/TextFieldTheme"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal"
+                        android:text="@string/head" />
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/armor_head_input"
+                        android:layout_width="@dimen/armor_input_width"
+                        android:layout_height="wrap_content">
+
+                        <androidx.appcompat.widget.AppCompatEditText
+                            android:id="@+id/normal_armor_head"
+                            style="@style/TextFieldTheme"
+                            android:layout_width="@dimen/armor_input_width"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/normal_armor"
+                            android:inputType="numberDecimal"
+                            tools:ignore="Autofill,LabelFor" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="@dimen/armor_input_width"
+                        android:layout_height="wrap_content">
+
+                        <androidx.appcompat.widget.AppCompatEditText
+                            android:id="@+id/proof_armor_head"
+                            style="@style/TextFieldTheme"
+                            android:layout_width="@dimen/armor_input_width"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/proof_armor"
+                            android:inputType="numberDecimal"
+                            tools:ignore="Autofill,LabelFor" />
+                    </com.google.android.material.textfield.TextInputLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/torso_armor_input"
+                    android:layout_height="wrap_content"
+                    android:layout_width="@dimen/armor_input_width"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="@dimen/torso_offset"
+                    android:background="@drawable/armor_bg"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/TextFieldTheme"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal"
+                        android:text="@string/torso" />
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="@dimen/armor_input_width"
+                        android:layout_height="wrap_content">
+
+                        <androidx.appcompat.widget.AppCompatEditText
+                            android:id="@+id/normal_armor_torso"
+                            style="@style/TextFieldTheme"
+                            android:layout_width="@dimen/armor_input_width"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/normal_armor"
+                            android:inputType="numberDecimal"
+                            tools:ignore="Autofill,LabelFor" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="@dimen/armor_input_width"
+                        android:layout_height="wrap_content">
+
+                        <androidx.appcompat.widget.AppCompatEditText
+                            android:id="@+id/proof_armor_torso"
+                            style="@style/TextFieldTheme"
+                            android:layout_width="@dimen/armor_input_width"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/proof_armor"
+                            android:inputType="numberDecimal"
+                            tools:ignore="Autofill,LabelFor" />
+                    </com.google.android.material.textfield.TextInputLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/armor_left_hand"
+                    android:layout_width="@dimen/armor_input_width"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@+id/torso_armor_input"
+                    android:layout_toEndOf="@+id/torso_armor_input"
+                    android:background="@drawable/armor_bg"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/TextFieldTheme"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal"
+                        android:text="@string/left_hand" />
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="@dimen/armor_input_width"
+                        android:layout_height="wrap_content">
+
+                        <androidx.appcompat.widget.AppCompatEditText
+                            android:id="@+id/normal_armor_left_hand"
+                            style="@style/TextFieldTheme"
+                            android:layout_width="@dimen/armor_input_width"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/normal_armor"
+                            android:inputType="numberDecimal"
+                            tools:ignore="Autofill,LabelFor" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="@dimen/armor_input_width"
+                        android:layout_height="wrap_content">
+
+                        <androidx.appcompat.widget.AppCompatEditText
+                            android:id="@+id/proof_armor_left_hand"
+                            style="@style/TextFieldTheme"
+                            android:layout_width="@dimen/armor_input_width"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/proof_armor"
+                            android:inputType="numberDecimal"
+                            tools:ignore="Autofill,LabelFor" />
+                    </com.google.android.material.textfield.TextInputLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/armor_right_hand"
+                    android:layout_width="@dimen/armor_input_width"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@+id/torso_armor_input"
+                    android:layout_toStartOf="@+id/torso_armor_input"
+                    android:background="@drawable/armor_bg"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/TextFieldTheme"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal"
+                        android:text="@string/right_hand" />
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="@dimen/armor_input_width"
+                        android:layout_height="wrap_content">
+
+                        <androidx.appcompat.widget.AppCompatEditText
+                            android:id="@+id/normal_armor_right_hand"
+                            style="@style/TextFieldTheme"
+                            android:layout_width="@dimen/armor_input_width"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/normal_armor"
+                            android:inputType="numberDecimal"
+                            tools:ignore="Autofill,LabelFor" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="@dimen/armor_input_width"
+                        android:layout_height="wrap_content">
+
+                        <androidx.appcompat.widget.AppCompatEditText
+                            android:id="@+id/proof_armor_right_hand"
+                            style="@style/TextFieldTheme"
+                            android:layout_width="@dimen/armor_input_width"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/proof_armor"
+                            android:inputType="numberDecimal"
+                            tools:ignore="Autofill,LabelFor" />
+                    </com.google.android.material.textfield.TextInputLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginEnd="@dimen/content_offset"
+                    android:background="@drawable/armor_bg"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/TextFieldTheme"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal"
+                        android:text="@string/left_leg" />
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="@dimen/armor_input_width"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/content_offset">
+
+                        <androidx.appcompat.widget.AppCompatEditText
+                            android:id="@+id/normal_armor_left_leg"
+                            style="@style/TextFieldTheme"
+                            android:layout_width="@dimen/armor_input_width"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/normal_armor"
+                            android:inputType="numberDecimal"
+                            tools:ignore="Autofill,LabelFor" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/armor_left_leg"
+                        android:layout_width="@dimen/armor_input_width"
+                        android:layout_height="wrap_content">
+
+                        <androidx.appcompat.widget.AppCompatEditText
+                            android:id="@+id/proof_armor_left_leg"
+                            style="@style/TextFieldTheme"
+                            android:layout_width="@dimen/armor_input_width"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/proof_armor"
+                            android:inputType="numberDecimal"
+                            tools:ignore="Autofill,LabelFor" />
+                    </com.google.android.material.textfield.TextInputLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginStart="@dimen/twin_content_offset"
+                    android:background="@drawable/armor_bg"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/TextFieldTheme"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal"
+                        android:text="@string/right_leg" />
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="@dimen/armor_input_width"
+                        android:layout_height="wrap_content">
+
+                        <androidx.appcompat.widget.AppCompatEditText
+                            android:id="@+id/normal_armor_right_leg"
+                            style="@style/TextFieldTheme"
+                            android:layout_width="@dimen/armor_input_width"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/normal_armor"
+                            android:inputType="numberDecimal"
+                            tools:ignore="Autofill,LabelFor" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/armor_right_leg"
+                        android:layout_width="@dimen/armor_input_width"
+                        android:layout_height="wrap_content">
+
+                        <androidx.appcompat.widget.AppCompatEditText
+                            android:id="@+id/proof_armor_right_leg"
+                            style="@style/TextFieldTheme"
+                            android:layout_width="@dimen/armor_input_width"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/proof_armor"
+                            android:inputType="numberDecimal"
+                            tools:ignore="Autofill,LabelFor" />
+                    </com.google.android.material.textfield.TextInputLayout>
+                </LinearLayout>
+            </RelativeLayout>
+
             <TextView
-                style="@style/TextFieldSubTheme"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/content_offset"
-                android:layout_marginBottom="@dimen/content_offset"
-                android:text="@string/head" />
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <androidx.appcompat.widget.AppCompatEditText
-                    android:id="@+id/normal_armor_head"
-                    style="@style/TextFieldTheme"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/normal_armor"
-                    android:inputType="numberDecimal"
-                    tools:ignore="Autofill,LabelFor" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <androidx.appcompat.widget.AppCompatEditText
-                    android:id="@+id/proof_armor_head"
-                    style="@style/TextFieldTheme"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/proof_armor"
-                    android:inputType="numberDecimal"
-                    tools:ignore="Autofill,LabelFor" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <TextView
-                style="@style/TextFieldSubTheme"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/content_offset"
-                android:layout_marginBottom="@dimen/content_offset"
-                android:text="@string/torso" />
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <androidx.appcompat.widget.AppCompatEditText
-                    android:id="@+id/normal_armor_torso"
-                    style="@style/TextFieldTheme"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/normal_armor"
-                    android:inputType="numberDecimal"
-                    tools:ignore="Autofill,LabelFor" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <androidx.appcompat.widget.AppCompatEditText
-                    android:id="@+id/proof_armor_torso"
-                    style="@style/TextFieldTheme"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/proof_armor"
-                    android:inputType="numberDecimal"
-                    tools:ignore="Autofill,LabelFor" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <TextView
-                style="@style/TextFieldSubTheme"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/content_offset"
-                android:layout_marginBottom="@dimen/content_offset"
-                android:text="@string/hands" />
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <androidx.appcompat.widget.AppCompatEditText
-                    android:id="@+id/normal_armor_hands"
-                    style="@style/TextFieldTheme"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/normal_armor"
-                    android:inputType="numberDecimal"
-                    tools:ignore="Autofill,LabelFor" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <androidx.appcompat.widget.AppCompatEditText
-                    android:id="@+id/proof_armor_hands"
-                    style="@style/TextFieldTheme"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/proof_armor"
-                    android:inputType="numberDecimal"
-                    tools:ignore="Autofill,LabelFor" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <TextView
-                style="@style/TextFieldSubTheme"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/content_offset"
-                android:layout_marginBottom="@dimen/content_offset"
-                android:text="@string/legs" />
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <androidx.appcompat.widget.AppCompatEditText
-                    android:id="@+id/normal_armor_legs"
-                    style="@style/TextFieldTheme"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/normal_armor"
-                    android:inputType="numberDecimal"
-                    tools:ignore="Autofill,LabelFor" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <androidx.appcompat.widget.AppCompatEditText
-                    android:id="@+id/proof_armor_legs"
-                    style="@style/TextFieldTheme"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/proof_armor"
-                    android:inputType="numberDecimal"
-                    tools:ignore="Autofill,LabelFor" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 style="@style/TextFieldTheme"
                 android:layout_marginBottom="@dimen/content_offset"
                 android:layout_marginTop="@dimen/content_offset"
                 android:text="@string/damage"/>
-            </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
@@ -431,7 +568,8 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                tools:ignore="TooManyViews">
 
                 <androidx.appcompat.widget.AppCompatEditText
                     android:id="@+id/critical_modifier"
