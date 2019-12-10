@@ -33,6 +33,23 @@
             android:background="@drawable/ic_remove" />
     </LinearLayout>
 
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/content_offset">
+
+        <RadioButton
+            android:id="@+id/full_random"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/full_random_attack" />
+
+        <RadioButton
+            android:id="@+id/wounded_first"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/wounded_first" />
+    </RadioGroup>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

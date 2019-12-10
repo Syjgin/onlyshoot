@@ -8,8 +8,9 @@ import android.view.View
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import com.squareup.moshi.Moshi
 import com.syjgin.onlyshoot.R
-import com.syjgin.onlyshoot.model.Attack
+import com.syjgin.onlyshoot.model.AttackList
 import com.syjgin.onlyshoot.model.AttackResult
 import com.syjgin.onlyshoot.navigation.BundleKeys
 import com.syjgin.onlyshoot.utils.DbUtils.NO_DATA
@@ -26,7 +27,7 @@ class AttackResultFragment : BaseFragment<AttackResultViewModel>(AttackResultVie
         }
     }
 
-    private var attacks: List<Attack>? = null
+    private var attacks: AttackList? = null
     private var defendSquadId: Long = NO_DATA
     private val adapter = AttackResultAdapter()
 
@@ -53,7 +54,10 @@ class AttackResultFragment : BaseFragment<AttackResultViewModel>(AttackResultVie
     }
 
     override fun parseArguments(args: Bundle) {
-        attacks = args.getParcelableArrayList(BundleKeys.Attacks.name)
+        val attacksJson = args.getString(BundleKeys.Attacks.name, "")
+        val moshi = Moshi.Builder().build()
+        val jsonAdapter = moshi.adapter(AttackList::class.java)
+        attacks = jsonAdapter.fromJson(attacksJson)
         defendSquadId = args.getLong(BundleKeys.DefendSquadId.name)
     }
 

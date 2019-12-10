@@ -6,17 +6,17 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.syjgin.onlyshoot.R
-import com.syjgin.onlyshoot.model.SquadUnit
+import com.syjgin.onlyshoot.model.UnitGroup
 import com.syjgin.onlyshoot.navigation.BundleKeys
 import com.syjgin.onlyshoot.utils.ColorUtils
 import kotlinx.android.synthetic.main.item_single_defend.view.*
 
 class DefenceAdapter(private val attackDirectionListener: AttackDirectionListener) :
     RecyclerView.Adapter<DefenceAdapter.DefenceViewHolder>() {
-    private val data = mutableListOf<SquadUnit>()
+    private val data = mutableListOf<UnitGroup>()
     private val colorsOfDefenders = mutableListOf<Int>()
 
-    fun addDefenders(list: List<SquadUnit>) {
+    fun addDefenders(list: List<UnitGroup>) {
         data.clear()
         data.addAll(list)
         for (i in data.indices) {
@@ -37,12 +37,12 @@ class DefenceAdapter(private val attackDirectionListener: AttackDirectionListene
             if (event.action == ACTION_DROP) {
                 val clipdata = event.clipData
                 val intent = clipdata.getItemAt(0).intent
-                val attackUnitId = intent.getLongExtra(BundleKeys.Unit.name, 0L)
+                val attackGroupId = intent.getStringExtra(BundleKeys.GroupName.name)
                 val attackCount = intent.getIntExtra(BundleKeys.AttackCount.name, 0)
                 val defender = data[holder.adapterPosition]
                 attackDirectionListener.onAttackDirectionFinished(
-                    attackUnitId,
-                    defender.id,
+                    attackGroupId,
+                    defender.name,
                     attackCount,
                     colorsOfDefenders[holder.adapterPosition]
                 )
@@ -50,10 +50,6 @@ class DefenceAdapter(private val attackDirectionListener: AttackDirectionListene
             return@setOnDragListener true
         }
         return holder
-    }
-
-    fun getData() : List<SquadUnit> {
-        return data
     }
 
     override fun getItemCount() = data.size

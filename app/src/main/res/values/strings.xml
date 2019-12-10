@@ -458,4 +458,6 @@ Charge Action within six metres of the target must make a Challenging (+0) Agili
     <string name="default_misfire" translatable="false">96</string>
     <string name="squad_title">Squad title</string>
     <string name="filter_by_name">Filter by name</string>
+    <string name="full_random_attack">Full random</string>
+    <string name="wounded_first">Wounded first</string>
 </resources>

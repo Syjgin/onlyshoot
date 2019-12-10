@@ -445,4 +445,6 @@
 </string>
     <string name="squad_title">Название отряда</string>
     <string name="filter_by_name">Фильтр по имени</string>
+    <string name="full_random_attack">Полная случайность</string>
+    <string name="wounded_first">Сначала - раненых</string>
 </resources>

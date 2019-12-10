@@ -2,8 +2,8 @@ package com.syjgin.onlyshoot.view.adapter
 
 interface AttackDirectionListener {
     fun onAttackDirectionFinished(
-        attackerId: Long,
-        defenderId: Long,
+        attackerName: String,
+        defenderName: String,
         count: Int,
         color: Int
     )

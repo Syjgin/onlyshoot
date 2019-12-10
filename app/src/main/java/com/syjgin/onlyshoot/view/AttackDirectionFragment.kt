@@ -49,7 +49,7 @@ class AttackDirectionFragment :
         attack_recycler.adapter = attackAdapter
         defence_recycler.adapter = defenceAdapter
         start_attack.setOnClickListener {
-            viewModel?.startAttack(attackAdapter.getAttacks(defenceAdapter.getData()))
+            viewModel?.startAttack(attackAdapter.getAttacks())
         }
         viewModel?.getAttackersLiveData()?.observe(this, Observer {
             handleAttackers(it)
@@ -63,38 +63,31 @@ class AttackDirectionFragment :
     override fun hasBackButton() = true
 
     override fun onAttackDirectionFinished(
-        attackerId: Long,
-        defenderId: Long,
+        attackerName: String,
+        defenderName: String,
         count: Int,
         color: Int
     ) {
-        if (count == 1) {
-            val attack = Attack(attackerId, defenderId, count)
-            attackAdapter.addAttack(attack, color)
-            remainAttacks -= count
-            updateRandomAttacksCount()
-        } else {
-            var countDialog: Dialog? = null
-            countDialog = DialogUtils.createCountDialog(
-                context,
-                getString(R.string.enter_attack_amount),
-                object : DialogUtils.CountDialogListener {
-                    override fun onValueSelected(value: Int) {
-                        countDialog?.dismiss()
-                        val attack = Attack(attackerId, defenderId, value)
-                        attackAdapter.addAttack(attack, color)
-                        remainAttacks -= value
-                        updateRandomAttacksCount()
-                    }
+        var countDialog: Dialog? = null
+        countDialog = DialogUtils.createCountDialog(
+            context,
+            getString(R.string.enter_attack_amount),
+            object : DialogUtils.CountDialogListener {
+                override fun onValueSelected(value: Int, isRandom: Boolean) {
+                    val attack =
+                        Attack(attackerName, defenderName, listOf(), listOf(), isRandom, value)
+                    attackAdapter.addAttack(attack, color)
+                    remainAttacks -= value
+                    updateRandomAttacksCount()
+                }
 
-                    override fun onCancel() {
-                        countDialog?.dismiss()
-                    }
-                },
-                count
-            )
-            countDialog?.show()
-        }
+                override fun onCancel() {
+                    countDialog?.dismiss()
+                }
+            },
+            count
+        )
+        countDialog?.show()
     }
 
     override fun onRandomAttackCountIncreased(count: Int) {
@@ -103,13 +96,13 @@ class AttackDirectionFragment :
     }
 
     private fun handleAttackers(squad: Squad) {
-        //attackAdapter.addAttackers(squad.list)
+        attackAdapter.addAttackers(squad.list)
         remainAttacks = attackAdapter.getFreeAttacksCount()
         updateRandomAttacksCount()
     }
 
     private fun handleDefenders(squad: Squad) {
-        //defenceAdapter.addDefenders(squad.list)
+        defenceAdapter.addDefenders(squad.list)
     }
 
     private fun updateRandomAttacksCount() {
