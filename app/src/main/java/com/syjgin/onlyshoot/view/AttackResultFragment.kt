@@ -73,7 +73,7 @@ class AttackResultFragment : BaseFragment<AttackResultViewModel>(AttackResultVie
             log.text = it
         })
         if (attacks != null)
-            viewModel?.load(attacks!!, defendSquadId)
+            viewModel?.load(attacks!!.attacks, defendSquadId)
         requireActivity().onBackPressedDispatcher.addCallback(object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 viewModel?.goBack()

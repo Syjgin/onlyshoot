@@ -63,10 +63,13 @@ class AttackDirectionViewModel : BaseViewModel() {
     fun startAttack(attacks: List<Attack>) {
         viewModelScope.launch {
             val bundle = Bundle()
-            val attacks2send = AttackList()
+            val attacks2send = mutableListOf<Attack>()
             val attackersSquad = database.unitDao().getBySquad(attackersId)
             val defendersSquad = database.unitDao().getBySquad(defendersId)
             val attackCountById = mutableMapOf<Long, Int>()
+            for (attackUnit in attackersSquad) {
+                attackCountById[attackUnit.id] = attackUnit.attackCount
+            }
             for (attack in attacks) {
                 val attackersUnitIds =
                     attackersSquad.filter { it.name.contains(attack.attackersGroupName) }
@@ -77,6 +80,8 @@ class AttackDirectionViewModel : BaseViewModel() {
                     val freeAttacks = attacker.attackCount - attackCountByUnit
                     if (freeAttacks > 0) {
                         attackCountById[attacker.id] = freeAttacks
+                    } else {
+                        attackCountById.remove(attacker.id)
                     }
                 }
                 attacks2send.add(
@@ -108,7 +113,8 @@ class AttackDirectionViewModel : BaseViewModel() {
             }
             val moshiBuilder = Moshi.Builder().build()
             val jsonAdapter = moshiBuilder.adapter(AttackList::class.java)
-            bundle.putString(BundleKeys.Attacks.name, jsonAdapter.toJson(attacks2send))
+            val attackString = jsonAdapter.toJson(AttackList(attacks2send))
+            bundle.putString(BundleKeys.Attacks.name, attackString)
             bundle.putLong(BundleKeys.DefendSquadId.name, defendersId)
             router.navigateTo(OnlyShootScreen(ScreenEnum.AttackResult, bundle))
         }

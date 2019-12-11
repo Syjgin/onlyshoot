@@ -33,6 +33,7 @@ dependencies {
     def lifecycle_version = "2.1.0"
     def room_version = "2.2.2"
     def dagger_version = "2.25.2"
+    def moshi_version = "1.9.2"
 
     kapt "com.google.dagger:dagger-compiler:$dagger_version"
     kapt "com.google.dagger:dagger-android-processor:$dagger_version"
@@ -63,5 +64,6 @@ dependencies {
 
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0-rc03'
 
-    implementation("com.squareup.moshi:moshi:1.9.2")
+    implementation("com.squareup.moshi:moshi:$moshi_version")
+    kapt("com.squareup.moshi:moshi-kotlin-codegen:$moshi_version")
 }

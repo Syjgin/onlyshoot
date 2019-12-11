@@ -1,3 +1,6 @@
 package com.syjgin.onlyshoot.model
 
-class AttackList : ArrayList<Attack>()
+import com.squareup.moshi.JsonClass
+
+@JsonClass(generateAdapter = true)
+data class AttackList(val attacks: List<Attack>)

@@ -177,8 +177,8 @@ class AttackResultViewModel : BaseViewModel() {
                         log("damage d10 count: ${attacker.damage}")
                         for (k in 0 until attacker.damage) {
                             currentDamage += random.nextInt(1, 11)
-                            log("current damage: $currentDamage")
                         }
+                        log("current damage for attack $j: $currentDamage")
                         val currentPart = allParts[j]
                         val usualArmor = when (currentPart) {
                             AttackResult.BodyPart.Head -> defender.usualArmorHead
@@ -202,6 +202,7 @@ class AttackResultViewModel : BaseViewModel() {
                             totalArmor = 0
                         totalDamageWithoutArmor += (currentDamage + attacker.damageModifier)
                         totalDamage += (currentDamage + attacker.damageModifier - totalArmor)
+                        log("total damage from all attacks for attack $j with modifier and armor: $totalDamage")
                         log("total armor for attack into ${allParts[j]}: $totalArmor")
                     }
                     log("total damage without armor: $totalDamageWithoutArmor")
