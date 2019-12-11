@@ -141,6 +141,8 @@ class AttackAdapter(private val listener: AttackDirectionListener) :
                 freeAttacks[attackers[itemType.index].name].toString()
         } else {
             val itemType = itemTypes[position]
+            holder.itemView.random_indicator.visibility =
+                if (attacks[itemType.index].isRandom) View.VISIBLE else View.GONE
             holder.itemView.defender_color.setBackgroundColor(colorsOfDefenders[attacks[itemType.index].defendersGroupName]!!)
             holder.itemView.attacks.text = attacks[itemType.index].count.toString()
         }

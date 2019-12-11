@@ -16,6 +16,14 @@
         tools:ignore="ContentDescription" />
 
     <ImageView
+        android:id="@+id/random_indicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:srcCompat="@drawable/ic_casino"
+        tools:ignore="ContentDescription" />
+
+    <ImageView
         android:id="@+id/defender_color"
         android:layout_width="@dimen/square_button"
         android:layout_height="@dimen/square_button"
