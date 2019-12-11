@@ -8,6 +8,7 @@ import com.syjgin.onlyshoot.di.OnlyShootApp
 import com.syjgin.onlyshoot.model.Attack
 import com.syjgin.onlyshoot.model.AttackResult
 import com.syjgin.onlyshoot.model.CritDescription
+import com.syjgin.onlyshoot.model.SquadUnit
 import com.syjgin.onlyshoot.navigation.OnlyShootScreen
 import com.syjgin.onlyshoot.navigation.ScreenEnum
 import kotlinx.coroutines.launch
@@ -32,10 +33,10 @@ class AttackResultViewModel : BaseViewModel() {
         viewModelScope.launch {
             val random = Random(System.currentTimeMillis())
             val results = mutableListOf<AttackResult>()
-            val defendersSquad = database.unitDao().getBySquad(defendSquadId)
             val mutableAttacks = mutableListOf<Attack>()
             mutableAttacks.addAll(attacks)
             val evasions = mutableMapOf<Long, Int>()
+            var defendersSquad = database.unitDao().getBySquad(defendSquadId)
             for (defender in defendersSquad) {
                 evasions[defender.id] = defender.evasionCount
             }
@@ -46,8 +47,18 @@ class AttackResultViewModel : BaseViewModel() {
                     val currentDefender = if (attack.isRandom) {
                         attack.defenderIds[random.nextInt(attack.defenderIds.size)]
                     } else {
+                        defendersSquad = database.unitDao().getBySquad(defendSquadId)
+                        var randomDefender: SquadUnit? = null
+                        var minHP = Int.MAX_VALUE
                         var result = attack.defenderIds[random.nextInt(attack.defenderIds.size)]
-                        var minHP = defendersSquad.first { it.id == result }.hp
+                        while (randomDefender == null) {
+                            randomDefender = database.unitDao().getById(result)
+                            if (randomDefender != null) {
+                                minHP = randomDefender.hp
+                            } else {
+                                result = attack.defenderIds[random.nextInt(attack.defenderIds.size)]
+                            }
+                        }
                         for (defender in defendersSquad) {
                             if (attack.defenderIds.contains(defender.id)) {
                                 if (defender.hp < minHP) {

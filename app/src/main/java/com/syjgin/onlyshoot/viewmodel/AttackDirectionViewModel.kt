@@ -15,6 +15,7 @@ import com.syjgin.onlyshoot.navigation.ScreenEnum
 import com.syjgin.onlyshoot.utils.DbUtils
 import com.syjgin.onlyshoot.utils.DbUtils.NO_DATA
 import kotlinx.coroutines.launch
+import kotlin.random.Random
 
 class AttackDirectionViewModel : BaseViewModel() {
     private val attackersLiveData = MutableLiveData<Squad>()
@@ -65,11 +66,19 @@ class AttackDirectionViewModel : BaseViewModel() {
             val attacks2send = AttackList()
             val attackersSquad = database.unitDao().getBySquad(attackersId)
             val defendersSquad = database.unitDao().getBySquad(defendersId)
+            val attackCountById = mutableMapOf<Long, Int>()
             for (attack in attacks) {
                 val attackersUnitIds =
                     attackersSquad.filter { it.name.contains(attack.attackersGroupName) }
                 val defendersUnitIds =
                     defendersSquad.filter { it.name.contains(attack.attackersGroupName) }
+                val attackCountByUnit = attack.count / attack.attackerIds.size
+                for (attacker in attackersUnitIds) {
+                    val freeAttacks = attacker.attackCount - attackCountByUnit
+                    if (freeAttacks > 0) {
+                        attackCountById[attacker.id] = freeAttacks
+                    }
+                }
                 attacks2send.add(
                     Attack(
                         attack.attackersGroupName,
@@ -80,6 +89,22 @@ class AttackDirectionViewModel : BaseViewModel() {
                         attack.count
                     )
                 )
+            }
+            val random = Random(System.currentTimeMillis())
+            while (attackCountById.isNotEmpty()) {
+                val currentUnitId = attackCountById.keys.first()
+                val currentFreeAttackCount = attackCountById[currentUnitId]!!
+                val defenderId = defendersSquad[random.nextInt(defendersSquad.size)].id
+                val attack = Attack(
+                    "",
+                    "",
+                    listOf(currentUnitId),
+                    listOf(defenderId),
+                    true,
+                    currentFreeAttackCount
+                )
+                attacks2send.add(attack)
+                attackCountById.remove(currentUnitId)
             }
             val moshiBuilder = Moshi.Builder().build()
             val jsonAdapter = moshiBuilder.adapter(AttackList::class.java)
