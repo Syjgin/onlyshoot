@@ -1,5 +1,6 @@
 package com.syjgin.onlyshoot.view
 
+import android.app.Dialog
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
@@ -14,6 +15,7 @@ import com.syjgin.onlyshoot.model.SquadUnit
 import com.syjgin.onlyshoot.navigation.BundleKeys
 import com.syjgin.onlyshoot.utils.AddEditUtils
 import com.syjgin.onlyshoot.utils.DbUtils.NO_DATA
+import com.syjgin.onlyshoot.utils.DialogUtils
 import com.syjgin.onlyshoot.view.adapter.SquadUnitListAdapter
 import com.syjgin.onlyshoot.viewmodel.AddEditSquadViewModel
 import kotlinx.android.synthetic.main.fragment_add_edit_squad.*
@@ -31,6 +33,7 @@ class AddEditSquadFragment : BaseFragment<AddEditSquadViewModel>(AddEditSquadVie
     private var squadId : Long = NO_DATA
     private var isEditMode = false
     private var filter = ""
+    private var isDisplayingDialog = false
     private val adapter = SquadUnitListAdapter(this, false)
 
     override fun fragmentTitle(): Int {
@@ -47,16 +50,35 @@ class AddEditSquadFragment : BaseFragment<AddEditSquadViewModel>(AddEditSquadVie
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.add_archetype_menu, menu)
+        inflater.inflate(R.menu.add_menu, menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if(item.itemId == R.id.add_unit) {
-            viewModel?.addUnit()
-            return true
-        }
-        if(item.itemId == R.id.add_archetype) {
-            viewModel?.addArchetype()
+        if (item.itemId == R.id.add) {
+            if (isDisplayingDialog)
+                return false
+            isDisplayingDialog = true
+            var dialog: Dialog? = null
+            dialog = DialogUtils.createAddUnitDialog(context, object :
+                DialogUtils.LoadUnitDialogListener {
+                override fun onFromUnitSelected() {
+                    dialog?.dismiss()
+                    isDisplayingDialog = false
+                    viewModel?.addUnit()
+                }
+
+                override fun onFromArchetypeSelected() {
+                    dialog?.dismiss()
+                    isDisplayingDialog = false
+                    viewModel?.addArchetype()
+                }
+
+                override fun onCancel() {
+                    dialog?.dismiss()
+                    isDisplayingDialog = false
+                }
+            })
+            dialog?.show()
             return true
         }
         return super.onOptionsItemSelected(item)

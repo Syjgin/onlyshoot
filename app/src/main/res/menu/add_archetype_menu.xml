@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:tools="http://schemas.android.com/tools"
-    xmlns:android="http://schemas.android.com/apk/res/android">
-<item android:title="@string/add_unit" android:id="@+id/add_unit"
-    tools:ignore="UnusedAttribute" />
-    <item android:title="@string/add_archetype" android:id="@+id/add_archetype"
-        tools:ignore="UnusedAttribute" />
-</menu>
