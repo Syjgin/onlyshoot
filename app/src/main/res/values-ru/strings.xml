@@ -450,7 +450,6 @@
     <string name="full_random_attack">Полная случайность</string>
     <string name="wounded_first">Сначала - раненых</string>
     <string name="already_dead">Этот враг уже убит</string>
-    <string name="current_defender_id">id текущего защитника: %d</string>
     <string name="attack_failed">атака не удалась: %d</string>
     <string name="new_defender">по ошибке попали в: %s</string>
     <string name="attack_part">перевёрнутый d100: %1$d часть тела: %2$s</string>
@@ -465,8 +464,14 @@
     <string name="damage_count">урон - количество d10: %d</string>
     <string name="current_damage">входящий урон для атаки %1$d : %2$d</string>
     <string name="damage_for_attack">полный урон после атаки %1$d с модификаторами и бронёй: %2$d</string>
-    <string name="armor_for_attack">полная броня при атаке в %1$d : %2$d</string>
+    <string name="armor_for_attack">полная броня при атаке в %1$s : %2$d</string>
     <string name="total_damage_without_armor">полный урон без учёта брони: %d</string>
     <string name="total_damage">полный урон: %d</string>
     <string name="rage_calculation">расчёт праведного гнева</string>
+    <string name="death_from_rage">смерть от праведного гнева</string>
+    <string name="rage_crit">крит от праведного гнева d5: %d</string>
+    <string name="defender_dead">противник погиб</string>
+    <string name="defender_hp">hp противника: %d</string>
+    <string name="rage_with_armor_save">праведный гнев: поглощение бронёй</string>
+    <string name="crit">крит: %d</string>
 </resources>

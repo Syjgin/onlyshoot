@@ -73,12 +73,6 @@ class AttackResultViewModel : BaseViewModel() {
                     }
                     log("--------------------------------------")
                     val attacker = database.unitDao().getById(attackerId)!!
-                    log(
-                        String.format(
-                            context.getString(R.string.current_defender_id),
-                            currentDefender
-                        )
-                    )
                     var defender = database.unitDao().getById(currentDefender)
                     if (defender == null) {
                         val defenderDescription =
@@ -276,7 +270,7 @@ class AttackResultViewModel : BaseViewModel() {
                             log(
                                 String.format(
                                     context.getString(R.string.armor_for_attack),
-                                    allParts[j],
+                                    allParts[j].toString(),
                                     totalArmor
                                 )
                             )
@@ -292,10 +286,9 @@ class AttackResultViewModel : BaseViewModel() {
                     if ((totalDamage >= attacker.rage || totalDamageWithoutArmor >= attacker.rage) && attacker.canUseRage) {
                         log(context.getString(R.string.rage_calculation))
                         if (totalDamage >= attacker.rage) {
-                            log("can use rage")
                             defender.hp -= totalDamage
                             if (defender.deathFromRage) {
-                                log("death from rage")
+                                log(context.getString(R.string.death_from_rage))
                                 val result = AttackResult(
                                     attacker.name,
                                     defender.name,
@@ -311,7 +304,7 @@ class AttackResultViewModel : BaseViewModel() {
                                 continue
                             } else {
                                 val d5 = random.nextInt(1, 6)
-                                log("d5 crit: $d5")
+                                log(String.format(context.getString(R.string.rage_crit), d5))
                                 defender.hp -= d5
                                 val crit = CritDescription.generateCrit(
                                     context,
@@ -331,24 +324,29 @@ class AttackResultViewModel : BaseViewModel() {
                                 )
                                 results.add(result)
                                 if (crit.isDeath) {
-                                    log("defender dead")
+                                    log(context.getString(R.string.defender_dead))
                                     database.unitDao().delete(defender.id)
                                 } else {
-                                    log("defender hp: ${defender.hp}")
+                                    log(
+                                        String.format(
+                                            context.getString(R.string.defender_hp),
+                                            defender.hp
+                                        )
+                                    )
                                     database.unitDao().insert(defender)
                                 }
                                 continue
                             }
                         } else if (totalDamageWithoutArmor >= attacker.rage) {
                             defender.hp -= 1
-                            log("rage with armor save")
+                            log(context.getString(R.string.rage_with_armor_save))
                             if (defender.hp < 0) {
                                 var hpBeyound = (defender.hp * -1) - defender.criticalHitAvoidance
                                 if (hpBeyound <= 0)
                                     hpBeyound = 1
                                 hpBeyound += attacker.criticalHitModifier
                                 defender.hp -= attacker.criticalHitModifier
-                                log("crit: $hpBeyound")
+                                log(String.format(context.getString(R.string.crit), hpBeyound))
                                 val crit = CritDescription.generateCrit(
                                     context,
                                     hpBeyound,
@@ -367,10 +365,15 @@ class AttackResultViewModel : BaseViewModel() {
                                 )
                                 results.add(result)
                                 if (crit.isDeath) {
-                                    log("defender dead")
+                                    log(context.getString(R.string.defender_dead))
                                     database.unitDao().delete(defender.id)
                                 } else {
-                                    log("defender hp: ${defender.hp}")
+                                    log(
+                                        String.format(
+                                            context.getString(R.string.defender_hp),
+                                            defender.hp
+                                        )
+                                    )
                                     database.unitDao().insert(defender)
                                 }
                                 continue
@@ -384,7 +387,7 @@ class AttackResultViewModel : BaseViewModel() {
                                 hpBeyound = 1
                             hpBeyound += attacker.criticalHitModifier
                             defender.hp -= attacker.criticalHitModifier
-                            log("crit: $hpBeyound")
+                            log(String.format(context.getString(R.string.crit), hpBeyound))
                             val crit = CritDescription.generateCrit(
                                 context,
                                 hpBeyound,
@@ -403,10 +406,15 @@ class AttackResultViewModel : BaseViewModel() {
                             )
                             results.add(result)
                             if (crit.isDeath) {
-                                log("defender dead")
+                                log(context.getString(R.string.defender_dead))
                                 database.unitDao().delete(defender.id)
                             } else {
-                                log("defender hp: ${defender.hp}")
+                                log(
+                                    String.format(
+                                        context.getString(R.string.defender_hp),
+                                        defender.hp
+                                    )
+                                )
                                 database.unitDao().insert(defender)
                             }
                             continue
@@ -422,7 +430,7 @@ class AttackResultViewModel : BaseViewModel() {
                                 attacksBySingleUnit
                             )
                             results.add(result)
-                            log("defender hp: ${defender.hp}")
+                            log(String.format(context.getString(R.string.defender_hp), defender.hp))
                             database.unitDao().insert(defender)
                             continue
                         }
@@ -437,7 +445,7 @@ class AttackResultViewModel : BaseViewModel() {
                             allParts,
                             attacksBySingleUnit
                         )
-                        log("armor save")
+                        log(context.getString(R.string.armor_save))
                         results.add(result)
                         continue
                     }

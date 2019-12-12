@@ -463,7 +463,6 @@ Charge Action within six metres of the target must make a Challenging (+0) Agili
     <string name="wounded_first">Wounded first</string>
     <string name="already_dead">This enemy already dead</string>
     <string name="attack_amount_template">Attacks amount: %d</string>
-    <string name="current_defender_id">current defender id: %d</string>
     <string name="attack_failed">attack failed: %d</string>
     <string name="new_defender">misfire to: %s</string>
     <string name="attack_part">reversed d100: %1$d part: %2$s</string>
@@ -478,8 +477,14 @@ Charge Action within six metres of the target must make a Challenging (+0) Agili
     <string name="damage_count">damage d10 count: %d</string>
     <string name="current_damage">incoming damage for attack %1$d : %2$d</string>
     <string name="damage_for_attack">full damage after attack %1$d with modifiers &amp; armor: %2$d</string>
-    <string name="armor_for_attack">full armor for attack into %1$d : %2$d</string>
+    <string name="armor_for_attack">full armor for attack into %1$s : %2$d</string>
     <string name="total_damage_without_armor">total damage without armor: %d</string>
     <string name="total_damage">total damage: %d</string>
     <string name="rage_calculation">rage calculation</string>
+    <string name="death_from_rage">death from rage</string>
+    <string name="rage_crit">rage d5 crit: %d</string>
+    <string name="defender_dead">enemy is dead</string>
+    <string name="defender_hp">enemy\'s hp: %d</string>
+    <string name="rage_with_armor_save">rage: armor save</string>
+    <string name="crit">crit: %d</string>
 </resources>
