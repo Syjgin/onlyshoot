@@ -1,5 +1,6 @@
 package com.syjgin.onlyshoot.view
 
+import android.app.Dialog
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -59,12 +60,6 @@ class AddEditFightFragment : BaseFragment<AddEditFightViewModel>(AddEditFightVie
         attackers.layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
         defenders.adapter = defendersAdapter
         attackers.adapter = attackersAdapter
-        load_attackers.setOnClickListener { viewModel?.loadSquad(true) }
-        load_defenders.setOnClickListener { viewModel?.loadSquad(false) }
-        load_attack_archetype.setOnClickListener { viewModel?.loadUnitFromArchetype(true) }
-        load_defence_archetype.setOnClickListener { viewModel?.loadUnitFromArchetype(false) }
-        load_attack_unit.setOnClickListener { viewModel?.loadUnit(true) }
-        load_defence_unit.setOnClickListener { viewModel?.loadUnit(false) }
         if (attackersAdapter.itemCount == 0 || defendersAdapter.itemCount == 0) {
             setupLoading()
         }
@@ -110,23 +105,46 @@ class AddEditFightFragment : BaseFragment<AddEditFightViewModel>(AddEditFightVie
     private fun setupExisting() {
         if (load_attackers == null)
             return
-        load_attackers.visibility = View.GONE
-        load_defenders.visibility = View.GONE
-        load_attack_archetype.visibility = View.VISIBLE
-        load_attack_unit.visibility = View.VISIBLE
-        load_defence_archetype.visibility = View.VISIBLE
-        load_defence_unit.visibility = View.VISIBLE
+        load_attackers.text = getString(R.string.add_unit)
+        load_defenders.text = getString(R.string.add_unit)
+        load_attackers.setOnClickListener { displayLoadUnitDialog(true) }
+        load_defenders.setOnClickListener { displayLoadUnitDialog(false) }
     }
 
     private fun setupLoading() {
         if (load_attackers == null)
             return
-        load_attackers.visibility = View.VISIBLE
-        load_defenders.visibility = View.VISIBLE
-        load_attack_archetype.visibility = View.GONE
-        load_attack_unit.visibility = View.GONE
-        load_defence_archetype.visibility = View.GONE
-        load_defence_unit.visibility = View.GONE
+        load_attackers.text = getString(R.string.load_attackers)
+        load_defenders.text = getString(R.string.load_defenders)
+        load_attackers.setOnClickListener { viewModel?.loadSquad(true) }
+        load_defenders.setOnClickListener { viewModel?.loadSquad(false) }
+    }
+
+    private fun displayLoadUnitDialog(isAttackers: Boolean) {
+        if (isDisplayingDialog)
+            return
+        isDisplayingDialog = true
+        var dialog: Dialog? = null
+        dialog = DialogUtils.createAddUnitDialog(context, object :
+            DialogUtils.LoadUnitDialogListener {
+            override fun onFromUnitSelected() {
+                dialog?.dismiss()
+                isDisplayingDialog = false
+                viewModel?.loadUnit(isAttackers)
+            }
+
+            override fun onFromArchetypeSelected() {
+                dialog?.dismiss()
+                isDisplayingDialog = false
+                viewModel?.loadUnitFromArchetype(isAttackers)
+            }
+
+            override fun onCancel() {
+                dialog?.dismiss()
+                isDisplayingDialog = false
+            }
+        })
+        dialog?.show()
     }
 
     private fun displaySaveDialog(boolean: Boolean) {

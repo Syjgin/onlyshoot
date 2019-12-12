@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/content_offset">
+
+        <RadioButton
+            android:id="@+id/create_new"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/add_unit" />
+
+        <RadioButton
+            android:id="@+id/select_archetype"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/add_archetype" />
+    </RadioGroup>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/cancel"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/content_offset"
+            android:text="@android:string/cancel" />
+
+        <Button
+            android:id="@+id/ok"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/content_offset"
+            android:text="@android:string/ok" />
+    </LinearLayout>
+</LinearLayout>

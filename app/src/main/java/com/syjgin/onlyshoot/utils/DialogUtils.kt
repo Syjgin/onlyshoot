@@ -38,6 +38,45 @@ object DialogUtils {
         fun onCancel()
     }
 
+    interface LoadUnitDialogListener {
+        fun onFromUnitSelected()
+        fun onFromArchetypeSelected()
+        fun onCancel()
+    }
+
+    fun createAddUnitDialog(
+        context: Context?,
+        listener: LoadUnitDialogListener
+    ): Dialog? {
+        if (context == null)
+            return null
+        var isUnitSelected: Boolean? = null
+        val dialog = Dialog(context)
+        dialog.setTitle(context.getString(R.string.add))
+        dialog.setContentView(R.layout.dialog_add_unit)
+        dialog.findViewById<Button>(R.id.ok)
+            .setOnClickListener {
+                if (isUnitSelected != null) {
+                    if (isUnitSelected!!) {
+                        listener.onFromUnitSelected()
+                    } else {
+                        listener.onFromArchetypeSelected()
+                    }
+                }
+            }
+        dialog.findViewById<Button>(R.id.cancel)
+            .setOnClickListener { listener.onCancel() }
+        dialog.findViewById<RadioButton>(R.id.create_new)
+            .setOnCheckedChangeListener { _, isChecked ->
+                isUnitSelected = isChecked
+            }
+        dialog.findViewById<RadioButton>(R.id.select_archetype)
+            .setOnCheckedChangeListener { _, isChecked ->
+                isUnitSelected = !isChecked
+            }
+        return dialog
+    }
+
     fun createCountDialog(
         context: Context?,
         caption: String,

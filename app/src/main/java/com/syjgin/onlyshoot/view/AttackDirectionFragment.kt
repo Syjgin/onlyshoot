@@ -74,6 +74,7 @@ class AttackDirectionFragment :
             getString(R.string.enter_attack_amount),
             object : DialogUtils.CountDialogListener {
                 override fun onValueSelected(value: Int, isRandom: Boolean) {
+                    countDialog?.dismiss()
                     val attack =
                         Attack(attackerName, defenderName, listOf(), listOf(), isRandom, value)
                     attackAdapter.addAttack(attack, color)

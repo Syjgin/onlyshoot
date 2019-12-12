@@ -18,7 +18,7 @@
     <string name="damage_template">Урон, d10: %s</string>
     <string name="no_data_for_attack">Добавьте данные отрядов перед атакой</string>
     <string name="save_fight">Введите название боя, если хотите его сохранить</string>
-    <string name="add">добавить</string>
+    <string name="add">Добавить</string>
     <string name="select">Выбрать</string>
     <string name="save">Сохранить</string>
     <string name="attack">Атака</string>

@@ -75,7 +75,7 @@ class AttackDirectionViewModel : BaseViewModel() {
                     attackersSquad.filter { it.name.contains(attack.attackersGroupName) }
                 val defendersUnitIds =
                     defendersSquad.filter { it.name.contains(attack.attackersGroupName) }
-                val attackCountByUnit = attack.count / attack.attackerIds.size
+                val attackCountByUnit = attack.count / attackersUnitIds.size
                 for (attacker in attackersUnitIds) {
                     val freeAttacks = attacker.attackCount - attackCountByUnit
                     if (freeAttacks > 0) {

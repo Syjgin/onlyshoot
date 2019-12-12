@@ -51,7 +51,8 @@ class AttackAdapter(private val listener: AttackDirectionListener) :
     fun addAttack(attack: Attack, color: Int) {
         for(currentAttack in attacks) {
             if (currentAttack.attackersGroupName == attack.attackersGroupName &&
-                currentAttack.defendersGroupName == attack.defendersGroupName
+                currentAttack.defendersGroupName == attack.defendersGroupName &&
+                currentAttack.isRandom == attack.isRandom
             ) {
                 val replacement = Attack(
                     attack.attackersGroupName,

@@ -32,9 +32,6 @@ class AttackResultViewModel : BaseViewModel() {
 
     fun load(attacks: List<Attack>, defendSquadId: Long) {
         viewModelScope.launch {
-            for (attack in attacks) {
-                log("incoming attack: $attack")
-            }
             val random = Random(System.currentTimeMillis())
             val results = mutableListOf<AttackResult>()
             val mutableAttacks = mutableListOf<Attack>()
