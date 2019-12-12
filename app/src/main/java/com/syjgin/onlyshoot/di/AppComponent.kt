@@ -8,6 +8,7 @@ import javax.inject.Singleton
 @Singleton
 interface AppComponent {
     fun inject(viewModel: MainViewModel)
+    fun inject(viewModel: MainFragmentViewModel)
     fun inject(viewModel: FightListViewModel)
     fun inject(viewModel: AddEditFightViewModel)
     fun inject(viewModel: AddEditSquadViewModel)

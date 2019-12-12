@@ -474,4 +474,7 @@
     <string name="defender_hp">hp противника: %d</string>
     <string name="rage_with_armor_save">праведный гнев: поглощение бронёй</string>
     <string name="crit">крит: %d</string>
+    <string name="squads">Отряды</string>
+    <string name="units">Юниты</string>
+    <string name="fights">Бои</string>
 </resources>

@@ -8,7 +8,10 @@ import com.syjgin.onlyshoot.R
 import com.syjgin.onlyshoot.model.UnitArchetype
 import kotlinx.android.synthetic.main.item_archetype_horizontal.view.*
 
-class ArchetypeUnitListAdapter(private val listener: ArchetypeListClickListener) :
+class ArchetypeUnitListAdapter(
+    private val listener: ArchetypeListClickListener,
+    private val isListMode: Boolean
+) :
     RecyclerView.Adapter<ArchetypeUnitListAdapter.SquadUnitViewHolder>() {
     private val data = mutableListOf<UnitArchetype>()
     private val countMap = mutableMapOf<UnitArchetype, Int>()
@@ -24,26 +27,28 @@ class ArchetypeUnitListAdapter(private val listener: ArchetypeListClickListener)
         holder.itemView.setOnClickListener {
             listener.selectUnit(data[holder.adapterPosition])
         }
-        holder.itemView.add_unit.setOnClickListener {
-            val currentArchetype = data[holder.adapterPosition]
-            var currentCount = countMap[currentArchetype]
-            if (currentCount == null)
-                currentCount = 0
-            countMap[currentArchetype] = ++currentCount
-            notifyItemChanged(holder.adapterPosition)
-            listener.archetypeCountChanged()
-        }
-        holder.itemView.remove_unit.setOnClickListener {
-            val currentArchetype = data[holder.adapterPosition]
-            var currentCount2 = countMap[currentArchetype] ?: return@setOnClickListener
-            currentCount2 -= 1
-            if (currentCount2 == 0) {
-                countMap.remove(currentArchetype)
-            } else {
-                countMap[currentArchetype] = currentCount2
+        if (!isListMode) {
+            holder.itemView.add_unit.setOnClickListener {
+                val currentArchetype = data[holder.adapterPosition]
+                var currentCount = countMap[currentArchetype]
+                if (currentCount == null)
+                    currentCount = 0
+                countMap[currentArchetype] = ++currentCount
+                notifyItemChanged(holder.adapterPosition)
+                listener.archetypeCountChanged()
             }
-            notifyItemChanged(holder.adapterPosition)
-            listener.archetypeCountChanged()
+            holder.itemView.remove_unit.setOnClickListener {
+                val currentArchetype = data[holder.adapterPosition]
+                var currentCount2 = countMap[currentArchetype] ?: return@setOnClickListener
+                currentCount2 -= 1
+                if (currentCount2 == 0) {
+                    countMap.remove(currentArchetype)
+                } else {
+                    countMap[currentArchetype] = currentCount2
+                }
+                notifyItemChanged(holder.adapterPosition)
+                listener.archetypeCountChanged()
+            }
         }
         return holder
     }
@@ -63,8 +68,14 @@ class ArchetypeUnitListAdapter(private val listener: ArchetypeListClickListener)
             holder.itemView.context.getString(R.string.damage_template),
             currentUnit.damage
         )
-        val count = countMap[data[position]]
-        holder.itemView.count.text = count?.toString() ?: "0"
+        if (isListMode) {
+            holder.itemView.add_unit.visibility = View.GONE
+            holder.itemView.remove_unit.visibility = View.GONE
+            holder.itemView.count.visibility = View.GONE
+        } else {
+            val count = countMap[data[position]]
+            holder.itemView.count.text = count?.toString() ?: "0"
+        }
     }
 
     fun addData(newData: List<UnitArchetype>) {

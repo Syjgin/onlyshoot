@@ -23,22 +23,30 @@ class SelectUnitFragment : BaseFragment<SelectUnitViewModel>(SelectUnitViewModel
     }
 
     private var squadId = NO_DATA
+    private var isListMode = false
 
-    val adapter = ArchetypeUnitListAdapter(this)
+    lateinit var adapter: ArchetypeUnitListAdapter
 
-    override fun fragmentTitle() = R.string.select_from_archetype
+    override fun fragmentTitle() =
+        if (isListMode) R.string.units else R.string.select_from_archetype
 
     override fun fragmentLayout() = R.layout.fragment_select_squad
 
     override fun parseArguments(args: Bundle) {
         squadId = args.getLong(BundleKeys.SquadId.name)
+        isListMode = args.getBoolean(BundleKeys.ListMode.name)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        adapter = ArchetypeUnitListAdapter(this, isListMode)
         existing_squads.adapter = adapter
-        select_squad.setOnClickListener {
-            viewModel?.addArchetypes(adapter.getCountMap(), squadId)
+        if (isListMode) {
+            select_squad.visibility = View.GONE
+        } else {
+            select_squad.setOnClickListener {
+                viewModel?.addArchetypes(adapter.getCountMap(), squadId)
+            }
         }
         viewModel?.getArchetypeLiveData()?.observe(this, Observer {
             renderData(it)

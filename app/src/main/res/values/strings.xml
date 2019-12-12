@@ -487,4 +487,8 @@ Charge Action within six metres of the target must make a Challenging (+0) Agili
     <string name="defender_hp">enemy\'s hp: %d</string>
     <string name="rage_with_armor_save">rage: armor save</string>
     <string name="crit">crit: %d</string>
+    <string name="squads">Squads</string>
+    <string name="units">Units</string>
+    <string name="fights">Fights</string>
+    <string name="main" translatable="false" />
 </resources>

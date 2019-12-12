@@ -8,6 +8,7 @@ import ru.terrakok.cicerone.android.support.SupportAppScreen
 class OnlyShootScreen(private val screen: ScreenEnum, private val bundle: Bundle? = null) : SupportAppScreen() {
     override fun getFragment(): Fragment {
         return when(screen) {
+            ScreenEnum.Main -> MainFragment.createFragment(bundle)
             ScreenEnum.FightList -> FightListFragment.createFragment(bundle)
             ScreenEnum.AddEditFight -> AddEditFightFragment.createFragment(bundle)
             ScreenEnum.SelectSquad -> SelectSquadFragment.createFragment(bundle)

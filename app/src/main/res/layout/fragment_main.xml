@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_centerInParent="true"
+    android:layout_gravity="center"
+    android:layout_marginStart="@dimen/content_offset"
+    android:layout_marginEnd="@dimen/content_offset"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <Button
+        android:id="@+id/select_squad"
+        style="@style/BottomButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/content_offset"
+        android:text="@string/squads" />
+
+    <Button
+        android:id="@+id/select_unit"
+        style="@style/BottomButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/content_offset"
+        android:text="@string/units" />
+
+    <Button
+        android:id="@+id/select_fights"
+        style="@style/BottomButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/fights" />
+</LinearLayout>

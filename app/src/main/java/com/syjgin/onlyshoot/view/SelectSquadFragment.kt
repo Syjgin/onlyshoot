@@ -29,14 +29,16 @@ class SelectSquadFragment : BaseFragment<SelectSquadViewModel>(SelectSquadViewMo
 
     private var squad: SquadDescription? = null
     private var isAttackers = false
-    private val adapter = SquadSelectAdapter(this)
+    private var isListMode = false
+    private lateinit var adapter: SquadSelectAdapter
 
-    override fun fragmentTitle() = R.string.select_squad
+    override fun fragmentTitle() = if (isListMode) R.string.squads else R.string.select_squad
 
     override fun fragmentLayout() = R.layout.fragment_select_squad
 
     override fun parseArguments(args: Bundle) {
         isAttackers = args.getBoolean(BundleKeys.SelectAttackers.name)
+        isListMode = args.getBoolean(BundleKeys.ListMode.name)
     }
 
     override fun hasBackButton() = true
@@ -55,11 +57,16 @@ class SelectSquadFragment : BaseFragment<SelectSquadViewModel>(SelectSquadViewMo
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        select_squad.setOnClickListener {
-            if(squad != null) {
-                val addEditFightViewModel =
-                    ViewModelProviders.of(activity!!).get(AddEditFightViewModel::class.java)
-                addEditFightViewModel.setSquadAndReturn(squad!!.id, isAttackers)
+        adapter = SquadSelectAdapter(this, isListMode)
+        if (isListMode) {
+            select_squad.visibility = View.GONE
+        } else {
+            select_squad.setOnClickListener {
+                if (squad != null) {
+                    val addEditFightViewModel =
+                        ViewModelProviders.of(activity!!).get(AddEditFightViewModel::class.java)
+                    addEditFightViewModel.setSquadAndReturn(squad!!.id, isAttackers)
+                }
             }
         }
         existing_squads.adapter = adapter

@@ -10,6 +10,6 @@ class MainViewModel : BaseViewModel() {
     }
 
     override fun onFirstLaunch() {
-        router.newRootScreen(OnlyShootScreen(ScreenEnum.FightList))
+        router.newRootScreen(OnlyShootScreen(ScreenEnum.Main))
     }
 }

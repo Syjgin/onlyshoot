@@ -1,6 +1,7 @@
 package com.syjgin.onlyshoot.navigation
 
 enum class ScreenEnum {
+    Main,
     FightList,
     AddEditFight,
     SelectSquad,

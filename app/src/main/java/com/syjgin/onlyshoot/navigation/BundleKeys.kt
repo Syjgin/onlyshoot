@@ -11,5 +11,6 @@ enum class BundleKeys {
     EditArchetype,
     AttackCount,
     Attacks,
-    GroupName
+    GroupName,
+    ListMode
 }

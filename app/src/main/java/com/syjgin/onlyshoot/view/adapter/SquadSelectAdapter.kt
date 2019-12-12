@@ -8,7 +8,10 @@ import com.syjgin.onlyshoot.R
 import com.syjgin.onlyshoot.model.SquadDescription
 import kotlinx.android.synthetic.main.item_squad_list.view.*
 
-class SquadSelectAdapter(private val listener : SquadSelectListener) : RecyclerView.Adapter<SquadSelectAdapter.SquadSelectViewHolder>() {
+class SquadSelectAdapter(
+    private val listener: SquadSelectListener,
+    private val isListMode: Boolean
+) : RecyclerView.Adapter<SquadSelectAdapter.SquadSelectViewHolder>() {
     private val data = mutableListOf<SquadDescription>()
     private var selectedSquad : SquadDescription? = null
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SquadSelectViewHolder {
@@ -41,7 +44,11 @@ class SquadSelectAdapter(private val listener : SquadSelectListener) : RecyclerV
 
     override fun onBindViewHolder(holder: SquadSelectViewHolder, position: Int) {
         holder.itemView.squad_name.text = data[position].name
-        holder.itemView.select_radio_button.isChecked = data[position].id == selectedSquad?.id
+        if (isListMode) {
+            holder.itemView.select_radio_button.visibility = View.GONE
+        } else {
+            holder.itemView.select_radio_button.isChecked = data[position].id == selectedSquad?.id
+        }
     }
 
     fun addData(list: List<SquadDescription>) {

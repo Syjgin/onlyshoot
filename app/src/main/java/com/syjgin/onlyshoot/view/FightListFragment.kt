@@ -29,7 +29,7 @@ class FightListFragment : BaseFragment<FightListViewModel>(FightListViewModel::c
 
     override fun parseArguments(args: Bundle) {}
 
-    override fun hasBackButton() = false
+    override fun hasBackButton() = true
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
