@@ -20,6 +20,7 @@ class AttackResultViewModel : BaseViewModel() {
     private val logData = MutableLiveData<String>()
     private val random = Random(System.currentTimeMillis())
     private val log = StringBuilder()
+    private val context = OnlyShootApp.getInstance().applicationContext
 
     init {
         OnlyShootApp.getInstance().getAppComponent().inject(this)
@@ -72,17 +73,22 @@ class AttackResultViewModel : BaseViewModel() {
                     }
                     log("--------------------------------------")
                     val attacker = database.unitDao().getById(attackerId)!!
-                    log("current defender id: $currentDefender")
+                    log(
+                        String.format(
+                            context.getString(R.string.current_defender_id),
+                            currentDefender
+                        )
+                    )
                     var defender = database.unitDao().getById(currentDefender)
                     if (defender == null) {
                         val defenderDescription =
                             defendersSquadInitialState.findLast { it.id == currentDefender }!!
-                        log("this enemy already dead")
+                        log(context.getString(R.string.already_dead))
                         val result = AttackResult(
                             attacker.name,
                             defenderDescription.name,
                             0,
-                            OnlyShootApp.getInstance().applicationContext.getString(R.string.already_dead),
+                            context.getString(R.string.already_dead),
                             0,
                             AttackResult.ResultState.Death,
                             emptyList(),
@@ -95,7 +101,7 @@ class AttackResultViewModel : BaseViewModel() {
                     val d100 = created100()
                     log("d100: $d100")
                     val fullAttack = attacker.attack + attacker.attackModifier
-                    log("attack value: $fullAttack")
+                    log(String.format(context.getString(R.string.attack_template), fullAttack))
                     if (d100 > fullAttack) {
                         val attackStatus = if (d100 > attacker.missPossibility) {
                             AttackResult.ResultState.Misfire
@@ -112,7 +118,7 @@ class AttackResultViewModel : BaseViewModel() {
                             emptyList(),
                             attacksBySingleUnit
                         )
-                        log("attack failed: $fullAttack")
+                        log(String.format(context.getString(R.string.attack_failed), fullAttack))
                         results.add(result)
                         continue
                     }
@@ -120,7 +126,7 @@ class AttackResultViewModel : BaseViewModel() {
                         val otherDefenders = attack.defenderIds.filter { it != defender!!.id }
                         val otherDefenderId = otherDefenders[random.nextInt(otherDefenders.size)]
                         defender = database.unitDao().getById(otherDefenderId)!!
-                        log("new defender: ${defender.name}")
+                        log(String.format(context.getString(R.string.new_defender), defender.name))
                     }
                     val dozens = d100 / 10
                     val units = d100 % 10
@@ -145,26 +151,53 @@ class AttackResultViewModel : BaseViewModel() {
                             AttackResult.BodyPart.LeftLeg
                         }
                     }
-                    log("reversed d100: $bodyPartIndex part: $firstAttackPart")
+                    log(
+                        String.format(
+                            context.getString(R.string.attack_part),
+                            bodyPartIndex,
+                            firstAttackPart.toString()
+                        )
+                    )
                     val allParts = mutableListOf<AttackResult.BodyPart>()
                     allParts.addAll(getAttackParts(firstAttackPart, attacksBySingleUnit))
-                    log("all attack body parts: $allParts")
+                    log(String.format(context.getString(R.string.all_attack_parts), allParts))
                     var successAttackAmount = attacksBySingleUnit
-                    log("attack count: $successAttackAmount")
+                    log(
+                        String.format(
+                            context.getString(R.string.attack_count),
+                            successAttackAmount
+                        )
+                    )
                     val evasionDice = created100()
                     var successCount = (defender.evasion - evasionDice) / 10
                     if (successCount > successAttackAmount) {
                         successCount = successAttackAmount
                     }
-                    log("previous evasion: ${evasions[defender.id]}")
-                    log("evasion success count: $successCount")
+                    log(
+                        String.format(
+                            context.getString(R.string.previous_evasion),
+                            evasions[defender.id]
+                        )
+                    )
+                    log(String.format(context.getString(R.string.evasion_success), successCount))
                     if (successCount > 0) {
                         evasions[defender.id] = evasions[defender.id]!! - successCount
-                        log("remain evasions for ${defender.name}: ${evasions[defender.id]}")
+                        log(
+                            String.format(
+                                context.getString(R.string.remain_evasions),
+                                defender.name,
+                                evasions[defender.id]
+                            )
+                        )
                         if (evasions[defender.id]!! > 0) {
                             successCount += 1
                             successAttackAmount -= successCount
-                            log("success attack amount after evasion: $successAttackAmount")
+                            log(
+                                String.format(
+                                    context.getString(R.string.attacks_after_evasion),
+                                    successAttackAmount
+                                )
+                            )
                             for (j in 0..successCount) {
                                 if (allParts.isNotEmpty()) {
                                     allParts.removeAt(0)
@@ -173,7 +206,7 @@ class AttackResultViewModel : BaseViewModel() {
                         }
                     }
                     if (successAttackAmount <= 0) {
-                        log("all attacks evaded")
+                        log(context.getString(R.string.all_attacks_evaded))
                         val result = AttackResult(
                             attacker.name,
                             defender.name,
@@ -190,13 +223,24 @@ class AttackResultViewModel : BaseViewModel() {
                     var totalDamage = 0
                     var totalDamageWithoutArmor = 0
                     for (j in 0 until successAttackAmount) {
-                        log("calculating attack: $j")
+                        log(String.format(context.getString(R.string.calculating_attack), j))
                         var currentDamage = 0
-                        log("damage d10 count: ${attacker.damage}")
+                        log(
+                            String.format(
+                                context.getString(R.string.damage_count),
+                                attacker.damage
+                            )
+                        )
                         for (k in 0 until attacker.damage) {
                             currentDamage += random.nextInt(1, 11)
                         }
-                        log("current damage for attack $j: $currentDamage")
+                        log(
+                            String.format(
+                                context.getString(R.string.current_damage),
+                                j,
+                                currentDamage + attacker.constantDamageModifier + attacker.tempDamageModifier
+                            )
+                        )
                         val currentPart =
                             if (j < allParts.size) allParts[j] else allParts[allParts.size - 1]
                         val usualArmor = when (currentPart) {
@@ -221,15 +265,32 @@ class AttackResultViewModel : BaseViewModel() {
                             totalArmor = 0
                         totalDamageWithoutArmor += (currentDamage + attacker.constantDamageModifier + attacker.tempDamageModifier)
                         totalDamage += (currentDamage + attacker.constantDamageModifier + attacker.tempDamageModifier - totalArmor)
-                        log("total damage from all attacks for attack $j with modifier and armor: $totalDamage")
+                        log(
+                            String.format(
+                                context.getString(R.string.damage_for_attack),
+                                j,
+                                totalDamage
+                            )
+                        )
                         if (j < allParts.size) {
-                            log("total armor for attack into ${allParts[j]}: $totalArmor")
+                            log(
+                                String.format(
+                                    context.getString(R.string.armor_for_attack),
+                                    allParts[j],
+                                    totalArmor
+                                )
+                            )
                         }
                     }
-                    log("total damage without armor: $totalDamageWithoutArmor")
-                    log("total damage: $totalDamage")
+                    log(
+                        String.format(
+                            context.getString(R.string.total_damage_without_armor),
+                            totalDamageWithoutArmor
+                        )
+                    )
+                    log(String.format(context.getString(R.string.total_damage), totalDamage))
                     if ((totalDamage >= attacker.rage || totalDamageWithoutArmor >= attacker.rage) && attacker.canUseRage) {
-                        log("rage calculation")
+                        log(context.getString(R.string.rage_calculation))
                         if (totalDamage >= attacker.rage) {
                             log("can use rage")
                             defender.hp -= totalDamage
@@ -253,7 +314,7 @@ class AttackResultViewModel : BaseViewModel() {
                                 log("d5 crit: $d5")
                                 defender.hp -= d5
                                 val crit = CritDescription.generateCrit(
-                                    OnlyShootApp.getInstance().applicationContext,
+                                    context,
                                     d5,
                                     allParts[0],
                                     attacker.damageType
@@ -289,7 +350,7 @@ class AttackResultViewModel : BaseViewModel() {
                                 defender.hp -= attacker.criticalHitModifier
                                 log("crit: $hpBeyound")
                                 val crit = CritDescription.generateCrit(
-                                    OnlyShootApp.getInstance().applicationContext,
+                                    context,
                                     hpBeyound,
                                     allParts[0],
                                     attacker.damageType
@@ -325,7 +386,7 @@ class AttackResultViewModel : BaseViewModel() {
                             defender.hp -= attacker.criticalHitModifier
                             log("crit: $hpBeyound")
                             val crit = CritDescription.generateCrit(
-                                OnlyShootApp.getInstance().applicationContext,
+                                context,
                                 hpBeyound,
                                 allParts[0],
                                 attacker.damageType

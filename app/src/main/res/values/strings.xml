@@ -463,4 +463,23 @@ Charge Action within six metres of the target must make a Challenging (+0) Agili
     <string name="wounded_first">Wounded first</string>
     <string name="already_dead">This enemy already dead</string>
     <string name="attack_amount_template">Attacks amount: %d</string>
+    <string name="current_defender_id">current defender id: %d</string>
+    <string name="attack_failed">attack failed: %d</string>
+    <string name="new_defender">misfire to: %s</string>
+    <string name="attack_part">reversed d100: %1$d part: %2$s</string>
+    <string name="all_attack_parts">all body parts: %s</string>
+    <string name="attack_count">attack count: %d</string>
+    <string name="previous_evasion">previous evasion: %d</string>
+    <string name="evasion_success">evasion success count: %d</string>
+    <string name="remain_evasions">remain evasions count %1$s : %2$d</string>
+    <string name="attacks_after_evasion">success attack amount after evasion: %d</string>
+    <string name="all_attacks_evaded">enemy evaded all attacks</string>
+    <string name="calculating_attack">calculating attack: %d</string>
+    <string name="damage_count">damage d10 count: %d</string>
+    <string name="current_damage">incoming damage for attack %1$d : %2$d</string>
+    <string name="damage_for_attack">full damage after attack %1$d with modifiers &amp; armor: %2$d</string>
+    <string name="armor_for_attack">full armor for attack into %1$d : %2$d</string>
+    <string name="total_damage_without_armor">total damage without armor: %d</string>
+    <string name="total_damage">total damage: %d</string>
+    <string name="rage_calculation">rage calculation</string>
 </resources>
