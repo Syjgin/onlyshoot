@@ -133,6 +133,7 @@
                             android:layout_width="@dimen/armor_input_width"
                             android:layout_height="wrap_content"
                             android:hint="@string/proof_armor"
+                            android:nextFocusDown="@id/normal_armor_right_hand"
                             android:inputType="numberDecimal"
                             tools:ignore="Autofill,LabelFor" />
                     </com.google.android.material.textfield.TextInputLayout>
@@ -178,6 +179,7 @@
                             android:layout_width="@dimen/armor_input_width"
                             android:layout_height="wrap_content"
                             android:hint="@string/proof_armor"
+                            android:nextFocusDown="@id/normal_armor_left_hand"
                             android:inputType="numberDecimal"
                             tools:ignore="Autofill,LabelFor" />
                     </com.google.android.material.textfield.TextInputLayout>
@@ -223,6 +225,7 @@
                             android:layout_width="@dimen/armor_input_width"
                             android:layout_height="wrap_content"
                             android:hint="@string/proof_armor"
+                            android:nextFocusDown="@id/normal_armor_right_leg"
                             android:inputType="numberDecimal"
                             tools:ignore="Autofill,LabelFor" />
                     </com.google.android.material.textfield.TextInputLayout>
@@ -268,6 +271,7 @@
                             android:layout_width="@dimen/armor_input_width"
                             android:layout_height="wrap_content"
                             android:hint="@string/proof_armor"
+                            android:nextFocusDown="@id/normal_armor_torso"
                             android:inputType="numberDecimal"
                             tools:ignore="Autofill,LabelFor" />
                     </com.google.android.material.textfield.TextInputLayout>
@@ -361,6 +365,7 @@
                             android:layout_width="@dimen/armor_input_width"
                             android:layout_height="wrap_content"
                             android:hint="@string/proof_armor"
+                            android:nextFocusDown="@id/normal_armor_left_leg"
                             android:inputType="numberDecimal"
                             tools:ignore="Autofill,LabelFor" />
                     </com.google.android.material.textfield.TextInputLayout>
@@ -394,11 +399,25 @@
                 android:layout_height="wrap_content">
 
                 <androidx.appcompat.widget.AppCompatEditText
-                    android:id="@+id/damage_modifier"
+                    android:id="@+id/constant_damage_modifier"
                     style="@style/TextFieldTheme"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/damage_modifier"
+                    android:hint="@string/constant_damage_modifier"
+                    android:inputType="numberDecimal"
+                    tools:ignore="Autofill,LabelFor" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/temp_damage_modifier"
+                    style="@style/TextFieldTheme"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/temp_damage_modifier"
                     android:inputType="numberDecimal"
                     tools:ignore="Autofill,LabelFor" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -554,7 +573,8 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                tools:ignore="TooManyViews">
 
                 <androidx.appcompat.widget.AppCompatEditText
                     android:id="@+id/critical_ignorance"

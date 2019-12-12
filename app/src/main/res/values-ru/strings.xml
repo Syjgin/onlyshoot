@@ -30,8 +30,9 @@
     <string name="normal_armor">Обычная</string>
     <string name="proof_armor">Непробиваемая</string>
     <string name="damage">Урон</string>
-    <string name="damage_amount">Уровень урона, d10</string>
-    <string name="damage_modifier">Модификатор урона</string>
+    <string name="damage_amount">Количество кубов, d10</string>
+    <string name="constant_damage_modifier">Постоянный модификатор урона</string>
+    <string name="temp_damage_modifier">Временный модификатор урона</string>
     <string name="damage_type">Тип урона</string>
     <string name="explosion">Взрыв</string>
     <string name="cut">Резаный</string>
@@ -41,8 +42,8 @@
     <string name="hp">HP</string>
     <string name="evasion">Уклонение</string>
     <string name="evasion_skill_amount">Уровень навыка уклонения</string>
-    <string name="evasion_attack_amount">Количество атак для уклонения</string>
-    <string name="misfire_possibility">Вероятность осечки</string>
+    <string name="evasion_attack_amount">Количество реакций</string>
+    <string name="misfire_possibility">Нижний порог заклинивания</string>
     <string name="critical_hit">Критический урон</string>
     <string name="critical_hit_ignorance">Игнорирование критического урона</string>
     <string name="critical_hit_modifier">Модификатор критического урона</string>
@@ -51,10 +52,10 @@
     <string name="anger_default">10</string>
     <string name="can_use_anger">Может использовать праведный гнев</string>
     <string name="can_die_from_anger">Может умереть от праведного гнева</string>
-    <string name="archetype">архетип</string>
-    <string name="add_archetype">Добавить архетип</string>
-    <string name="select_from_archetype">Выбрать из архетипов</string>
-    <string name="edit_archetype">Править архетип</string>
+    <string name="archetype">образец</string>
+    <string name="add_archetype">Добавить образец</string>
+    <string name="select_from_archetype">Выбрать из образцов</string>
+    <string name="edit_archetype">Править образец</string>
     <string name="random_attacks">Случайные атаки: %d</string>
     <string name="start_attack">Начать атаку</string>
     <string name="enter_attack_amount">Введите количество атак:</string>

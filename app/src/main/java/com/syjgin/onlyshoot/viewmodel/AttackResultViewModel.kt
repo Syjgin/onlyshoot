@@ -72,6 +72,7 @@ class AttackResultViewModel : BaseViewModel() {
                     }
                     log("--------------------------------------")
                     val attacker = database.unitDao().getById(attackerId)!!
+                    log("current defender id: $currentDefender")
                     var defender = database.unitDao().getById(currentDefender)
                     if (defender == null) {
                         val defenderDescription =
@@ -196,7 +197,8 @@ class AttackResultViewModel : BaseViewModel() {
                             currentDamage += random.nextInt(1, 11)
                         }
                         log("current damage for attack $j: $currentDamage")
-                        val currentPart = allParts[j]
+                        val currentPart =
+                            if (j < allParts.size) allParts[j] else allParts[allParts.size - 1]
                         val usualArmor = when (currentPart) {
                             AttackResult.BodyPart.Head -> defender.usualArmorHead
                             AttackResult.BodyPart.Torso -> defender.usualArmorTorso
@@ -217,10 +219,12 @@ class AttackResultViewModel : BaseViewModel() {
                             usualArmor - attacker.armorPenetration + proofArmor
                         if (totalArmor < 0)
                             totalArmor = 0
-                        totalDamageWithoutArmor += (currentDamage + attacker.damageModifier)
-                        totalDamage += (currentDamage + attacker.damageModifier - totalArmor)
+                        totalDamageWithoutArmor += (currentDamage + attacker.constantDamageModifier + attacker.tempDamageModifier)
+                        totalDamage += (currentDamage + attacker.constantDamageModifier + attacker.tempDamageModifier - totalArmor)
                         log("total damage from all attacks for attack $j with modifier and armor: $totalDamage")
-                        log("total armor for attack into ${allParts[j]}: $totalArmor")
+                        if (j < allParts.size) {
+                            log("total armor for attack into ${allParts[j]}: $totalArmor")
+                        }
                     }
                     log("total damage without armor: $totalDamageWithoutArmor")
                     log("total damage: $totalDamage")
@@ -513,7 +517,7 @@ class AttackResultViewModel : BaseViewModel() {
                     AttackResult.BodyPart.Head
                 )
             }
-            6 -> when (firstPart) {
+            else -> when (firstPart) {
                 AttackResult.BodyPart.Head -> listOf(
                     firstPart,
                     AttackResult.BodyPart.Head,
@@ -563,7 +567,6 @@ class AttackResultViewModel : BaseViewModel() {
                     AttackResult.BodyPart.Torso
                 )
             }
-            else -> emptyList()
         }
     }
 

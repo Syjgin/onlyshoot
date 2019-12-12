@@ -157,7 +157,8 @@ class AddEditUnitFragment : BaseFragment<AddEditUnitViewModel>(AddEditUnitViewMo
             normal_armor_right_leg.text.toString().toInt(),
             proof_armor_right_leg.text.toString().toInt(),
             damage_amount.text.toString().toInt(),
-            damage_modifier.text.toString().toInt(),
+            constant_damage_modifier.text.toString().toInt(),
+            temp_damage_modifier.text.toString().toInt(),
             damageType,
             attack_amount.text.toString().toInt(),
             hp.text.toString().toInt(),
@@ -219,7 +220,8 @@ class AddEditUnitFragment : BaseFragment<AddEditUnitViewModel>(AddEditUnitViewMo
         normal_armor_right_leg.setText(squadUnit.usualArmorRightLeg.toString())
         proof_armor_right_leg.setText(squadUnit.proofArmorRightLeg.toString())
         damage_amount.setText(squadUnit.damage.toString())
-        damage_modifier.setText(squadUnit.damageModifier.toString())
+        constant_damage_modifier.setText(squadUnit.constantDamageModifier.toString())
+        temp_damage_modifier.setText(squadUnit.tempDamageModifier.toString())
         when(squadUnit.damageType) {
             DamageType.Explosion -> explosion.isChecked = true
             DamageType.Cut -> cut.isChecked = true
