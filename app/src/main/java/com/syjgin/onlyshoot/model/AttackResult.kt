@@ -7,7 +7,8 @@ data class AttackResult(
     val description: String,
     val remainHP: Int,
     val resultState: ResultState,
-    val affectedParts: List<BodyPart>
+    val affectedParts: List<BodyPart>,
+    val attackCount: Int
 ) {
     enum class ResultState {
         Hit,

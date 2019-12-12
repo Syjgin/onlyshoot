@@ -48,11 +48,18 @@
         android:layout_marginTop="@dimen/content_offset" />
 
     <TextView
-        android:id="@+id/description"
+        android:id="@+id/attack_count"
         style="@style/TextFieldTheme"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/damage"
+        android:layout_marginTop="@dimen/content_offset" />
+    <TextView
+        android:id="@+id/description"
+        style="@style/TextFieldTheme"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/attack_count"
         android:layout_marginTop="@dimen/content_offset" />
 
     <TextView

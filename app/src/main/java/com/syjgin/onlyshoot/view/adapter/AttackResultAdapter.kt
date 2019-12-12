@@ -37,6 +37,10 @@ class AttackResultAdapter : RecyclerView.Adapter<AttackResultAdapter.AttackResul
             holder.itemView.context.getString(R.string.damage_text),
             currentItem.damage
         )
+        holder.itemView.attack_count.text = String.format(
+            holder.itemView.context.getString(R.string.attack_amount_template),
+            currentItem.attackCount
+        )
         holder.itemView.description.text = currentItem.description
         val partsString = StringBuilder()
         for ((index, part) in currentItem.affectedParts.withIndex()) {

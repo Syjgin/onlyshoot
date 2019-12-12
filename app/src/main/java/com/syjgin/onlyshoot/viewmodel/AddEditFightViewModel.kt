@@ -167,7 +167,7 @@ class AddEditFightViewModel : BaseViewModel() {
     private fun refreshDefenders() {
         viewModelScope.launch {
             val squadDescription = database.squadDescriptionDao().getById(defendersId)
-            val groupList = DbUtils.getGroupListBySquad(database.unitDao().getBySquad(attackersId))
+            val groupList = DbUtils.getGroupListBySquad(database.unitDao().getBySquad(defendersId))
             defendersSquad = Squad(
                 groupList,
                 false,

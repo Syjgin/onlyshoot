@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.syjgin.onlyshoot.R
 import com.syjgin.onlyshoot.di.OnlyShootApp
 import com.syjgin.onlyshoot.model.Attack
 import com.syjgin.onlyshoot.model.AttackResult
@@ -31,13 +32,16 @@ class AttackResultViewModel : BaseViewModel() {
 
     fun load(attacks: List<Attack>, defendSquadId: Long) {
         viewModelScope.launch {
+            for (attack in attacks) {
+                log("incoming attack: $attack")
+            }
             val random = Random(System.currentTimeMillis())
             val results = mutableListOf<AttackResult>()
             val mutableAttacks = mutableListOf<Attack>()
             mutableAttacks.addAll(attacks)
             val evasions = mutableMapOf<Long, Int>()
-            var defendersSquad = database.unitDao().getBySquad(defendSquadId)
-            for (defender in defendersSquad) {
+            val defendersSquadInitialState = database.unitDao().getBySquad(defendSquadId)
+            for (defender in defendersSquadInitialState) {
                 evasions[defender.id] = defender.evasionCount
             }
             for (i in mutableAttacks.indices) {
@@ -47,7 +51,7 @@ class AttackResultViewModel : BaseViewModel() {
                     val currentDefender = if (attack.isRandom) {
                         attack.defenderIds[random.nextInt(attack.defenderIds.size)]
                     } else {
-                        defendersSquad = database.unitDao().getBySquad(defendSquadId)
+                        val defendersSquad = database.unitDao().getBySquad(defendSquadId)
                         var randomDefender: SquadUnit? = null
                         var minHP = Int.MAX_VALUE
                         var result = attack.defenderIds[random.nextInt(attack.defenderIds.size)]
@@ -73,6 +77,20 @@ class AttackResultViewModel : BaseViewModel() {
                     val attacker = database.unitDao().getById(attackerId)!!
                     var defender = database.unitDao().getById(currentDefender)
                     if (defender == null) {
+                        val defenderDescription =
+                            defendersSquadInitialState.findLast { it.id == currentDefender }!!
+                        log("this enemy already dead")
+                        val result = AttackResult(
+                            attacker.name,
+                            defenderDescription.name,
+                            0,
+                            OnlyShootApp.getInstance().applicationContext.getString(R.string.already_dead),
+                            0,
+                            AttackResult.ResultState.Death,
+                            emptyList(),
+                            attacksBySingleUnit
+                        )
+                        results.add(result)
                         continue
                     }
                     log("${attacker.name} -> ${defender.name}")
@@ -93,7 +111,8 @@ class AttackResultViewModel : BaseViewModel() {
                             "",
                             defender.hp,
                             attackStatus,
-                            emptyList()
+                            emptyList(),
+                            attacksBySingleUnit
                         )
                         log("attack failed: $fullAttack")
                         results.add(result)
@@ -164,7 +183,8 @@ class AttackResultViewModel : BaseViewModel() {
                             "",
                             defender.hp,
                             AttackResult.ResultState.Evasion,
-                            emptyList()
+                            emptyList(),
+                            attacksBySingleUnit
                         )
                         results.add(result)
                         continue
@@ -221,7 +241,8 @@ class AttackResultViewModel : BaseViewModel() {
                                     "",
                                     defender.hp,
                                     AttackResult.ResultState.Death,
-                                    allParts
+                                    allParts,
+                                    attacksBySingleUnit
                                 )
                                 results.add(result)
                                 database.unitDao().delete(defender.id)
@@ -243,7 +264,8 @@ class AttackResultViewModel : BaseViewModel() {
                                     crit.description,
                                     defender.hp,
                                     if (crit.isDeath) AttackResult.ResultState.Death else AttackResult.ResultState.Hit,
-                                    allParts
+                                    allParts,
+                                    attacksBySingleUnit
                                 )
                                 results.add(result)
                                 if (crit.isDeath) {
@@ -278,7 +300,8 @@ class AttackResultViewModel : BaseViewModel() {
                                     crit.description,
                                     defender.hp,
                                     if (crit.isDeath) AttackResult.ResultState.Death else AttackResult.ResultState.Hit,
-                                    allParts
+                                    allParts,
+                                    attacksBySingleUnit
                                 )
                                 results.add(result)
                                 if (crit.isDeath) {
@@ -313,7 +336,8 @@ class AttackResultViewModel : BaseViewModel() {
                                 crit.description,
                                 defender.hp,
                                 if (crit.isDeath) AttackResult.ResultState.Death else AttackResult.ResultState.Hit,
-                                allParts
+                                allParts,
+                                attacksBySingleUnit
                             )
                             results.add(result)
                             if (crit.isDeath) {
@@ -332,7 +356,8 @@ class AttackResultViewModel : BaseViewModel() {
                                 "",
                                 defender.hp,
                                 AttackResult.ResultState.Hit,
-                                allParts
+                                allParts,
+                                attacksBySingleUnit
                             )
                             results.add(result)
                             log("defender hp: ${defender.hp}")
@@ -347,7 +372,8 @@ class AttackResultViewModel : BaseViewModel() {
                             "",
                             defender.hp,
                             AttackResult.ResultState.ArmorSave,
-                            allParts
+                            allParts,
+                            attacksBySingleUnit
                         )
                         log("armor save")
                         results.add(result)

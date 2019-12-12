@@ -14,6 +14,7 @@
     <string name="load_defenders">Загрузка защищающихся</string>
     <string name="hp_template">HP: %s</string>
     <string name="attack_template">Атака: %s</string>
+    <string name="attack_amount_template">Число атак: %d</string>
     <string name="damage_template">Урон, d10: %s</string>
     <string name="no_data_for_attack">Добавьте данные отрядов перед атакой</string>
     <string name="save_fight">Введите название боя, если хотите его сохранить</string>
@@ -447,4 +448,5 @@
     <string name="filter_by_name">Фильтр по имени</string>
     <string name="full_random_attack">Полная случайность</string>
     <string name="wounded_first">Сначала - раненых</string>
+    <string name="already_dead">Этот враг уже убит</string>
 </resources>

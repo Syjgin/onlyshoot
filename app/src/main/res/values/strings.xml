@@ -460,4 +460,6 @@ Charge Action within six metres of the target must make a Challenging (+0) Agili
     <string name="filter_by_name">Filter by name</string>
     <string name="full_random_attack">Full random</string>
     <string name="wounded_first">Wounded first</string>
+    <string name="already_dead">This enemy already dead</string>
+    <string name="attack_amount_template">Attacks amount: %d</string>
 </resources>
