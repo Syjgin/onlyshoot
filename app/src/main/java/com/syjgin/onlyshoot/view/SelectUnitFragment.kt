@@ -1,6 +1,9 @@
 package com.syjgin.onlyshoot.view
 
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -35,6 +38,18 @@ class SelectUnitFragment : BaseFragment<SelectUnitViewModel>(SelectUnitViewModel
     override fun parseArguments(args: Bundle) {
         squadId = args.getLong(BundleKeys.SquadId.name)
         isListMode = args.getBoolean(BundleKeys.ListMode.name)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.add_menu, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.add) {
+            viewModel?.addNewArchetype()
+            return true
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

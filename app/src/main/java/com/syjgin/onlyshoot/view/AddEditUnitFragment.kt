@@ -33,7 +33,11 @@ class AddEditUnitFragment : BaseFragment<AddEditUnitViewModel>(AddEditUnitViewMo
     var isArchetypeEditMode = false
 
     override fun fragmentTitle(): Int {
-        return if (isArchetypeEditMode) R.string.edit_archetype else AddEditUtils.getAddEditFragmentTitle(
+        return if (isArchetypeEditMode) AddEditUtils.getAddEditFragmentTitle(
+            arguments,
+            R.string.add_archetype,
+            R.string.edit_archetype
+        ) else AddEditUtils.getAddEditFragmentTitle(
             arguments,
             R.string.add_unit,
             R.string.edit_unit
@@ -124,8 +128,10 @@ class AddEditUnitFragment : BaseFragment<AddEditUnitViewModel>(AddEditUnitViewMo
             saveUnit()
         }
         if (isArchetypeEditMode) {
-            viewModel?.getUnitLiveData()?.observe(this, Observer { loadUnit(it) })
-            viewModel?.loadArchetypeData(unitId)
+            if (isEditMode) {
+                viewModel?.getUnitLiveData()?.observe(this, Observer { loadUnit(it) })
+                viewModel?.loadArchetypeData(unitId)
+            }
         } else if (isEditMode) {
             viewModel?.getUnitLiveData()?.observe(this, Observer { loadUnit(it) })
             viewModel?.loadUnitData(unitId, squadId)

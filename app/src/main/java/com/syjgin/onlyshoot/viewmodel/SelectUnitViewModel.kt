@@ -53,4 +53,11 @@ class SelectUnitViewModel : BaseViewModel() {
         bundle.putLong(BundleKeys.Unit.name, archetype.id)
         router.navigateTo(OnlyShootScreen(ScreenEnum.AddEditUnit, bundle))
     }
+
+    fun addNewArchetype() {
+        val bundle = Bundle()
+        bundle.putBoolean(BundleKeys.AddFlavor.name, true)
+        bundle.putBoolean(BundleKeys.EditArchetype.name, true)
+        router.navigateTo(OnlyShootScreen(ScreenEnum.AddEditUnit, bundle))
+    }
 }

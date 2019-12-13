@@ -111,44 +111,45 @@ class AddEditUnitViewModel : BaseViewModel() {
                     return@launch
                 }
             }
-
-            val squadUnit =
-                SquadUnit(
-                    if(isEditMode) unitId else DbUtils.generateLongUUID(),
-                    archetypeUnitId,
-                    name,
-                    attack,
-                    attackModifier,
-                    armorPenetration,
-                    usualArmorHead,
-                    proofArmorHead,
-                    usualArmorTorso,
-                    proofArmorTorso,
-                    usualArmorLeftHand,
-                    proofArmorLeftHand,
-                    usualArmorRightHand,
-                    proofArmorRightHand,
-                    usualArmorLeftLeg,
-                    proofArmorLeftLeg,
-                    usualArmorRightLeg,
-                    proofArmorRightLeg,
-                    damage,
-                    constDamageModifier,
-                    tempDamageModifier,
-                    damageType,
-                    attackCount,
-                    hp,
-                    evasion,
-                    evasionCount,
-                    missPossibility,
-                    criticalHitAvoidance,
-                    criticalHitModifier,
-                    canUseRage,
-                    deathFromRage,
-                    squadId,
-                    rage
-                )
-            database.unitDao().insert(squadUnit)
+            if (squadId != NO_DATA) {
+                val squadUnit =
+                    SquadUnit(
+                        if (isEditMode) unitId else DbUtils.generateLongUUID(),
+                        archetypeUnitId,
+                        name,
+                        attack,
+                        attackModifier,
+                        armorPenetration,
+                        usualArmorHead,
+                        proofArmorHead,
+                        usualArmorTorso,
+                        proofArmorTorso,
+                        usualArmorLeftHand,
+                        proofArmorLeftHand,
+                        usualArmorRightHand,
+                        proofArmorRightHand,
+                        usualArmorLeftLeg,
+                        proofArmorLeftLeg,
+                        usualArmorRightLeg,
+                        proofArmorRightLeg,
+                        damage,
+                        constDamageModifier,
+                        tempDamageModifier,
+                        damageType,
+                        attackCount,
+                        hp,
+                        evasion,
+                        evasionCount,
+                        missPossibility,
+                        criticalHitAvoidance,
+                        criticalHitModifier,
+                        canUseRage,
+                        deathFromRage,
+                        squadId,
+                        rage
+                    )
+                database.unitDao().insert(squadUnit)
+            }
             router.exit()
         }
     }
