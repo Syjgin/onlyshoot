@@ -29,7 +29,7 @@
     <string name="normal_armor">Normal</string>
     <string name="proof_armor">Proof</string>
     <string name="damage">Damage</string>
-    <string name="damage_amount">Dice amount, d10</string>
+    <string name="damage_amount">d10 dice amount</string>
     <string name="constant_damage_modifier">Constant damage modifier</string>
     <string name="temp_damage_modifier">Temp damage modifier</string>
     <string name="damage_type">Damage type</string>

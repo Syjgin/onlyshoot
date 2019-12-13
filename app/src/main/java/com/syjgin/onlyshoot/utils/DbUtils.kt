@@ -34,7 +34,7 @@ object DbUtils {
             }
         }
         return if (sameNameCount == 0) targetName else String.format(
-            "%s %d",
+            "%s %02d",
             targetName,
             sameNameCount + 1
         )

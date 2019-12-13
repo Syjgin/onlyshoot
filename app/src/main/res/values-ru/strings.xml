@@ -30,7 +30,7 @@
     <string name="normal_armor">Обычная</string>
     <string name="proof_armor">Непробиваемая</string>
     <string name="damage">Урон</string>
-    <string name="damage_amount">Количество кубов, d10</string>
+    <string name="damage_amount">Количество кубов d10</string>
     <string name="constant_damage_modifier">Постоянный модификатор урона</string>
     <string name="temp_damage_modifier">Временный модификатор урона</string>
     <string name="damage_type">Тип урона</string>
