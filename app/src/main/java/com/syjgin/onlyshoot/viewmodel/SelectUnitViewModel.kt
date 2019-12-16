@@ -2,8 +2,10 @@ package com.syjgin.onlyshoot.viewmodel
 
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
+import com.syjgin.onlyshoot.R
 import com.syjgin.onlyshoot.di.OnlyShootApp
 import com.syjgin.onlyshoot.model.UnitArchetype
 import com.syjgin.onlyshoot.navigation.BundleKeys
@@ -59,5 +61,44 @@ class SelectUnitViewModel : BaseViewModel() {
         bundle.putBoolean(BundleKeys.AddFlavor.name, true)
         bundle.putBoolean(BundleKeys.EditArchetype.name, true)
         router.navigateTo(OnlyShootScreen(ScreenEnum.AddEditUnit, bundle))
+    }
+
+    fun deleteArchetype(archetype: UnitArchetype) {
+        viewModelScope.launch {
+            val units = database.unitDao().getByArchetype(archetype.id)
+            if (units.isNotEmpty()) {
+                var isFightWithIncorrectUnitsFound = false
+                val allFights = database.fightDao().getAllSuspend()
+                for (unit in units) {
+                    if (isFightWithIncorrectUnitsFound)
+                        break
+                    val squadId = unit.squadId
+                    for (fight in allFights) {
+                        if (fight.firstSquadId == squadId || fight.secondSquadId == squadId) {
+                            isFightWithIncorrectUnitsFound = true
+                            break
+                        }
+                    }
+                }
+                if (isFightWithIncorrectUnitsFound) {
+                    Toast.makeText(
+                        OnlyShootApp.getInstance().applicationContext,
+                        OnlyShootApp.getInstance().applicationContext.getString(
+                            R.string.cant_delete_archetype
+                        ),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                } else {
+                    for (unit in units) {
+                        val squadId = unit.squadId
+                        database.unitDao().delete(unit.id)
+                        database.squadDescriptionDao().delete(squadId)
+                    }
+                    database.archetypeDao().delete(archetype)
+                }
+            } else {
+                database.archetypeDao().delete(archetype)
+            }
+        }
     }
 }

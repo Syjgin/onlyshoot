@@ -84,6 +84,10 @@ class SelectUnitFragment : BaseFragment<SelectUnitViewModel>(SelectUnitViewModel
         select_squad.isEnabled = false
     }
 
+    override fun deleteUnit(archetype: UnitArchetype) {
+        viewModel?.deleteArchetype(archetype)
+    }
+
     private fun renderData(data: List<UnitArchetype>) {
         adapter.addData(data)
     }

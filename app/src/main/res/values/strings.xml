@@ -491,4 +491,5 @@ Charge Action within six metres of the target must make a Challenging (+0) Agili
     <string name="units">Units</string>
     <string name="fights">Fights</string>
     <string name="main" translatable="false" />
+    <string name="cant_delete_archetype">Can\'t remove sample: dependent units found</string>
 </resources>

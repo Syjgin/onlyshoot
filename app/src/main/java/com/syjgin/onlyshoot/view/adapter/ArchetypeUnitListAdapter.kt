@@ -49,6 +49,11 @@ class ArchetypeUnitListAdapter(
                 notifyItemChanged(holder.adapterPosition)
                 listener.archetypeCountChanged()
             }
+        } else {
+            holder.itemView.completely_remove.setOnClickListener {
+                val currentArchetype = data[holder.adapterPosition]
+                listener.deleteUnit(currentArchetype)
+            }
         }
         return holder
     }
@@ -72,7 +77,9 @@ class ArchetypeUnitListAdapter(
             holder.itemView.add_unit.visibility = View.GONE
             holder.itemView.remove_unit.visibility = View.GONE
             holder.itemView.count.visibility = View.GONE
+            holder.itemView.completely_remove.visibility = View.VISIBLE
         } else {
+            holder.itemView.completely_remove.visibility = View.GONE
             val count = countMap[data[position]]
             holder.itemView.count.text = count?.toString() ?: "0"
         }
@@ -90,6 +97,7 @@ class ArchetypeUnitListAdapter(
 
     interface ArchetypeListClickListener {
         fun selectUnit(archetype: UnitArchetype)
+        fun deleteUnit(archetype: UnitArchetype)
         fun archetypeCountChanged()
     }
 

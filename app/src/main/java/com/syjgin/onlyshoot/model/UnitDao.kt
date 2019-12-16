@@ -11,6 +11,9 @@ interface UnitDao {
     @Query("SELECT * FROM SquadUnit WHERE id = :id")
     suspend fun getById(id: Long) : SquadUnit?
 
+    @Query("SELECT * FROM SquadUnit WHERE parentId = :id")
+    suspend fun getByArchetype(id: Long): List<SquadUnit>
+
     @Query("SELECT * FROM SquadUnit WHERE squadId = :id ORDER BY name")
     suspend fun getBySquad(id: Long) : List<SquadUnit>
 

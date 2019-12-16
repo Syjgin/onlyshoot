@@ -72,5 +72,12 @@
             android:layout_height="@dimen/square_button"
             android:gravity="center"
             tools:text="0" />
+
+        <Button
+            android:id="@+id/completely_remove"
+            android:layout_width="@dimen/square_button"
+            android:layout_height="@dimen/square_button"
+            android:background="@drawable/ic_delete_forever"
+            android:visibility="gone" />
     </LinearLayout>
 </LinearLayout>

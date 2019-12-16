@@ -7,6 +7,9 @@ import androidx.room.*
 interface FightDao {
     @Query("SELECT * FROM Fight ORDER BY date DESC")
     fun getAll() : LiveData<List<Fight>>
+
+    @Query("SELECT * FROM Fight ORDER BY date DESC")
+    suspend fun getAllSuspend(): List<Fight>
     @Query("SELECT * FROM Fight WHERE id = :id")
     suspend fun getById(id: Long) : Fight
     @Insert(onConflict = OnConflictStrategy.REPLACE)

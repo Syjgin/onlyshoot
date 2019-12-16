@@ -477,4 +477,5 @@
     <string name="squads">Отряды</string>
     <string name="units">Юниты</string>
     <string name="fights">Бои</string>
+    <string name="cant_delete_archetype">Невозможно удалить образец: найдены зависящие от него юниты</string>
 </resources>
