@@ -117,7 +117,9 @@ class AttackResultViewModel : BaseViewModel() {
                         continue
                     }
                     if (d100 == fullAttack) {
-                        val otherDefenders = attack.defenderIds.filter { it != defender!!.id }
+                        val defenderSquadIds =
+                            database.unitDao().getBySquad(defendSquadId).map { it.id }
+                        val otherDefenders = defenderSquadIds.filter { it != defender!!.id }
                         val otherDefenderId = otherDefenders[random.nextInt(otherDefenders.size)]
                         defender = database.unitDao().getById(otherDefenderId)!!
                         log(String.format(context.getString(R.string.new_defender), defender.name))
