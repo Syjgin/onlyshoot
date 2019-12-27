@@ -175,8 +175,13 @@ class AttackResultViewModel : BaseViewModel() {
                             evasions[defender.id]
                         )
                     )
-                    log(String.format(context.getString(R.string.evasion_success), successCount))
                     if (successCount > 0) {
+                        log(
+                            String.format(
+                                context.getString(R.string.evasion_success),
+                                successCount
+                            )
+                        )
                         evasions[defender.id] = evasions[defender.id]!! - successCount
                         log(
                             String.format(
