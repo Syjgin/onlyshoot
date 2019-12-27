@@ -473,9 +473,12 @@
     <string name="defender_dead">противник погиб</string>
     <string name="defender_hp">hp противника: %d</string>
     <string name="rage_with_armor_save">праведный гнев: поглощение бронёй</string>
-    <string name="crit">крит: %d</string>
+    <string name="crit">Общий критический урон: %d</string>
     <string name="squads">Отряды</string>
     <string name="units">Юниты</string>
     <string name="fights">Бои</string>
+    <string name="crit_without_avoidance_log">Критический урон без учёта поглощения и модификатора атаки: %d</string>
     <string name="cant_delete_archetype">Невозможно удалить образец: найдены зависящие от него юниты</string>
+    <string name="crit_avoidance_log">Поглощение критического урона: %d</string>
+    <string name="crit_modifier_log">Модификатор крита: %d</string>
 </resources>

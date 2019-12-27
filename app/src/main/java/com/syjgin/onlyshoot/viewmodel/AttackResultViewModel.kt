@@ -345,7 +345,7 @@ class AttackResultViewModel : BaseViewModel() {
                                 continue
                             }
                         } else if (totalDamageWithoutArmor >= attacker.rage) {
-                            defender.hp -= 1
+                            defender.hp -= (totalDamage + 1)
                             log(context.getString(R.string.rage_with_armor_save))
                             if (defender.hp < 0) {
                                 var hpBeyound = (defender.hp * -1) - defender.criticalHitAvoidance
@@ -353,6 +353,24 @@ class AttackResultViewModel : BaseViewModel() {
                                     hpBeyound = 1
                                 hpBeyound += attacker.criticalHitModifier
                                 defender.hp -= attacker.criticalHitModifier
+                                log(
+                                    String.format(
+                                        context.getString(R.string.crit_without_avoidance_log),
+                                        defender.hp * -1
+                                    )
+                                )
+                                log(
+                                    String.format(
+                                        context.getString(R.string.crit_modifier_log),
+                                        attacker.criticalHitModifier
+                                    )
+                                )
+                                log(
+                                    String.format(
+                                        context.getString(R.string.crit_avoidance_log),
+                                        defender.criticalHitAvoidance
+                                    )
+                                )
                                 log(String.format(context.getString(R.string.crit), hpBeyound))
                                 val crit = CritDescription.generateCrit(
                                     context,
@@ -363,7 +381,7 @@ class AttackResultViewModel : BaseViewModel() {
                                 val result = AttackResult(
                                     attacker.name,
                                     defender.name,
-                                    1 + attacker.criticalHitModifier,
+                                    totalDamage + 1 + attacker.criticalHitModifier,
                                     crit.description,
                                     defender.hp,
                                     if (crit.isDeath) AttackResult.ResultState.Death else AttackResult.ResultState.Hit,
@@ -384,6 +402,26 @@ class AttackResultViewModel : BaseViewModel() {
                                     database.unitDao().insert(defender)
                                 }
                                 continue
+                            } else {
+                                val result = AttackResult(
+                                    attacker.name,
+                                    defender.name,
+                                    totalDamage + 1,
+                                    "",
+                                    defender.hp,
+                                    AttackResult.ResultState.Hit,
+                                    allParts,
+                                    attacksBySingleUnit
+                                )
+                                results.add(result)
+                                log(
+                                    String.format(
+                                        context.getString(R.string.defender_hp),
+                                        defender.hp
+                                    )
+                                )
+                                database.unitDao().insert(defender)
+                                continue
                             }
                         }
                     } else if (totalDamage > 0) {
@@ -394,6 +432,24 @@ class AttackResultViewModel : BaseViewModel() {
                                 hpBeyound = 1
                             hpBeyound += attacker.criticalHitModifier
                             defender.hp -= attacker.criticalHitModifier
+                            log(
+                                String.format(
+                                    context.getString(R.string.crit_without_avoidance_log),
+                                    defender.hp * -1
+                                )
+                            )
+                            log(
+                                String.format(
+                                    context.getString(R.string.crit_modifier_log),
+                                    attacker.criticalHitModifier
+                                )
+                            )
+                            log(
+                                String.format(
+                                    context.getString(R.string.crit_avoidance_log),
+                                    defender.criticalHitAvoidance
+                                )
+                            )
                             log(String.format(context.getString(R.string.crit), hpBeyound))
                             val crit = CritDescription.generateCrit(
                                 context,

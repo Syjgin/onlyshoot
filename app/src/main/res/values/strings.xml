@@ -486,10 +486,13 @@ Charge Action within six metres of the target must make a Challenging (+0) Agili
     <string name="defender_dead">enemy is dead</string>
     <string name="defender_hp">enemy\'s hp: %d</string>
     <string name="rage_with_armor_save">rage: armor save</string>
-    <string name="crit">crit: %d</string>
+    <string name="crit">Total critical amount: %d</string>
     <string name="squads">Squads</string>
     <string name="units">Units</string>
     <string name="fights">Fights</string>
     <string name="main" translatable="false" />
     <string name="cant_delete_archetype">Can\'t remove sample: dependent units found</string>
+    <string name="crit_without_avoidance_log">Critical hit without avoidance and attack modifier: %d</string>
+    <string name="crit_avoidance_log">Critical hit avoidance: %d</string>
+    <string name="crit_modifier_log">Critical hit modifier: %d</string>
 </resources>
