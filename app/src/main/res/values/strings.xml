@@ -495,4 +495,5 @@ Charge Action within six metres of the target must make a Challenging (+0) Agili
     <string name="crit_without_avoidance_log">Critical hit without avoidance and attack modifier: %d</string>
     <string name="crit_avoidance_log">Critical hit avoidance: %d</string>
     <string name="crit_modifier_log">Critical hit modifier: %d</string>
+    <string name="next">Next</string>
 </resources>

@@ -481,4 +481,5 @@
     <string name="cant_delete_archetype">Невозможно удалить образец: найдены зависящие от него юниты</string>
     <string name="crit_avoidance_log">Поглощение критического урона: %d</string>
     <string name="crit_modifier_log">Модификатор крита: %d</string>
+    <string name="next">Продолжить</string>
 </resources>

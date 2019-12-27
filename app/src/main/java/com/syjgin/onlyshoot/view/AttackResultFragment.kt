@@ -79,6 +79,9 @@ class AttackResultFragment : BaseFragment<AttackResultViewModel>(AttackResultVie
                 viewModel?.goBack()
             }
         })
+        close.setOnClickListener {
+            viewModel?.goBack()
+        }
     }
 
     private fun handleAttackResults(results: List<AttackResult>) {
