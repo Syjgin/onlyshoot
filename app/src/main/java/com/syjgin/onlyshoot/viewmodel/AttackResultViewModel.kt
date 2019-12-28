@@ -94,9 +94,10 @@ class AttackResultViewModel : BaseViewModel() {
                     log("${attacker.name} -> ${defender.name}")
                     val d100 = created100()
                     log("d100: $d100")
-                    val fullAttack = attacker.attack + attacker.attackModifier
-                    log(String.format(context.getString(R.string.attack_template), fullAttack))
                     val weapon = database.weaponDao().getById(attacker.weaponId)!!
+                    val fullAttack =
+                        attacker.attack + attacker.attackModifier + weapon.attackModifier
+                    log(String.format(context.getString(R.string.attack_template), fullAttack))
                     if (d100 > fullAttack) {
                         val attackStatus = if (d100 > weapon.missPossibility) {
                             AttackResult.ResultState.Misfire
@@ -292,9 +293,10 @@ class AttackResultViewModel : BaseViewModel() {
                         )
                     )
                     log(String.format(context.getString(R.string.total_damage), totalDamage))
-                    if ((totalDamage >= attacker.rage || totalDamageWithoutArmor >= attacker.rage) && attacker.canUseRage) {
+                    val rage = if (attacker.rage > weapon.rage) attacker.rage else weapon.rage
+                    if ((totalDamage >= rage || totalDamageWithoutArmor >= rage) && attacker.canUseRage) {
                         log(context.getString(R.string.rage_calculation))
-                        if (totalDamage >= attacker.rage) {
+                        if (totalDamage >= rage) {
                             defender.hp -= totalDamage
                             if (defender.deathFromRage) {
                                 log(context.getString(R.string.death_from_rage))
@@ -346,7 +348,7 @@ class AttackResultViewModel : BaseViewModel() {
                                 }
                                 continue
                             }
-                        } else if (totalDamageWithoutArmor >= attacker.rage) {
+                        } else if (totalDamageWithoutArmor >= rage) {
                             defender.hp -= (totalDamage + 1)
                             log(context.getString(R.string.rage_with_armor_save))
                             if (defender.hp < 0) {
