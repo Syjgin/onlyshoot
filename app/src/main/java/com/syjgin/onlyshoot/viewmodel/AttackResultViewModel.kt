@@ -3,11 +3,16 @@ package com.syjgin.onlyshoot.viewmodel
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
+import com.syjgin.onlyshoot.R
 import com.syjgin.onlyshoot.di.OnlyShootApp
 import com.syjgin.onlyshoot.model.Attack
 import com.syjgin.onlyshoot.model.AttackResult
+import com.syjgin.onlyshoot.model.CritDescription
+import com.syjgin.onlyshoot.model.SquadUnit
 import com.syjgin.onlyshoot.navigation.OnlyShootScreen
 import com.syjgin.onlyshoot.navigation.ScreenEnum
+import kotlinx.coroutines.launch
 import kotlin.random.Random
 
 class AttackResultViewModel : BaseViewModel() {
@@ -27,7 +32,7 @@ class AttackResultViewModel : BaseViewModel() {
     }
 
     fun load(attacks: List<Attack>, defendSquadId: Long) {
-        /*viewModelScope.launch {
+        viewModelScope.launch {
             val random = Random(System.currentTimeMillis())
             val results = mutableListOf<AttackResult>()
             val mutableAttacks = mutableListOf<Attack>()
@@ -91,8 +96,9 @@ class AttackResultViewModel : BaseViewModel() {
                     log("d100: $d100")
                     val fullAttack = attacker.attack + attacker.attackModifier
                     log(String.format(context.getString(R.string.attack_template), fullAttack))
+                    val weapon = database.weaponDao().getById(attacker.weaponId)!!
                     if (d100 > fullAttack) {
-                        val attackStatus = if (d100 > attacker.missPossibility) {
+                        val attackStatus = if (d100 > weapon.missPossibility) {
                             AttackResult.ResultState.Misfire
                         } else {
                             AttackResult.ResultState.Miss
@@ -221,13 +227,14 @@ class AttackResultViewModel : BaseViewModel() {
                     for (j in 0 until successAttackAmount) {
                         log(String.format(context.getString(R.string.calculating_attack), j))
                         var currentDamage = 0
+                        val damage = weapon.damage
                         log(
                             String.format(
                                 context.getString(R.string.damage_count),
-                                attacker.damage
+                                damage
                             )
                         )
-                        for (k in 0 until attacker.damage) {
+                        for (k in 0 until damage) {
                             currentDamage += random.nextInt(1, 11)
                         }
                         log(
@@ -256,7 +263,7 @@ class AttackResultViewModel : BaseViewModel() {
                             AttackResult.BodyPart.LeftLeg -> defender.proofArmorLeftLeg
                         }
                         var totalArmor =
-                            usualArmor - attacker.armorPenetration + proofArmor
+                            usualArmor - weapon.armorPenetration + proofArmor
                         if (totalArmor < 0)
                             totalArmor = 0
                         totalDamageWithoutArmor += (currentDamage + attacker.constantDamageModifier + attacker.tempDamageModifier)
@@ -312,7 +319,7 @@ class AttackResultViewModel : BaseViewModel() {
                                     context,
                                     d5,
                                     allParts[0],
-                                    attacker.damageType
+                                    weapon.damageType
                                 )
                                 val result = AttackResult(
                                     attacker.name,
@@ -346,8 +353,8 @@ class AttackResultViewModel : BaseViewModel() {
                                 var hpBeyound = (defender.hp * -1) - defender.criticalHitAvoidance
                                 if (hpBeyound <= 0)
                                     hpBeyound = 1
-                                hpBeyound += attacker.criticalHitModifier
-                                defender.hp -= attacker.criticalHitModifier
+                                hpBeyound += weapon.criticalHitModifier
+                                defender.hp -= weapon.criticalHitModifier
                                 log(
                                     String.format(
                                         context.getString(R.string.crit_without_avoidance_log),
@@ -357,7 +364,7 @@ class AttackResultViewModel : BaseViewModel() {
                                 log(
                                     String.format(
                                         context.getString(R.string.crit_modifier_log),
-                                        attacker.criticalHitModifier
+                                        weapon.criticalHitModifier
                                     )
                                 )
                                 log(
@@ -371,12 +378,12 @@ class AttackResultViewModel : BaseViewModel() {
                                     context,
                                     hpBeyound,
                                     allParts[0],
-                                    attacker.damageType
+                                    weapon.damageType
                                 )
                                 val result = AttackResult(
                                     attacker.name,
                                     defender.name,
-                                    totalDamage + 1 + attacker.criticalHitModifier,
+                                    totalDamage + 1 + weapon.criticalHitModifier,
                                     crit.description,
                                     defender.hp,
                                     if (crit.isDeath) AttackResult.ResultState.Death else AttackResult.ResultState.Hit,
@@ -425,8 +432,8 @@ class AttackResultViewModel : BaseViewModel() {
                             var hpBeyound = (defender.hp * -1) - defender.criticalHitAvoidance
                             if (hpBeyound <= 0)
                                 hpBeyound = 1
-                            hpBeyound += attacker.criticalHitModifier
-                            defender.hp -= attacker.criticalHitModifier
+                            hpBeyound += weapon.criticalHitModifier
+                            defender.hp -= weapon.criticalHitModifier
                             log(
                                 String.format(
                                     context.getString(R.string.crit_without_avoidance_log),
@@ -436,7 +443,7 @@ class AttackResultViewModel : BaseViewModel() {
                             log(
                                 String.format(
                                     context.getString(R.string.crit_modifier_log),
-                                    attacker.criticalHitModifier
+                                    weapon.criticalHitModifier
                                 )
                             )
                             log(
@@ -450,12 +457,12 @@ class AttackResultViewModel : BaseViewModel() {
                                 context,
                                 hpBeyound,
                                 allParts[0],
-                                attacker.damageType
+                                weapon.damageType
                             )
                             val result = AttackResult(
                                 attacker.name,
                                 defender.name,
-                                1 + attacker.criticalHitModifier,
+                                1 + weapon.criticalHitModifier,
                                 crit.description,
                                 defender.hp,
                                 if (crit.isDeath) AttackResult.ResultState.Death else AttackResult.ResultState.Hit,
@@ -511,7 +518,7 @@ class AttackResultViewModel : BaseViewModel() {
             }
             resultData.postValue(results)
             logData.postValue(log.toString())
-        }*/
+        }
     }
 
     private fun created100() = random.nextInt(1, 101)

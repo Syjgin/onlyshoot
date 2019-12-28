@@ -69,10 +69,10 @@ class ArchetypeUnitListAdapter(
             holder.itemView.context.getString(R.string.attack_template),
             currentUnit.attack
         )
-        /*holder.itemView.damage.text = String.format(
-            holder.itemView.context.getString(R.string.damage_template),
-            currentUnit.damage
-        )*/
+        holder.itemView.damage.text = String.format(
+            holder.itemView.context.getString(R.string.weapon_template),
+            currentUnit.weaponName
+        )
         if (isListMode) {
             holder.itemView.add_unit.visibility = View.GONE
             holder.itemView.remove_unit.visibility = View.GONE

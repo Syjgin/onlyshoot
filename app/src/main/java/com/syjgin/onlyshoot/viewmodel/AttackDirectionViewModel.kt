@@ -84,23 +84,25 @@ class AttackDirectionViewModel : BaseViewModel() {
             val attackersSquad = database.unitDao().getBySquad(attackersId)
             val defendersSquad = database.unitDao().getBySquad(defendersId)
             val attackCountById = mutableMapOf<Long, Int>()
-            /*for (attackUnit in attackersSquad) {
-                attackCountById[attackUnit.id] = attackUnit.attackCount
-            }*/
+            for (attackUnit in attackersSquad) {
+                val weapon = database.weaponDao().getById(attackUnit.weaponId)!!
+                attackCountById[attackUnit.id] = weapon.attackCount
+            }
             for (attack in attacks) {
                 val attackersUnitIds =
                     attackersSquad.filter { it.name.contains(attack.attackersGroupName) }
                 val defendersUnitIds =
                     defendersSquad.filter { it.name.contains(attack.attackersGroupName) }
                 val attackCountByUnit = attack.count / attackersUnitIds.size
-                /*for (attacker in attackersUnitIds) {
-                    val freeAttacks = attacker.attackCount - attackCountByUnit
+                for (attacker in attackersUnitIds) {
+                    val weapon = database.weaponDao().getById(attacker.weaponId)!!
+                    val freeAttacks = weapon.attackCount - attackCountByUnit
                     if (freeAttacks > 0) {
                         attackCountById[attacker.id] = freeAttacks
                     } else {
                         attackCountById.remove(attacker.id)
                     }
-                }*/
+                }
                 attacks2send.add(
                     Attack(
                         attack.attackersGroupName,

@@ -32,8 +32,8 @@ data class SquadUnit(
     val criticalHitAvoidance: Int,
     val canUseRage: Boolean,
     val deathFromRage: Boolean,
-    val weaponId: Long,
-    val weaponName: String,
+    var weaponId: Long,
+    var weaponName: String,
     var squadId: Long = -1,
     val rage: Int = 10
 ) : Serializable

@@ -13,7 +13,7 @@
     <string name="load_attackers">Load attackers</string>
     <string name="load_defenders">Load defenders</string>
     <string name="hp_template">HP: %s</string>
-    <string name="attack_template">Attack: %s</string>
+    <string name="attack_template">Attack skill: %s</string>
     <string name="weapon_template">Weapon: %s</string>
     <string name="no_data_for_attack">Add squads data before attack</string>
     <string name="save_fight">Enter the name for this fight, if you want to save it</string>

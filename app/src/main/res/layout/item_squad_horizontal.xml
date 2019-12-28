@@ -36,7 +36,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:text="Damage: "
+            tools:text="Weapon: "
             style="@style/TextFieldTheme"
             android:layout_marginBottom="@dimen/field_offset"
             android:id="@+id/damage"/>

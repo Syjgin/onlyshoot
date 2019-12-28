@@ -13,7 +13,7 @@
     <string name="load_attackers">Загрузка атакующих</string>
     <string name="load_defenders">Загрузка защищающихся</string>
     <string name="hp_template">HP: %s</string>
-    <string name="attack_template">Атака: %s</string>
+    <string name="attack_template">Атака (навык): %s</string>
     <string name="attack_amount_template">Число атак: %d</string>
     <string name="weapon_template">Оружие: %s</string>
     <string name="no_data_for_attack">Добавьте данные отрядов перед атакой</string>

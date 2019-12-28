@@ -251,4 +251,34 @@ class AddEditFightViewModel : BaseViewModel() {
                 refreshDefenders()
         }, REFRESH_DELAY)
     }
+
+    fun finishChangeWeapon(
+        groupName: String,
+        previousWeaponId: Long,
+        nextWeaponId: Long,
+        squadId: Long
+    ) {
+        viewModelScope.launch {
+            DbUtils.changeWeaponForSquadGroup(
+                squadId,
+                groupName,
+                previousWeaponId,
+                nextWeaponId,
+                database
+            )
+        }
+    }
+
+    fun changeWeapon(groupName: String, weaponId: Long, attackers: Boolean) {
+        viewModelScope.launch {
+            val bundle = Bundle()
+            bundle.putBoolean(BundleKeys.ListMode.name, false)
+            if (weaponId != NO_DATA) {
+                bundle.putLong(BundleKeys.WeaponId.name, weaponId)
+            }
+            bundle.putLong(BundleKeys.SquadId.name, if (attackers) attackersId else defendersId)
+            bundle.putString(BundleKeys.GroupName.name, groupName)
+            router.navigateTo(OnlyShootScreen(ScreenEnum.SelectWeapon, bundle))
+        }
+    }
 }

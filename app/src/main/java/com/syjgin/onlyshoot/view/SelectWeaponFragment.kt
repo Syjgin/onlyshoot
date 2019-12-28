@@ -13,6 +13,7 @@ import com.syjgin.onlyshoot.model.Weapon
 import com.syjgin.onlyshoot.navigation.BundleKeys
 import com.syjgin.onlyshoot.utils.DbUtils.NO_DATA
 import com.syjgin.onlyshoot.view.adapter.WeaponSelectAdapter
+import com.syjgin.onlyshoot.viewmodel.AddEditFightViewModel
 import com.syjgin.onlyshoot.viewmodel.AddEditUnitViewModel
 import com.syjgin.onlyshoot.viewmodel.SelectWeaponViewModel
 import kotlinx.android.synthetic.main.fragment_select_squad.*
@@ -30,6 +31,9 @@ class SelectWeaponFragment : BaseFragment<SelectWeaponViewModel>(SelectWeaponVie
 
     private var isListMode = false
     private var currentWeaponId = NO_DATA
+    private var previousWeaponId = NO_DATA
+    private var squadId = NO_DATA
+    private var squadGroupName = ""
     private lateinit var adapter: WeaponSelectAdapter
 
     override fun fragmentTitle() = if (isListMode) R.string.arsenal else R.string.select_weapon
@@ -41,6 +45,11 @@ class SelectWeaponFragment : BaseFragment<SelectWeaponViewModel>(SelectWeaponVie
             currentWeaponId = args.getLong(BundleKeys.WeaponId.name)
         }
         isListMode = args.getBoolean(BundleKeys.ListMode.name)
+        squadId = args.getLong(BundleKeys.SquadId.name, NO_DATA)
+        squadGroupName = args.getString(BundleKeys.GroupName.name, "")
+        if (squadGroupName.isNotEmpty()) {
+            previousWeaponId = currentWeaponId
+        }
     }
 
     override fun hasBackButton() = true
@@ -65,9 +74,20 @@ class SelectWeaponFragment : BaseFragment<SelectWeaponViewModel>(SelectWeaponVie
         } else {
             select_squad.setOnClickListener {
                 if (currentWeaponId != NO_DATA) {
-                    val addEditUnitViewModel =
-                        ViewModelProviders.of(activity!!).get(AddEditUnitViewModel::class.java)
-                    addEditUnitViewModel.setWeapon(currentWeaponId)
+                    if (squadGroupName.isNotEmpty() && squadId != NO_DATA) {
+                        val addEditFightViewModel =
+                            ViewModelProviders.of(activity!!).get(AddEditFightViewModel::class.java)
+                        addEditFightViewModel.finishChangeWeapon(
+                            squadGroupName,
+                            previousWeaponId,
+                            currentWeaponId,
+                            squadId
+                        )
+                    } else {
+                        val addEditUnitViewModel =
+                            ViewModelProviders.of(activity!!).get(AddEditUnitViewModel::class.java)
+                        addEditUnitViewModel.setWeapon(currentWeaponId)
+                    }
                 }
             }
         }

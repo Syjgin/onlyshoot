@@ -96,6 +96,10 @@ class AddEditFightFragment : BaseFragment<AddEditFightViewModel>(AddEditFightVie
         viewModel?.removeUnit(groupName, isAttackers)
     }
 
+    override fun changeWeapon(groupName: String, weaponId: Long, isAttackers: Boolean) {
+        viewModel?.changeWeapon(groupName, weaponId, isAttackers)
+    }
+
     private fun setupExisting() {
         if (load_attackers == null)
             return

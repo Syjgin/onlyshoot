@@ -53,6 +53,27 @@ object DbUtils {
         return src.removeDigits()
     }
 
+    suspend fun changeWeaponForSquadGroup(
+        squadId: Long,
+        groupName: String,
+        previousWeaponId: Long,
+        nextWeaponId: Long,
+        database: Database
+    ) {
+        val squad = database.unitDao().getBySquad(squadId)
+        for (squadUnit in squad) {
+            val nameWithoutDigits = squadUnit.name.removeDigits()
+            if (groupName === nameWithoutDigits) {
+                if (previousWeaponId == squadUnit.weaponId) {
+                    squadUnit.weaponId = nextWeaponId
+                    val weapon = database.weaponDao().getById(nextWeaponId)!!
+                    squadUnit.weaponName = weapon.name
+                    database.unitDao().insert(squadUnit)
+                }
+            }
+        }
+    }
+
     fun getGroupListBySquad(
         squad: List<SquadUnit>,
         database: Database,

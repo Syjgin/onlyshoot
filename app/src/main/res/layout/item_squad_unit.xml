@@ -23,14 +23,32 @@
         android:layout_marginBottom="@dimen/field_offset"
         android:gravity="center_horizontal"
         tools:text="1" />
-    <Button
-        android:id="@+id/add_unit"
-        android:layout_width="@dimen/square_button"
-        android:layout_height="@dimen/square_button"
-        android:background="@drawable/ic_add"/>
-    <Button
-        android:id="@+id/remove_unit"
-        android:layout_width="@dimen/square_button"
-        android:layout_height="@dimen/square_button"
-        android:background="@drawable/ic_remove"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/add_unit"
+            style="?android:attr/buttonBarStyle"
+            android:layout_width="@dimen/square_button"
+            android:layout_height="@dimen/square_button"
+            android:background="@drawable/ic_add" />
+
+        <Button
+            android:id="@+id/remove_unit"
+            style="?android:attr/buttonBarStyle"
+            android:layout_width="@dimen/square_button"
+            android:layout_height="@dimen/square_button"
+            android:background="@drawable/ic_remove" />
+
+        <Button
+            android:id="@+id/change_weapon"
+            style="?android:attr/buttonBarStyle"
+            android:layout_width="@dimen/square_button"
+            android:layout_height="@dimen/square_button"
+            android:background="@drawable/ic_knife" />
+    </LinearLayout>
 </LinearLayout>
