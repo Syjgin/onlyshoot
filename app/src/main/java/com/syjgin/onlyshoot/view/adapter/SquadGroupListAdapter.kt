@@ -45,7 +45,8 @@ class SquadGroupListAdapter(
 
     override fun onBindViewHolder(holder: SquadUnitViewHolder, position: Int) {
         val currentUnit = data[position]
-        holder.itemView.caption.text = currentUnit.name
+        holder.itemView.caption.text =
+            String.format("%s (%s)", currentUnit.name, currentUnit.weaponName)
         holder.itemView.amount.text = currentUnit.count.toString()
     }
 

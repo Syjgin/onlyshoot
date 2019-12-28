@@ -33,6 +33,7 @@ data class SquadUnit(
     val canUseRage: Boolean,
     val deathFromRage: Boolean,
     val weaponId: Long,
+    val weaponName: String,
     var squadId: Long = -1,
     val rage: Int = 10
 ) : Serializable

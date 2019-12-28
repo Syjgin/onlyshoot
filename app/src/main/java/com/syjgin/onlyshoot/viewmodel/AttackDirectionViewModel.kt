@@ -9,6 +9,7 @@ import com.syjgin.onlyshoot.di.OnlyShootApp
 import com.syjgin.onlyshoot.model.Attack
 import com.syjgin.onlyshoot.model.AttackList
 import com.syjgin.onlyshoot.model.Squad
+import com.syjgin.onlyshoot.model.UnitGroup
 import com.syjgin.onlyshoot.navigation.BundleKeys
 import com.syjgin.onlyshoot.navigation.OnlyShootScreen
 import com.syjgin.onlyshoot.navigation.ScreenEnum
@@ -29,24 +30,40 @@ class AttackDirectionViewModel : BaseViewModel() {
             this.attackersId = attackersId
             this.defendersId = defendersId
             viewModelScope.launch {
-                val attackersGroupList =
-                    DbUtils.getGroupListBySquad(database.unitDao().getBySquad(attackersId))
-                attackersLiveData.postValue(
-                    Squad(
-                        attackersGroupList,
-                        true,
-                        database.squadDescriptionDao().getById(attackersId)!!.name
-                    )
-                )
-                val defendersGroupList =
-                    DbUtils.getGroupListBySquad(database.unitDao().getBySquad(defendersId))
-                defendersLiveData.postValue(
-                    Squad(
-                        defendersGroupList,
-                        false,
-                        database.squadDescriptionDao().getById(defendersId)!!.name
-                    )
-                )
+                val attackersSquadDescription =
+                    database.squadDescriptionDao().getById(attackersId)!!.name
+                DbUtils.getGroupListBySquad(
+                    database.unitDao().getBySquad(attackersId),
+                    database,
+                    viewModelScope,
+                    object : DbUtils.GroupsCallback {
+                        override fun onGroupsCreationFinished(groups: List<UnitGroup>) {
+                            attackersLiveData.postValue(
+                                Squad(
+                                    groups,
+                                    true,
+                                    attackersSquadDescription
+                                )
+                            )
+                        }
+                    })
+                val defendersSquadDescription =
+                    database.squadDescriptionDao().getById(defendersId)!!.name
+                DbUtils.getGroupListBySquad(
+                    database.unitDao().getBySquad(defendersId),
+                    database,
+                    viewModelScope,
+                    object : DbUtils.GroupsCallback {
+                        override fun onGroupsCreationFinished(groups: List<UnitGroup>) {
+                            attackersLiveData.postValue(
+                                Squad(
+                                    groups,
+                                    false,
+                                    defendersSquadDescription
+                                )
+                            )
+                        }
+                    })
             }
             alreadyLoaded = true
         }

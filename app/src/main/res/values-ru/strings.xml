@@ -15,7 +15,7 @@
     <string name="hp_template">HP: %s</string>
     <string name="attack_template">Атака: %s</string>
     <string name="attack_amount_template">Число атак: %d</string>
-    <string name="damage_template">Урон, d10: %s</string>
+    <string name="weapon_template">Оружие: %s</string>
     <string name="no_data_for_attack">Добавьте данные отрядов перед атакой</string>
     <string name="save_fight">Введите название боя, если хотите его сохранить</string>
     <string name="add">Добавить</string>

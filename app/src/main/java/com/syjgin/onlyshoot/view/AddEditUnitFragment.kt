@@ -147,6 +147,7 @@ class AddEditUnitFragment : BaseFragment<AddEditUnitViewModel>(AddEditUnitViewMo
             can_die_from_anger.isChecked,
             squadId,
             weaponId,
+            load_weapon.text.toString(),
             anger_amount.text.toString().toInt(),
             isEditMode
         )
