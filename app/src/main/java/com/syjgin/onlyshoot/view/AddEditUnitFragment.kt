@@ -46,6 +46,10 @@ class AddEditUnitFragment : BaseFragment<AddEditUnitViewModel>(AddEditUnitViewMo
         )
     }
 
+    override fun getProviderFromFragment(): Boolean {
+        return false
+    }
+
     override fun fragmentLayout() = R.layout.fragment_add_edit_unit
 
     override fun parseArguments(args: Bundle) {

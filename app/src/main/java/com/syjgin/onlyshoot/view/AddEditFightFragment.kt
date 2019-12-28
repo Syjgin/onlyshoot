@@ -4,7 +4,6 @@ import android.app.Dialog
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
-import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -73,11 +72,6 @@ class AddEditFightFragment : BaseFragment<AddEditFightViewModel>(AddEditFightVie
         swap.setOnClickListener {
             viewModel?.swap()
         }
-        requireActivity().onBackPressedDispatcher.addCallback(object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                viewModel?.goBack()
-            }
-        })
     }
 
     override fun onResume() {

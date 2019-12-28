@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.annotation.LayoutRes
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
@@ -55,6 +56,15 @@ abstract class BaseFragment<B: BaseViewModel>(private val viewModelType: Class<B
         (activity as AppCompatActivity?)?.supportActionBar?.setDisplayHomeAsUpEnabled(hasBackButton())
         (activity as AppCompatActivity?)?.supportActionBar?.setDisplayShowHomeEnabled(hasBackButton())
         setHasOptionsMenu(true)
+        requireActivity().onBackPressedDispatcher.addCallback(object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                onBackPressed()
+            }
+        })
+    }
+
+    open fun onBackPressed() {
+        viewModel?.goBack()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

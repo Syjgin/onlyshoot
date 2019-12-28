@@ -67,10 +67,10 @@ class AddEditFightViewModel : BaseViewModel() {
 
     override fun goBack() {
         if(isEditMode) {
-            exit()
+            release()
         } else {
             if(attackersId == NO_DATA || defendersId == NO_DATA) {
-                exit()
+                release()
             } else {
                 saveDialogLiveEvent.postValue(true)
             }
@@ -80,14 +80,14 @@ class AddEditFightViewModel : BaseViewModel() {
     fun saveFight(name: String) {
         Handler(Looper.getMainLooper()).postDelayed(Runnable {
             if (attackersId == NO_DATA || defendersId == NO_DATA) {
-                exit()
+                release()
                 return@Runnable
             }
             val fightId = DbUtils.generateLongUUID()
             val fight = Fight(fightId, name, attackersId, defendersId, System.currentTimeMillis())
             viewModelScope.launch {
                 database.fightDao().insert(fight)
-                exit()
+                release()
             }
         }, REFRESH_DELAY)
     }
@@ -213,11 +213,12 @@ class AddEditFightViewModel : BaseViewModel() {
 
     fun exitWithoutSaving() {
         Handler(Looper.getMainLooper()).postDelayed({
-            exit()
+            release()
         }, REFRESH_DELAY)
     }
 
-    private fun exit() {
+    override fun release() {
+        super.release()
         attackersId = NO_DATA
         defendersId = NO_DATA
         attackLiveData.postValue(Squad(listOf(), true, ""))

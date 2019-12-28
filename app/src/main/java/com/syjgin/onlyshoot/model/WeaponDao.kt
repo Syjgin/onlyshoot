@@ -9,7 +9,7 @@ interface WeaponDao {
     fun getAll(): LiveData<List<Weapon>>
 
     @Query("SELECT * FROM Weapon WHERE id = :id")
-    suspend fun getById(id: Long): Weapon
+    suspend fun getById(id: Long): Weapon?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(weapon: Weapon)

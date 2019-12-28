@@ -112,7 +112,7 @@ class AddEditUnitViewModel : BaseViewModel() {
                     rage)
                 database.archetypeDao().insert(archetype)
                 if (isArchetypeMode) {
-                    router.exit()
+                    goBack()
                     return@launch
                 }
             }
@@ -152,7 +152,7 @@ class AddEditUnitViewModel : BaseViewModel() {
                     )
                 database.unitDao().insert(squadUnit)
             }
-            router.exit()
+            goBack()
         }
     }
 
@@ -183,6 +183,21 @@ class AddEditUnitViewModel : BaseViewModel() {
         }
     }
 
+    override fun goBack() {
+        release()
+        super.goBack()
+    }
+
+    override fun release() {
+        super.release()
+        unitLiveData.postValue(null)
+        unitId = NO_DATA
+        archetypeUnitId = NO_DATA
+        unitName = ""
+        isArchetypeMode = false
+        weaponLiveData.postValue(null)
+    }
+
     fun selectWeapon() {
         val bundle = Bundle()
         bundle.putBoolean(BundleKeys.ListMode.name, false)
@@ -190,6 +205,14 @@ class AddEditUnitViewModel : BaseViewModel() {
             bundle.putLong(BundleKeys.WeaponId.name, squadId)
         }
         router.navigateTo(OnlyShootScreen(ScreenEnum.SelectWeapon, bundle))
+    }
+
+    fun setWeapon(currentWeaponId: Long) {
+        weaponId = currentWeaponId
+        viewModelScope.launch {
+            val weapon = database.weaponDao().getById(weaponId)
+            weaponLiveData.postValue(weapon)
+        }
     }
 
     init {

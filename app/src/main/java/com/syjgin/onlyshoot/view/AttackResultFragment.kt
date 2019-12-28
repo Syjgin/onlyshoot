@@ -5,7 +5,6 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
-import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.squareup.moshi.Moshi
@@ -74,11 +73,6 @@ class AttackResultFragment : BaseFragment<AttackResultViewModel>(AttackResultVie
         })
         if (attacks != null)
             viewModel?.load(attacks!!.attacks, defendSquadId)
-        requireActivity().onBackPressedDispatcher.addCallback(object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                viewModel?.goBack()
-            }
-        })
         close.setOnClickListener {
             viewModel?.goBack()
         }
