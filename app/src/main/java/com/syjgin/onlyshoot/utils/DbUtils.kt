@@ -53,31 +53,51 @@ object DbUtils {
         return src.removeDigits()
     }
 
-    fun getGroupListBySquad(squad: List<SquadUnit>): List<UnitGroup> {
-        val unitMap = mutableMapOf<String, List<SquadUnit>>()
-        for (squadUnit in squad) {
-            val removedDigitsName = squadUnit.name.removeDigits()
-            if (!unitMap.containsKey(removedDigitsName)) {
-                unitMap[removedDigitsName] = listOf(squadUnit)
-            } else {
-                val prevValue = unitMap[removedDigitsName]!!
-                val mutableSquad = mutableListOf<SquadUnit>()
-                mutableSquad.addAll(prevValue)
-                mutableSquad.add(squadUnit)
-                unitMap[removedDigitsName] = mutableSquad
+    fun getGroupListBySquad(
+        squad: List<SquadUnit>,
+        database: Database,
+        viewModelScope: CoroutineScope,
+        groupsCallback: GroupsCallback
+    ) {
+        viewModelScope.launch {
+            val unitMap = mutableMapOf<String, List<SquadUnit>>()
+            for (squadUnit in squad) {
+                val weapon = database.weaponDao().getById(squadUnit.weaponId)!!
+                val removedDigitsName = "${squadUnit.name.removeDigits()} (${weapon.name})"
+                if (!unitMap.containsKey(removedDigitsName)) {
+                    unitMap[removedDigitsName] = listOf(squadUnit)
+                } else {
+                    val prevValue = unitMap[removedDigitsName]!!
+                    val mutableSquad = mutableListOf<SquadUnit>()
+                    mutableSquad.addAll(prevValue)
+                    mutableSquad.add(squadUnit)
+                    unitMap[removedDigitsName] = mutableSquad
+                }
             }
+            val result = mutableListOf<UnitGroup>()
+            for (entry in unitMap.entries) {
+                var attackCount = 0
+                val weapon = database.weaponDao().getById(entry.value[0].weaponId)!!
+                for (squadUnit in entry.value) {
+                    attackCount += weapon.attackCount
+                }
+                val unitGroup =
+                    UnitGroup(
+                        entry.value[0].name.removeDigits(),
+                        weapon.name,
+                        weapon.id,
+                        entry.value.size,
+                        attackCount,
+                        entry.value[0].parentId
+                    )
+                result.add(unitGroup)
+            }
+            groupsCallback.onGroupsCreationFinished(result)
         }
-        val result = mutableListOf<UnitGroup>()
-        /*for (entry in unitMap.entries) {
-            var attackCount = 0
-            for (squadUnit in entry.value) {
-                attackCount += squadUnit.attackCount
-            }
-            val unitGroup =
-                UnitGroup(entry.key, entry.value.size, attackCount, entry.value[0].parentId)
-            result.add(unitGroup)
-        }*/
-        return result
+    }
+
+    interface GroupsCallback {
+        fun onGroupsCreationFinished(groups: List<UnitGroup>)
     }
 
     fun duplicateUnit(

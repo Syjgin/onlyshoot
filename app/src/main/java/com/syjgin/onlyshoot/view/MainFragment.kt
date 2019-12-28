@@ -36,5 +36,8 @@ class MainFragment : BaseFragment<MainFragmentViewModel>(MainFragmentViewModel::
         select_fights.setOnClickListener {
             viewModel?.openFights()
         }
+        select_arsenal.setOnClickListener {
+            viewModel?.openWeapons()
+        }
     }
 }

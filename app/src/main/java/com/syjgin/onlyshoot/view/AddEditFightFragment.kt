@@ -84,8 +84,8 @@ class AddEditFightFragment : BaseFragment<AddEditFightViewModel>(AddEditFightVie
         }
     }
 
-    override fun selectGroup(groupName: String, isAttackers: Boolean) {
-        viewModel?.openGroup(groupName, isAttackers)
+    override fun selectGroup(unitName: String, weaponId: Long, isAttackers: Boolean) {
+        viewModel?.openGroup(unitName, weaponId, isAttackers)
     }
 
     override fun addUnit(archetypeId: Long, isAttackers: Boolean) {

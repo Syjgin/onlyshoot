@@ -9,6 +9,7 @@ import androidx.lifecycle.viewModelScope
 import com.syjgin.onlyshoot.di.OnlyShootApp
 import com.syjgin.onlyshoot.model.Fight
 import com.syjgin.onlyshoot.model.Squad
+import com.syjgin.onlyshoot.model.UnitGroup
 import com.syjgin.onlyshoot.navigation.BundleKeys
 import com.syjgin.onlyshoot.navigation.OnlyShootScreen
 import com.syjgin.onlyshoot.navigation.ScreenEnum
@@ -116,10 +117,11 @@ class AddEditFightViewModel : BaseViewModel() {
         router.navigateTo(OnlyShootScreen(ScreenEnum.SelectUnit, bundle))
     }
 
-    fun openGroup(groupName: String, isAttackers: Boolean) {
+    fun openGroup(unitName: String, weaponId: Long, isAttackers: Boolean) {
         val bundle = Bundle()
         bundle.putBoolean(BundleKeys.AddFlavor.name, false)
-        bundle.putString(BundleKeys.GroupName.name, groupName)
+        bundle.putString(BundleKeys.GroupName.name, unitName)
+        bundle.putLong(BundleKeys.WeaponId.name, weaponId)
         bundle.putLong(BundleKeys.SquadId.name, if (isAttackers) attackersId else defendersId)
         router.navigateTo(OnlyShootScreen(ScreenEnum.AddEditSquad, bundle))
     }
@@ -167,26 +169,40 @@ class AddEditFightViewModel : BaseViewModel() {
     private fun refreshDefenders() {
         viewModelScope.launch {
             val squadDescription = database.squadDescriptionDao().getById(defendersId)
-            val groupList = DbUtils.getGroupListBySquad(database.unitDao().getBySquad(defendersId))
-            defendersSquad = Squad(
-                groupList,
-                false,
-                squadDescription?.name ?: ""
-            )
-            defendLiveData.postValue(defendersSquad)
+            DbUtils.getGroupListBySquad(
+                database.unitDao().getBySquad(defendersId),
+                database,
+                viewModelScope, object : DbUtils.GroupsCallback {
+                    override fun onGroupsCreationFinished(groups: List<UnitGroup>) {
+                        defendersSquad = Squad(
+                            groups,
+                            false,
+                            squadDescription?.name ?: ""
+                        )
+                        defendLiveData.postValue(defendersSquad)
+                    }
+                })
         }
     }
 
     private fun refreshAttackers() {
         viewModelScope.launch {
             val squadDescription = database.squadDescriptionDao().getById(attackersId)
-            val groupList = DbUtils.getGroupListBySquad(database.unitDao().getBySquad(attackersId))
-            attackersSquad = Squad(
-                groupList,
-                true,
-                squadDescription?.name ?: ""
+            DbUtils.getGroupListBySquad(
+                database.unitDao().getBySquad(attackersId),
+                database,
+                viewModelScope,
+                object : DbUtils.GroupsCallback {
+                    override fun onGroupsCreationFinished(groups: List<UnitGroup>) {
+                        attackersSquad = Squad(
+                            groups,
+                            true,
+                            squadDescription?.name ?: ""
+                        )
+                        attackLiveData.postValue(attackersSquad)
+                    }
+                }
             )
-            attackLiveData.postValue(attackersSquad)
         }
     }
 

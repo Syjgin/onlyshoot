@@ -26,4 +26,10 @@ class MainFragmentViewModel : BaseViewModel() {
     fun openFights() {
         router.navigateTo(OnlyShootScreen(ScreenEnum.FightList))
     }
+
+    fun openWeapons() {
+        val bundle = Bundle()
+        bundle.putBoolean(BundleKeys.ListMode.name, true)
+        router.navigateTo(OnlyShootScreen(ScreenEnum.SelectWeapon, bundle))
+    }
 }

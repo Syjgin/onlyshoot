@@ -32,7 +32,9 @@ class AddEditSquadFragment : BaseFragment<AddEditSquadViewModel>(AddEditSquadVie
 
     private var squadId : Long = NO_DATA
     private var isEditMode = false
-    private var filter = ""
+    private var unitFilter = ""
+    private var weaponFilter = NO_DATA
+    private var externalUnitFilter = ""
     private var isDisplayingDialog = false
     private val adapter = SquadUnitListAdapter(this, false)
 
@@ -46,7 +48,8 @@ class AddEditSquadFragment : BaseFragment<AddEditSquadViewModel>(AddEditSquadVie
         isEditMode = !args.getBoolean(BundleKeys.AddFlavor.name)
         if(isEditMode)
             squadId = args.getLong(BundleKeys.SquadId.name)
-        filter = args.getString(BundleKeys.GroupName.name, "")
+        externalUnitFilter = args.getString(BundleKeys.GroupName.name, "")
+        weaponFilter = args.getLong(BundleKeys.WeaponId.name, NO_DATA)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -93,10 +96,10 @@ class AddEditSquadFragment : BaseFragment<AddEditSquadViewModel>(AddEditSquadVie
         }
         if (isEditMode) {
             filter_text.addTextChangedListener {
-                filter = it.toString()
-                adapter.setFilter(filter)
+                unitFilter = it.toString()
+                adapter.setFilter(unitFilter)
             }
-            filter_text.setText(filter)
+            filter_text.setText(unitFilter)
         } else {
             filter_text.visibility = View.GONE
         }
@@ -110,9 +113,9 @@ class AddEditSquadFragment : BaseFragment<AddEditSquadViewModel>(AddEditSquadVie
             }
         })
         if (isEditMode) {
-            viewModel?.loadSquad(squadId)
+            viewModel?.loadSquad(squadId, externalUnitFilter, weaponFilter)
         } else {
-            viewModel?.startObserveSquad()
+            viewModel?.startObserveSquad("", NO_DATA)
         }
         viewModel?.getSquadLiveData()?.observe(this, Observer { showUnitsList(it) })
         viewModel?.getNameLiveData()?.observe(this, Observer { title_text.setText(it) })

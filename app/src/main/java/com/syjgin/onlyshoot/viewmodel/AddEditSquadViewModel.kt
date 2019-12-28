@@ -11,6 +11,7 @@ import com.syjgin.onlyshoot.navigation.BundleKeys
 import com.syjgin.onlyshoot.navigation.OnlyShootScreen
 import com.syjgin.onlyshoot.navigation.ScreenEnum
 import com.syjgin.onlyshoot.utils.DbUtils
+import com.syjgin.onlyshoot.utils.DbUtils.NO_DATA
 import kotlinx.coroutines.launch
 
 class AddEditSquadViewModel : BaseViewModel() {
@@ -23,10 +24,10 @@ class AddEditSquadViewModel : BaseViewModel() {
         OnlyShootApp.getInstance().getAppComponent().inject(this)
     }
 
-    fun loadSquad(id: Long) {
+    fun loadSquad(id: Long, unitFilter: String, weaponFilter: Long) {
         squadId = id
         isEditMode = true
-        startObserveSquad()
+        startObserveSquad(unitFilter, weaponFilter)
         viewModelScope.launch {
             val description = database.squadDescriptionDao().getById(squadId)
             if(description != null) {
@@ -86,7 +87,11 @@ class AddEditSquadViewModel : BaseViewModel() {
         router.navigateTo(OnlyShootScreen(ScreenEnum.SelectUnit, bundle))
     }
 
-    fun startObserveSquad() {
-        squadLiveData = database.unitDao().getBySquadLiveData(squadId)
+    fun startObserveSquad(unitFilter: String, weaponFilter: Long) {
+        squadLiveData = if (unitFilter.isEmpty() && weaponFilter == NO_DATA) {
+            database.unitDao().getBySquadLiveData(squadId)
+        } else {
+            database.unitDao().getBySquadLiveDataWithFilters(squadId, unitFilter, weaponFilter)
+        }
     }
 }

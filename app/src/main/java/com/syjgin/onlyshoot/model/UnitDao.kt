@@ -20,6 +20,13 @@ interface UnitDao {
     @Query("SELECT * FROM SquadUnit WHERE squadId = :id ORDER BY name")
     fun getBySquadLiveData(id: Long) : LiveData<List<SquadUnit>>
 
+    @Query("SELECT * FROM SquadUnit WHERE squadId = :id AND name LIKE :nameFilter AND weaponId = :weaponFilter ORDER BY name")
+    fun getBySquadLiveDataWithFilters(
+        id: Long,
+        nameFilter: String,
+        weaponFilter: Long
+    ): LiveData<List<SquadUnit>>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(fight: SquadUnit)
 

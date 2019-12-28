@@ -24,19 +24,17 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/content_offset"
         android:text="@string/units" />
-
-    <Button
-        android:id="@+id/select_fights"
-        style="@style/BottomButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/content_offset"
-        android:text="@string/fights" />
-
     <Button
         android:id="@+id/select_arsenal"
         style="@style/BottomButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/content_offset"
         android:text="@string/arsenal" />
+    <Button
+        android:id="@+id/select_fights"
+        style="@style/BottomButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/fights" />
 </LinearLayout>
