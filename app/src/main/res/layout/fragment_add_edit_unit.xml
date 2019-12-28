@@ -385,20 +385,6 @@
                 android:layout_height="wrap_content">
 
                 <androidx.appcompat.widget.AppCompatEditText
-                    android:id="@+id/damage_amount"
-                    style="@style/TextFieldTheme"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/damage_amount"
-                    android:inputType="numberDecimal"
-                    tools:ignore="Autofill,LabelFor" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <androidx.appcompat.widget.AppCompatEditText
                     android:id="@+id/constant_damage_modifier"
                     style="@style/TextFieldTheme"
                     android:layout_width="match_parent"
@@ -483,21 +469,6 @@
                 android:layout_height="wrap_content">
 
                 <androidx.appcompat.widget.AppCompatEditText
-                    android:id="@+id/attack_amount"
-                    style="@style/TextFieldTheme"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/content_offset"
-                    android:hint="@string/attack_amount"
-                    android:inputType="numberDecimal"
-                    tools:ignore="Autofill,LabelFor" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <androidx.appcompat.widget.AppCompatEditText
                     android:id="@+id/hp"
                     style="@style/TextFieldTheme"
                     android:layout_width="match_parent"
@@ -549,20 +520,6 @@
                     tools:ignore="Autofill,LabelFor" />
             </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <androidx.appcompat.widget.AppCompatEditText
-                    android:id="@+id/misfire"
-                    style="@style/TextFieldTheme"
-                    android:text="@string/default_misfire"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/misfire_possibility"
-                    android:inputType="numberDecimal"
-                    tools:ignore="Autofill,LabelFor" />
-            </com.google.android.material.textfield.TextInputLayout>
             <TextView
                 android:layout_marginBottom="@dimen/content_offset"
                 android:layout_marginTop="@dimen/content_offset"
@@ -586,20 +543,21 @@
                     tools:ignore="Autofill,LabelFor" />
             </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputLayout
+            <TextView
+                style="@style/TextFieldTheme"
+                android:layout_marginTop="@dimen/content_offset"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                tools:ignore="TooManyViews">
+                android:layout_marginBottom="@dimen/content_offset"
+                android:text="@string/weapon" />
 
-                <androidx.appcompat.widget.AppCompatEditText
-                    android:id="@+id/critical_modifier"
-                    style="@style/TextFieldTheme"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/critical_hit_modifier"
-                    android:inputType="numberDecimal"
-                    tools:ignore="Autofill,LabelFor" />
-            </com.google.android.material.textfield.TextInputLayout>
+            <Button
+                android:id="@+id/load_weapon"
+                style="@style/BottomButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:enabled="false"
+                android:text="@string/load" />
             <TextView
                 android:layout_marginBottom="@dimen/content_offset"
                 android:layout_marginTop="@dimen/content_offset"

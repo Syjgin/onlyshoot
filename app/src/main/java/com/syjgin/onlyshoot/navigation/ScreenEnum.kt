@@ -9,5 +9,7 @@ enum class ScreenEnum {
     AddEditUnit,
     AttackDirection,
     AttackResult,
-    SelectUnit
+    SelectUnit,
+    SelectWeapon,
+    AddEditWeapon
 }

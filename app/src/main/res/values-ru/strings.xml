@@ -482,4 +482,8 @@
     <string name="crit_avoidance_log">Поглощение критического урона: %d</string>
     <string name="crit_modifier_log">Модификатор крита: %d</string>
     <string name="next">Продолжить</string>
+    <string name="arsenal">Арсенал</string>
+    <string name="weapon">Оружие</string>
+    <string name="load">Загрузить</string>
+    <string name="select_weapon">Выбрать оружие</string>
 </resources>

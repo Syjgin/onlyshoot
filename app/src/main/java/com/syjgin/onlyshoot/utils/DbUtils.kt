@@ -68,7 +68,7 @@ object DbUtils {
             }
         }
         val result = mutableListOf<UnitGroup>()
-        for (entry in unitMap.entries) {
+        /*for (entry in unitMap.entries) {
             var attackCount = 0
             for (squadUnit in entry.value) {
                 attackCount += squadUnit.attackCount
@@ -76,7 +76,7 @@ object DbUtils {
             val unitGroup =
                 UnitGroup(entry.key, entry.value.size, attackCount, entry.value[0].parentId)
             result.add(unitGroup)
-        }
+        }*/
         return result
     }
 

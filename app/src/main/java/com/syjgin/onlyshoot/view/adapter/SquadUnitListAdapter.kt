@@ -50,10 +50,10 @@ class SquadUnitListAdapter(
             holder.itemView.context.getString(R.string.attack_template),
             currentUnit.attack
         )
-        holder.itemView.damage.text = String.format(
+        /*holder.itemView.damage.text = String.format(
             holder.itemView.context.getString(R.string.damage_template),
             currentUnit.damage
-        )
+        )*/
     }
 
     fun setFilter(filter: String) {

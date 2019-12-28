@@ -3,16 +3,11 @@ package com.syjgin.onlyshoot.viewmodel
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
-import com.syjgin.onlyshoot.R
 import com.syjgin.onlyshoot.di.OnlyShootApp
 import com.syjgin.onlyshoot.model.Attack
 import com.syjgin.onlyshoot.model.AttackResult
-import com.syjgin.onlyshoot.model.CritDescription
-import com.syjgin.onlyshoot.model.SquadUnit
 import com.syjgin.onlyshoot.navigation.OnlyShootScreen
 import com.syjgin.onlyshoot.navigation.ScreenEnum
-import kotlinx.coroutines.launch
 import kotlin.random.Random
 
 class AttackResultViewModel : BaseViewModel() {
@@ -32,7 +27,7 @@ class AttackResultViewModel : BaseViewModel() {
     }
 
     fun load(attacks: List<Attack>, defendSquadId: Long) {
-        viewModelScope.launch {
+        /*viewModelScope.launch {
             val random = Random(System.currentTimeMillis())
             val results = mutableListOf<AttackResult>()
             val mutableAttacks = mutableListOf<Attack>()
@@ -516,7 +511,7 @@ class AttackResultViewModel : BaseViewModel() {
             }
             resultData.postValue(results)
             logData.postValue(log.toString())
-        }
+        }*/
     }
 
     private fun created100() = random.nextInt(1, 101)

@@ -17,4 +17,5 @@ interface AppComponent {
     fun inject(viewModel: AttackResultViewModel)
     fun inject(viewModel: SelectSquadViewModel)
     fun inject(viewModel: SelectUnitViewModel)
+    fun inject(viewModel: SelectWeaponViewModel)
 }
