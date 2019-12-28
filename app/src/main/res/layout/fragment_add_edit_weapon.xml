@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingStart="@dimen/content_offset"
+            android:paddingEnd="@dimen/content_offset">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/title_text"
+                    style="@style/CaptionFieldTheme"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/name"
+                    android:inputType="textCapSentences"
+                    tools:ignore="Autofill,LabelFor"
+                    tools:text="text" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/attack_modifier"
+                    style="@style/TextFieldTheme"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/attack_skill_modifier"
+                    android:inputType="numberDecimal"
+                    tools:ignore="Autofill,LabelFor" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/attack_count"
+                    style="@style/TextFieldTheme"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/attack_count"
+                    android:inputType="numberDecimal"
+                    tools:ignore="Autofill,LabelFor" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/damage_modifier"
+                    style="@style/TextFieldTheme"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/damage_modifier"
+                    android:inputType="numberDecimal"
+                    tools:ignore="Autofill,LabelFor" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/miss_possibility"
+                    style="@style/TextFieldTheme"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/misfire_possibility"
+                    android:inputType="numberDecimal"
+                    android:text="@string/default_misfire"
+                    tools:ignore="Autofill,LabelFor" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    style="@style/TextFieldTheme"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/content_offset"
+                    android:layout_marginBottom="@dimen/content_offset"
+                    android:text="@string/damage_type" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <RadioGroup
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <androidx.appcompat.widget.AppCompatRadioButton
+                    android:id="@+id/explosion"
+                    style="@style/TextFieldTheme"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/explosion" />
+
+                <androidx.appcompat.widget.AppCompatRadioButton
+                    android:id="@+id/cut"
+                    style="@style/TextFieldTheme"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/cut" />
+
+                <androidx.appcompat.widget.AppCompatRadioButton
+                    android:id="@+id/strike"
+                    style="@style/TextFieldTheme"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/strike" />
+
+                <androidx.appcompat.widget.AppCompatRadioButton
+                    android:id="@+id/energy"
+                    style="@style/TextFieldTheme"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/energy" />
+            </RadioGroup>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/armor_penetration_attack"
+                    style="@style/TextFieldTheme"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/content_offset"
+                    android:hint="@string/armor_penetration_attack"
+                    android:inputType="numberDecimal"
+                    tools:ignore="Autofill,LabelFor" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:ignore="TooManyViews">
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/critical_modifier"
+                    style="@style/TextFieldTheme"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/critical_hit_modifier"
+                    android:inputType="numberDecimal"
+                    tools:ignore="Autofill,LabelFor" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/anger_amount"
+                    style="@style/TextFieldTheme"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/righteous_anger_amount"
+                    android:inputType="numberDecimal"
+                    android:text="@string/anger_default"
+                    tools:ignore="Autofill,LabelFor" />
+            </com.google.android.material.textfield.TextInputLayout>
+        </LinearLayout>
+    </ScrollView>
+
+    <Button
+        android:id="@+id/save_weapon"
+        style="@style/BottomButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:enabled="false"
+        android:text="@string/save" />
+</LinearLayout>

@@ -5,7 +5,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.syjgin.onlyshoot.di.OnlyShootApp
-import com.syjgin.onlyshoot.model.DamageType
 import com.syjgin.onlyshoot.model.SquadUnit
 import com.syjgin.onlyshoot.model.UnitArchetype
 import com.syjgin.onlyshoot.model.Weapon
@@ -49,7 +48,6 @@ class AddEditUnitViewModel : BaseViewModel() {
         name: String,
         attack: Int,
         attackModifier: Int,
-        armorPenetration: Int,
         usualArmorHead: Int,
         proofArmorHead: Int,
         usualArmorTorso: Int,
@@ -64,7 +62,6 @@ class AddEditUnitViewModel : BaseViewModel() {
         proofArmorRightLeg: Int,
         constDamageModifier: Int,
         tempDamageModifier: Int,
-        damageType: DamageType,
         hp: Int,
         evasion: Int,
         evasionCount: Int,
@@ -86,7 +83,6 @@ class AddEditUnitViewModel : BaseViewModel() {
                     name,
                     attack,
                     attackModifier,
-                    armorPenetration,
                     usualArmorHead,
                     proofArmorHead,
                     usualArmorTorso,
@@ -101,7 +97,6 @@ class AddEditUnitViewModel : BaseViewModel() {
                     proofArmorRightLeg,
                     constDamageModifier,
                     tempDamageModifier,
-                    damageType,
                     hp,
                     evasion,
                     evasionCount,
@@ -124,7 +119,6 @@ class AddEditUnitViewModel : BaseViewModel() {
                         name,
                         attack,
                         attackModifier,
-                        armorPenetration,
                         usualArmorHead,
                         proofArmorHead,
                         usualArmorTorso,
@@ -139,7 +133,6 @@ class AddEditUnitViewModel : BaseViewModel() {
                         proofArmorRightLeg,
                         constDamageModifier,
                         tempDamageModifier,
-                        damageType,
                         hp,
                         evasion,
                         evasionCount,

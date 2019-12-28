@@ -9,7 +9,6 @@ import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.syjgin.onlyshoot.R
-import com.syjgin.onlyshoot.model.DamageType
 import com.syjgin.onlyshoot.model.SquadUnit
 import com.syjgin.onlyshoot.model.Weapon
 import com.syjgin.onlyshoot.navigation.BundleKeys
@@ -30,7 +29,6 @@ class AddEditUnitFragment : BaseFragment<AddEditUnitViewModel>(AddEditUnitViewMo
     var unitId : Long = 0
     var squadId: Long = NO_DATA
     var isEditMode = false
-    var isRadioListenersActive = true
     var isArchetypeEditMode = false
     var weaponId: Long = NO_DATA
 
@@ -92,38 +90,11 @@ class AddEditUnitFragment : BaseFragment<AddEditUnitViewModel>(AddEditUnitViewMo
             proof_armor_left_leg,
             normal_armor_right_leg,
             proof_armor_right_leg,
-            armor_penetration_attack,
             evasion_skill,
             critical_ignorance,
             anger_amount)) {
             textField.addTextChangedListener {
                 changeButtonState()
-            }
-            for(checkbox in listOf(
-                explosion,
-                cut,
-                strike,
-                energy
-            )) {
-                checkbox.setOnCheckedChangeListener { checkView, isChecked ->
-                    if(!isRadioListenersActive)
-                        return@setOnCheckedChangeListener
-                    isRadioListenersActive = false
-                    if(isChecked) {
-                        val others = when(checkView) {
-                            explosion -> listOf(cut, strike, energy)
-                            cut -> listOf(explosion, strike, energy)
-                            strike -> listOf(cut, explosion, energy)
-                            energy -> listOf(cut, strike, explosion)
-                            else -> emptyList()
-                        }
-                        for(checkBox in others) {
-                            checkBox.isChecked = false
-                        }
-                    }
-                    isRadioListenersActive = true
-                    changeButtonState()
-                }
             }
             load_weapon.setOnClickListener {
                 viewModel?.selectWeapon()
@@ -150,17 +121,10 @@ class AddEditUnitFragment : BaseFragment<AddEditUnitViewModel>(AddEditUnitViewMo
     }
 
     private fun saveUnit() {
-        val damageType : DamageType = when {
-            explosion.isChecked -> DamageType.Explosion
-            strike.isChecked -> DamageType.Strike
-            cut.isChecked -> DamageType.Cut
-            else -> DamageType.Energy
-        }
         viewModel?.saveUnit(
             title_text.text.toString(),
             attack_skill.text.toString().toInt(),
             attack_modifier.text.toString().toInt(),
-            armor_penetration_attack.text.toString().toInt(),
             normal_armor_head.text.toString().toInt(),
             proof_armor_head.text.toString().toInt(),
             normal_armor_torso.text.toString().toInt(),
@@ -175,7 +139,6 @@ class AddEditUnitFragment : BaseFragment<AddEditUnitViewModel>(AddEditUnitViewMo
             proof_armor_right_leg.text.toString().toInt(),
             constant_damage_modifier.text.toString().toInt(),
             temp_damage_modifier.text.toString().toInt(),
-            damageType,
             hp.text.toString().toInt(),
             evasion_skill.text.toString().toInt(),
             evasion_amount.text.toString().toInt(),
@@ -205,8 +168,6 @@ class AddEditUnitFragment : BaseFragment<AddEditUnitViewModel>(AddEditUnitViewMo
                 proof_armor_left_leg.text?.isNotEmpty() ?: false &&
                 normal_armor_right_leg.text?.isNotEmpty() ?: false &&
                 proof_armor_right_leg.text?.isNotEmpty() ?: false &&
-                (explosion.isChecked || cut.isChecked || strike.isChecked || energy.isChecked) &&
-                armor_penetration_attack.text?.isNotEmpty() ?: false &&
                 evasion_skill.text?.isNotEmpty() ?: false &&
                 critical_ignorance.text?.isNotEmpty() ?: false &&
                 anger_amount.text?.isNotEmpty() ?: false &&
@@ -232,13 +193,6 @@ class AddEditUnitFragment : BaseFragment<AddEditUnitViewModel>(AddEditUnitViewMo
         proof_armor_right_leg.setText(squadUnit.proofArmorRightLeg.toString())
         constant_damage_modifier.setText(squadUnit.constantDamageModifier.toString())
         temp_damage_modifier.setText(squadUnit.tempDamageModifier.toString())
-        when(squadUnit.damageType) {
-            DamageType.Explosion -> explosion.isChecked = true
-            DamageType.Cut -> cut.isChecked = true
-            DamageType.Strike -> strike.isChecked = true
-            DamageType.Energy -> energy.isChecked = true
-        }
-        armor_penetration_attack.setText(squadUnit.armorPenetration.toString())
         evasion_skill.setText(squadUnit.evasion.toString())
         evasion_amount.setText(squadUnit.evasionCount.toString())
         critical_ignorance.setText(squadUnit.criticalHitAvoidance.toString())

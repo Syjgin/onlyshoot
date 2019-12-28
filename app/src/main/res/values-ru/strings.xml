@@ -486,4 +486,7 @@
     <string name="weapon">Оружие</string>
     <string name="load">Загрузить</string>
     <string name="select_weapon">Выбрать оружие</string>
+    <string name="add_weapon">Добавить оружие</string>
+    <string name="edit_weapon">Редактировать оружие</string>
+    <string name="damage_modifier">Модификатор урона</string>
 </resources>

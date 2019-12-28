@@ -13,5 +13,7 @@ data class Weapon(
     val attackCount: Int,
     val missPossibility: Int,
     val criticalHitModifier: Int,
-    val rage: Int
+    val rage: Int,
+    val damageType: DamageType,
+    val armorPenetration: Int
 )
