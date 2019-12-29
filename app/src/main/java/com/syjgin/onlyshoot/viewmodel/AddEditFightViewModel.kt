@@ -126,8 +126,9 @@ class AddEditFightViewModel : BaseViewModel() {
         router.navigateTo(OnlyShootScreen(ScreenEnum.AddEditSquad, bundle))
     }
 
-    fun duplicateUnit(archetypeId: Long, isAttackers: Boolean) {
+    fun duplicateUnit(archetypeId: Long, isAttackers: Boolean, weaponId: Long) {
         DbUtils.duplicateUnit(
+            weaponId,
             viewModelScope,
             database,
             archetypeId,
@@ -264,7 +265,8 @@ class AddEditFightViewModel : BaseViewModel() {
                 groupName,
                 previousWeaponId,
                 nextWeaponId,
-                database
+                database,
+                viewModelScope
             )
         }
     }

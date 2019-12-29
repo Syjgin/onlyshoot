@@ -33,7 +33,11 @@ class SquadGroupListAdapter(
             )
         }
         holder.itemView.add_unit.setOnClickListener {
-            listener.addUnit(data[holder.adapterPosition].archetypeId, isAttackers)
+            listener.addUnit(
+                data[holder.adapterPosition].archetypeId,
+                isAttackers,
+                data[holder.adapterPosition].weaponId
+            )
         }
         holder.itemView.remove_unit.setOnClickListener {
             listener.removeUnit(data[holder.adapterPosition].name, isAttackers)
@@ -65,7 +69,7 @@ class SquadGroupListAdapter(
 
     interface SquadListClickListener {
         fun selectGroup(unitName: String, weaponId: Long, isAttackers: Boolean)
-        fun addUnit(archetypeId: Long, isAttackers: Boolean)
+        fun addUnit(archetypeId: Long, isAttackers: Boolean, weaponId: Long)
         fun removeUnit(groupName: String, isAttackers: Boolean)
         fun changeWeapon(groupName: String, weaponId: Long, isAttackers: Boolean)
     }

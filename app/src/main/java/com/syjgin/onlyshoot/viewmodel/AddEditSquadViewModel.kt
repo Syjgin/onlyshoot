@@ -72,7 +72,13 @@ class AddEditSquadViewModel : BaseViewModel() {
     }
 
     fun duplicateUnit(squadUnit: SquadUnit) {
-        DbUtils.duplicateUnit(viewModelScope, database, squadUnit.parentId, squadId)
+        DbUtils.duplicateUnit(
+            squadUnit.weaponId,
+            viewModelScope,
+            database,
+            squadUnit.parentId,
+            squadId
+        )
     }
 
     fun removeUnit(squadUnit: SquadUnit) {

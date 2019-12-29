@@ -53,22 +53,25 @@ object DbUtils {
         return src.removeDigits()
     }
 
-    suspend fun changeWeaponForSquadGroup(
+    fun changeWeaponForSquadGroup(
         squadId: Long,
         groupName: String,
         previousWeaponId: Long,
         nextWeaponId: Long,
-        database: Database
+        database: Database,
+        viewModelScope: CoroutineScope
     ) {
-        val squad = database.unitDao().getBySquad(squadId)
-        for (squadUnit in squad) {
-            val nameWithoutDigits = squadUnit.name.removeDigits()
-            if (groupName === nameWithoutDigits) {
-                if (previousWeaponId == squadUnit.weaponId) {
-                    squadUnit.weaponId = nextWeaponId
-                    val weapon = database.weaponDao().getById(nextWeaponId)!!
-                    squadUnit.weaponName = weapon.name
-                    database.unitDao().insert(squadUnit)
+        viewModelScope.launch {
+            val squad = database.unitDao().getBySquad(squadId)
+            for (squadUnit in squad) {
+                val nameWithoutDigits = squadUnit.name.removeDigits()
+                if (groupName == nameWithoutDigits) {
+                    if (previousWeaponId == squadUnit.weaponId) {
+                        squadUnit.weaponId = nextWeaponId
+                        val weapon = database.weaponDao().getById(nextWeaponId)!!
+                        squadUnit.weaponName = weapon.name
+                        database.unitDao().insert(squadUnit)
+                    }
                 }
             }
         }
@@ -122,6 +125,7 @@ object DbUtils {
     }
 
     fun duplicateUnit(
+        weaponId: Long,
         viewModelScope: CoroutineScope,
         database: Database,
         archetypeId: Long,
@@ -132,12 +136,15 @@ object DbUtils {
             val targetUnit = database.archetypeDao().getById(archetypeId)
             val squad = database.unitDao().getBySquad(squadId)
             val names = mutableListOf<String>()
+            val weapon = database.weaponDao().getById(weaponId)!!
             for(currentUnit in squad) {
                 names.add(currentUnit.name)
             }
             if(targetUnit != null) {
                 val targetName = getNextUnitName(targetUnit.name, names)
                 val newUnit = targetUnit.convertToSquadUnit(squadId, targetName)
+                newUnit.weaponName = weapon.name
+                newUnit.weaponId = weaponId
                 database.unitDao().insert(newUnit)
             }
             if (callback != null) {

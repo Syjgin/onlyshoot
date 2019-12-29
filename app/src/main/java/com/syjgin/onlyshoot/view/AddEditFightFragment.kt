@@ -88,8 +88,8 @@ class AddEditFightFragment : BaseFragment<AddEditFightViewModel>(AddEditFightVie
         viewModel?.openGroup(unitName, weaponId, isAttackers)
     }
 
-    override fun addUnit(archetypeId: Long, isAttackers: Boolean) {
-        viewModel?.duplicateUnit(archetypeId, isAttackers)
+    override fun addUnit(archetypeId: Long, isAttackers: Boolean, weaponId: Long) {
+        viewModel?.duplicateUnit(archetypeId, isAttackers, weaponId)
     }
 
     override fun removeUnit(groupName: String, isAttackers: Boolean) {

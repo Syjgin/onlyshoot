@@ -16,14 +16,14 @@ import com.syjgin.onlyshoot.utils.DbUtils.NO_DATA
 import kotlinx.coroutines.launch
 
 class AddEditUnitViewModel : BaseViewModel() {
-    private val unitLiveData = MutableLiveData<SquadUnit>()
+    private var unitLiveData = MutableLiveData<SquadUnit>()
     private var unitId : Long = NO_DATA
     private var archetypeUnitId : Long = NO_DATA
     private var squadId : Long = NO_DATA
     private var weaponId: Long = NO_DATA
     private var unitName = ""
     private var isArchetypeMode = false
-    private val weaponLiveData = MutableLiveData<Weapon>()
+    private var weaponLiveData = MutableLiveData<Weapon>()
 
     fun getUnitLiveData() : LiveData<SquadUnit> = unitLiveData
 
@@ -190,7 +190,10 @@ class AddEditUnitViewModel : BaseViewModel() {
 
     override fun release() {
         super.release()
+        unitLiveData = MutableLiveData()
+        weaponLiveData = MutableLiveData()
         unitId = NO_DATA
+        weaponId = NO_DATA
         archetypeUnitId = NO_DATA
         unitName = ""
         isArchetypeMode = false
