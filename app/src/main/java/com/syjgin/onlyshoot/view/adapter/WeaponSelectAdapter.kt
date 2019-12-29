@@ -63,6 +63,16 @@ class WeaponSelectAdapter(
         notifyDataSetChanged()
     }
 
+    fun setSelectedWeapon(weaponId: Long) {
+        for ((index, weapon) in data.withIndex()) {
+            if (weapon.id == weaponId) {
+                selectedWeapon = weapon
+                notifyItemChanged(index)
+                return
+            }
+        }
+    }
+
     interface WeaponSelectListener {
         fun weaponSelected(weapon: Weapon)
         fun weaponEditClick(weapon: Weapon)

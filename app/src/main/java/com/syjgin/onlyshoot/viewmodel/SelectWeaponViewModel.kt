@@ -32,4 +32,8 @@ class SelectWeaponViewModel : BaseViewModel() {
         bundle.putLong(BundleKeys.WeaponId.name, weapon.id)
         router.navigateTo(OnlyShootScreen(ScreenEnum.AddEditWeapon, bundle))
     }
+
+    fun exit() {
+        router.exit()
+    }
 }

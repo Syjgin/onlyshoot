@@ -83,10 +83,12 @@ class SelectWeaponFragment : BaseFragment<SelectWeaponViewModel>(SelectWeaponVie
                             currentWeaponId,
                             squadId
                         )
+                        viewModel?.exit()
                     } else {
                         val addEditUnitViewModel =
                             ViewModelProviders.of(activity!!).get(AddEditUnitViewModel::class.java)
                         addEditUnitViewModel.setWeapon(currentWeaponId)
+                        viewModel?.exit()
                     }
                 }
             }
@@ -97,10 +99,14 @@ class SelectWeaponFragment : BaseFragment<SelectWeaponViewModel>(SelectWeaponVie
 
     private fun showWeapons(weapons: List<Weapon>) {
         adapter.addData(weapons)
+        if (currentWeaponId != NO_DATA) {
+            adapter.setSelectedWeapon(currentWeaponId)
+        }
     }
 
     override fun weaponSelected(weapon: Weapon) {
         select_squad.isEnabled = true
+        currentWeaponId = weapon.id
     }
 
     override fun weaponEditClick(weapon: Weapon) {

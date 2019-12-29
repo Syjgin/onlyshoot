@@ -106,18 +106,19 @@ class AddEditUnitFragment : BaseFragment<AddEditUnitViewModel>(AddEditUnitViewMo
         if (isArchetypeEditMode) {
             if (isEditMode) {
                 viewModel?.getUnitLiveData()?.observe(this, Observer { loadUnit(it) })
-                viewModel?.getWeaponLiveData()?.observe(this, Observer { loadWeapon(it) })
                 viewModel?.loadArchetypeData(unitId)
             }
         } else if (isEditMode) {
             viewModel?.getUnitLiveData()?.observe(this, Observer { loadUnit(it) })
             viewModel?.loadUnitData(unitId, squadId)
         }
+        viewModel?.getWeaponLiveData()?.observe(this, Observer { loadWeapon(it) })
     }
 
     private fun loadWeapon(weapon: Weapon) {
         weaponId = weapon.id
         load_weapon.text = weapon.name
+        changeButtonState()
     }
 
     private fun saveUnit() {

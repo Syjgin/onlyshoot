@@ -32,7 +32,6 @@
     <string name="damage_amount">d10 dice amount</string>
     <string name="constant_damage_modifier">Constant damage modifier</string>
     <string name="temp_damage_modifier">Temp damage modifier</string>
-    <string name="damage_modifier">Damage modifier</string>
     <string name="damage_type">Damage type</string>
     <string name="explosion">Explosion</string>
     <string name="cut">Cut</string>

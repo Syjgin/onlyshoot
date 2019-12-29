@@ -127,8 +127,7 @@ class AddEditWeaponFragment :
                 critical_modifier.text?.isNotEmpty() ?: false &&
                 anger_amount.text?.isNotEmpty() ?: false &&
                 armor_penetration_attack.text?.isNotEmpty() ?: false &&
-                (explosion.isChecked || cut.isChecked || strike.isChecked || energy.isChecked) &&
-                weaponId != NO_DATA
+                (explosion.isChecked || cut.isChecked || strike.isChecked || energy.isChecked)
     }
 
     private fun loadWeapon(weapon: Weapon) {

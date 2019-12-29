@@ -30,6 +30,8 @@ class AddEditUnitViewModel : BaseViewModel() {
     fun getWeaponLiveData(): LiveData<Weapon> = weaponLiveData
 
     fun loadUnitData(unitId: Long, squadId: Long) {
+        if (unitId == this.unitId)
+            return
         this.unitId = unitId
         this.squadId = squadId
         viewModelScope.launch {
@@ -165,6 +167,8 @@ class AddEditUnitViewModel : BaseViewModel() {
     }
 
     fun loadArchetypeData(unitId: Long) {
+        if (unitId == archetypeUnitId)
+            return
         isArchetypeMode = true
         archetypeUnitId = unitId
         viewModelScope.launch {
@@ -186,19 +190,17 @@ class AddEditUnitViewModel : BaseViewModel() {
 
     override fun release() {
         super.release()
-        unitLiveData.postValue(null)
         unitId = NO_DATA
         archetypeUnitId = NO_DATA
         unitName = ""
         isArchetypeMode = false
-        weaponLiveData.postValue(null)
     }
 
     fun selectWeapon() {
         val bundle = Bundle()
         bundle.putBoolean(BundleKeys.ListMode.name, false)
         if (weaponId != NO_DATA) {
-            bundle.putLong(BundleKeys.WeaponId.name, squadId)
+            bundle.putLong(BundleKeys.WeaponId.name, weaponId)
         }
         router.navigateTo(OnlyShootScreen(ScreenEnum.SelectWeapon, bundle))
     }
