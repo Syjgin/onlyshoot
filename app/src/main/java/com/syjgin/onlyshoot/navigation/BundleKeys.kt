@@ -12,6 +12,7 @@ enum class BundleKeys {
     AttackCount,
     Attacks,
     GroupName,
+    WeaponName,
     ListMode,
     WeaponId
 }

@@ -52,10 +52,12 @@ class AttackAdapter(private val listener: AttackDirectionListener) :
         for(currentAttack in attacks) {
             if (currentAttack.attackersGroupName == attack.attackersGroupName &&
                 currentAttack.defendersGroupName == attack.defendersGroupName &&
-                currentAttack.isRandom == attack.isRandom
+                currentAttack.isRandom == attack.isRandom &&
+                currentAttack.attackersWeaponName == attack.attackersWeaponName
             ) {
                 val replacement = Attack(
                     attack.attackersGroupName,
+                    attack.attackersWeaponName,
                     attack.defendersGroupName,
                     listOf(),
                     listOf(),
@@ -88,11 +90,15 @@ class AttackAdapter(private val listener: AttackDirectionListener) :
             holder.itemView.setOnLongClickListener {
                 val itemType = itemTypes[holder.adapterPosition]
                 val attacker = attackers[itemType.index]
-                if (freeAttacks[attacker.name] == 0)
+                if (freeAttacks[attacker.name + attacker.weaponName] == 0)
                     return@setOnLongClickListener false
                 val bundle = Bundle()
                 bundle.putString(BundleKeys.GroupName.name, attacker.name)
-                bundle.putInt(BundleKeys.AttackCount.name, freeAttacks[attacker.name]!!)
+                bundle.putString(BundleKeys.WeaponName.name, attacker.weaponName)
+                bundle.putInt(
+                    BundleKeys.AttackCount.name,
+                    freeAttacks[attacker.name + attacker.weaponName]!!
+                )
                 val intent = Intent()
                 intent.putExtras(bundle)
                 val item = ClipData.Item(intent)
@@ -137,9 +143,13 @@ class AttackAdapter(private val listener: AttackDirectionListener) :
         if (holder is AttackerViewHolder) {
             holder.itemView.border.visibility = if (position == 0) View.GONE else View.VISIBLE
             val itemType = itemTypes[position]
-            holder.itemView.unit_name.text = attackers[itemType.index].name
+            holder.itemView.unit_name.text = String.format(
+                "%s (%s)",
+                attackers[itemType.index].name,
+                attackers[itemType.index].weaponName
+            )
             holder.itemView.attack_count.text =
-                freeAttacks[attackers[itemType.index].name].toString()
+                freeAttacks[attackers[itemType.index].name + attackers[itemType.index].weaponName].toString()
         } else {
             val itemType = itemTypes[position]
             holder.itemView.random_indicator.visibility =
@@ -160,12 +170,12 @@ class AttackAdapter(private val listener: AttackDirectionListener) :
             var currentFreeAttacks = attackers[i].attackCount
             itemTypes.add(ItemType(true, i))
             for (j in attacks.indices) {
-                if (attacks[j].attackersGroupName == attackers[i].name) {
+                if (attacks[j].attackersGroupName == attackers[i].name && attacks[j].attackersWeaponName == attackers[i].weaponName) {
                     currentFreeAttacks -= attacks[j].count
                     itemTypes.add(ItemType(false, j))
                 }
             }
-            freeAttacks[attackers[i].name] = currentFreeAttacks
+            freeAttacks[attackers[i].name + attackers[i].weaponName] = currentFreeAttacks
         }
     }
 

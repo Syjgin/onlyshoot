@@ -9,7 +9,7 @@ data class Fight(
     @PrimaryKey
     val id: Long,
     val name: String,
-    val firstSquadId: Long,
-    val secondSquadId: Long,
+    var firstSquadId: Long,
+    var secondSquadId: Long,
     val date: Long
     ) : Serializable

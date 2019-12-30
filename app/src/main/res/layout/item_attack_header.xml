@@ -28,7 +28,6 @@
             android:layout_marginEnd="@dimen/content_offset"
             android:ellipsize="end"
             android:lines="1"
-            android:maxWidth="100dp"
             tools:text="Ork1, Ork2Ork1, Ork2Ork1, Ork2" />
 
         <View

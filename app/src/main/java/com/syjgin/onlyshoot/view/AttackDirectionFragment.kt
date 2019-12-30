@@ -64,6 +64,7 @@ class AttackDirectionFragment :
 
     override fun onAttackDirectionFinished(
         attackerName: String,
+        weaponName: String,
         defenderName: String,
         count: Int,
         color: Int
@@ -76,7 +77,15 @@ class AttackDirectionFragment :
                 override fun onValueSelected(value: Int, isRandom: Boolean) {
                     countDialog?.dismiss()
                     val attack =
-                        Attack(attackerName, defenderName, listOf(), listOf(), isRandom, value)
+                        Attack(
+                            attackerName,
+                            weaponName,
+                            defenderName,
+                            listOf(),
+                            listOf(),
+                            isRandom,
+                            value
+                        )
                     attackAdapter.addAttack(attack, color)
                     remainAttacks -= value
                     updateRandomAttacksCount()

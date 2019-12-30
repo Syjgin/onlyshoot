@@ -49,21 +49,10 @@ class AttackDirectionViewModel : BaseViewModel() {
                     })
                 val defendersSquadDescription =
                     database.squadDescriptionDao().getById(defendersId)!!.name
-                DbUtils.getGroupListBySquad(
-                    database.unitDao().getBySquad(defendersId),
-                    database,
-                    viewModelScope,
-                    object : DbUtils.GroupsCallback {
-                        override fun onGroupsCreationFinished(groups: List<UnitGroup>) {
-                            attackersLiveData.postValue(
-                                Squad(
-                                    groups,
-                                    false,
-                                    defendersSquadDescription
-                                )
-                            )
-                        }
-                    })
+                val defenderGroups = DbUtils.getGroupListBySquadForDefence(
+                    database.unitDao().getBySquad(defendersId)
+                )
+                defendersLiveData.postValue(Squad(defenderGroups, false, defendersSquadDescription))
             }
             alreadyLoaded = true
         }
@@ -91,8 +80,9 @@ class AttackDirectionViewModel : BaseViewModel() {
             for (attack in attacks) {
                 val attackersUnitIds =
                     attackersSquad.filter { it.name.contains(attack.attackersGroupName) }
+                        .filter { it.weaponName == attack.attackersWeaponName }
                 val defendersUnitIds =
-                    defendersSquad.filter { it.name.contains(attack.attackersGroupName) }
+                    defendersSquad.filter { it.name.contains(attack.defendersGroupName) }
                 val attackCountByUnit = attack.count / attackersUnitIds.size
                 for (attacker in attackersUnitIds) {
                     val weapon = database.weaponDao().getById(attacker.weaponId)!!
@@ -106,6 +96,7 @@ class AttackDirectionViewModel : BaseViewModel() {
                 attacks2send.add(
                     Attack(
                         attack.attackersGroupName,
+                        attack.attackersWeaponName,
                         attack.defendersGroupName,
                         attackersUnitIds.map { it.id },
                         defendersUnitIds.map { it.id },
@@ -120,6 +111,7 @@ class AttackDirectionViewModel : BaseViewModel() {
                 val currentFreeAttackCount = attackCountById[currentUnitId]!!
                 val defenderId = defendersSquad[random.nextInt(defendersSquad.size)].id
                 val attack = Attack(
+                    "",
                     "",
                     "",
                     listOf(currentUnitId),

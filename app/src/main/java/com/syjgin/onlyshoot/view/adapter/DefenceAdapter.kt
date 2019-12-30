@@ -38,10 +38,12 @@ class DefenceAdapter(private val attackDirectionListener: AttackDirectionListene
                 val clipdata = event.clipData
                 val intent = clipdata.getItemAt(0).intent
                 val attackGroupId = intent.getStringExtra(BundleKeys.GroupName.name)
+                val attackWeaponName = intent.getStringExtra(BundleKeys.WeaponName.name)
                 val attackCount = intent.getIntExtra(BundleKeys.AttackCount.name, 0)
                 val defender = data[holder.adapterPosition]
                 attackDirectionListener.onAttackDirectionFinished(
                     attackGroupId,
+                    attackWeaponName,
                     defender.name,
                     attackCount,
                     colorsOfDefenders[holder.adapterPosition]

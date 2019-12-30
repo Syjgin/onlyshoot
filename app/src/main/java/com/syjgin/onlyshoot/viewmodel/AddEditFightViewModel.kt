@@ -30,6 +30,7 @@ class AddEditFightViewModel : BaseViewModel() {
     private var attackersSquad: Squad? = null
     private var defendersSquad: Squad? = null
     private var isEditMode = false
+    private var fight: Fight? = null
 
     init {
         OnlyShootApp.getInstance().getAppComponent().inject(this)
@@ -44,6 +45,7 @@ class AddEditFightViewModel : BaseViewModel() {
     }
 
     fun renderFight(fight: Fight) {
+        this.fight = fight
         isEditMode = true
         attackersId = fight.firstSquadId
         defendersId = fight.secondSquadId
@@ -155,6 +157,13 @@ class AddEditFightViewModel : BaseViewModel() {
         val tempId = attackersId
         attackersId = defendersId
         defendersId = tempId
+        if (fight != null) {
+            viewModelScope.launch {
+                fight?.firstSquadId = attackersId
+                fight?.secondSquadId = defendersId
+                database.fightDao().insert(fight!!)
+            }
+        }
         if (attackersId != NO_DATA) {
             refreshAttackers()
         } else {

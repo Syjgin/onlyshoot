@@ -124,6 +124,29 @@ object DbUtils {
         fun onGroupsCreationFinished(groups: List<UnitGroup>)
     }
 
+    fun getGroupListBySquadForDefence(squad: List<SquadUnit>): List<UnitGroup> {
+        val unitMap = mutableMapOf<String, List<SquadUnit>>()
+        for (squadUnit in squad) {
+            val removedDigitsName = squadUnit.name.removeDigits()
+            if (!unitMap.containsKey(removedDigitsName)) {
+                unitMap[removedDigitsName] = listOf(squadUnit)
+            } else {
+                val prevValue = unitMap[removedDigitsName]!!
+                val mutableSquad = mutableListOf<SquadUnit>()
+                mutableSquad.addAll(prevValue)
+                mutableSquad.add(squadUnit)
+                unitMap[removedDigitsName] = mutableSquad
+            }
+        }
+        val result = mutableListOf<UnitGroup>()
+        for (entry in unitMap.entries) {
+            val unitGroup =
+                UnitGroup(entry.key, "", NO_DATA, entry.value.size, 0, entry.value[0].parentId)
+            result.add(unitGroup)
+        }
+        return result
+    }
+
     fun duplicateUnit(
         weaponId: Long,
         viewModelScope: CoroutineScope,
