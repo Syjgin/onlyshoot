@@ -133,11 +133,11 @@ class AddEditWeaponFragment :
     private fun loadWeapon(weapon: Weapon) {
         title_text.setText(weapon.name)
         attack_modifier.setText(weapon.attackModifier.toString())
-        damage_modifier.setText(weapon.armorPenetration.toString())
-        attack_count.setText(weapon.armorPenetration.toString())
-        miss_possibility.setText(weapon.armorPenetration.toString())
-        critical_modifier.setText(weapon.armorPenetration.toString())
-        anger_amount.setText(weapon.armorPenetration.toString())
+        damage_modifier.setText(weapon.damage.toString())
+        attack_count.setText(weapon.attackCount.toString())
+        miss_possibility.setText(weapon.missPossibility.toString())
+        critical_modifier.setText(weapon.criticalHitModifier.toString())
+        anger_amount.setText(weapon.rage.toString())
         armor_penetration_attack.setText(weapon.armorPenetration.toString())
         when (weapon.damageType) {
             DamageType.Explosion -> explosion.isChecked = true
