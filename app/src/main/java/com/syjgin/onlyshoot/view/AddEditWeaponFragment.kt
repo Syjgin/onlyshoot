@@ -52,7 +52,8 @@ class AddEditWeaponFragment :
         for (textField in listOf(
             title_text,
             attack_modifier,
-            damage_modifier,
+            damage_amount,
+            damage_mod,
             attack_count,
             miss_possibility,
             armor_penetration_attack,
@@ -108,7 +109,8 @@ class AddEditWeaponFragment :
         viewModel?.saveWeapon(
             title_text.text.toString(),
             attack_modifier.text.toString().toInt(),
-            damage_modifier.text.toString().toInt(),
+            damage_amount.text.toString().toInt(),
+            damage_mod.text.toString().toInt(),
             attack_count.text.toString().toInt(),
             miss_possibility.text.toString().toInt(),
             critical_modifier.text.toString().toInt(),
@@ -121,7 +123,8 @@ class AddEditWeaponFragment :
     private fun changeButtonState() {
         save_weapon.isEnabled = title_text.text?.isNotEmpty() ?: false &&
                 attack_modifier.text?.isNotEmpty() ?: false &&
-                damage_modifier.text?.isNotEmpty() ?: false &&
+                damage_amount.text?.isNotEmpty() ?: false &&
+                damage_mod.text?.isNotEmpty() ?: false &&
                 attack_count.text?.isNotEmpty() ?: false &&
                 miss_possibility.text?.isNotEmpty() ?: false &&
                 critical_modifier.text?.isNotEmpty() ?: false &&
@@ -133,7 +136,8 @@ class AddEditWeaponFragment :
     private fun loadWeapon(weapon: Weapon) {
         title_text.setText(weapon.name)
         attack_modifier.setText(weapon.attackModifier.toString())
-        damage_modifier.setText(weapon.damage.toString())
+        damage_amount.setText(weapon.damage.toString())
+        damage_mod.setText(weapon.damageModifier.toString())
         attack_count.setText(weapon.attackCount.toString())
         miss_possibility.setText(weapon.missPossibility.toString())
         critical_modifier.setText(weapon.criticalHitModifier.toString())

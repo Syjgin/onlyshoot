@@ -242,7 +242,7 @@ class AttackResultViewModel : BaseViewModel() {
                             String.format(
                                 context.getString(R.string.current_damage),
                                 j,
-                                currentDamage + attacker.constantDamageModifier + attacker.tempDamageModifier
+                                currentDamage + attacker.constantDamageModifier + attacker.tempDamageModifier + weapon.damageModifier
                             )
                         )
                         val currentPart =
@@ -267,8 +267,8 @@ class AttackResultViewModel : BaseViewModel() {
                             usualArmor - weapon.armorPenetration + proofArmor
                         if (totalArmor < 0)
                             totalArmor = 0
-                        totalDamageWithoutArmor += (currentDamage + attacker.constantDamageModifier + attacker.tempDamageModifier)
-                        totalDamage += (currentDamage + attacker.constantDamageModifier + attacker.tempDamageModifier - totalArmor)
+                        totalDamageWithoutArmor += (currentDamage + attacker.constantDamageModifier + attacker.tempDamageModifier + weapon.damageModifier)
+                        totalDamage += (currentDamage + attacker.constantDamageModifier + attacker.tempDamageModifier + weapon.damageModifier - totalArmor)
                         log(
                             String.format(
                                 context.getString(R.string.damage_for_attack),

@@ -29,8 +29,9 @@
     <string name="normal_armor">Normal</string>
     <string name="proof_armor">Proof</string>
     <string name="damage">Damage</string>
-    <string name="damage_amount">damage: d10</string>
+    <string name="damage_amount">damage: amount of d10</string>
     <string name="constant_damage_modifier">Constant damage modifier</string>
+    <string name="damage_modifier">Damage modifier</string>
     <string name="temp_damage_modifier">Temp damage modifier</string>
     <string name="damage_type">Damage type</string>
     <string name="explosion">Explosion</string>

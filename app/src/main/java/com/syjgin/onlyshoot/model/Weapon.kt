@@ -10,6 +10,7 @@ data class Weapon(
     val name: String,
     val attackModifier: Int,
     val damage: Int,
+    val damageModifier: Int,
     val attackCount: Int,
     val missPossibility: Int,
     val criticalHitModifier: Int,
