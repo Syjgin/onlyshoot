@@ -33,6 +33,9 @@
     <string name="damage_amount">Урон: количество d10</string>
     <string name="constant_damage_modifier">Постоянный модификатор урона</string>
     <string name="damage_modifier">Модификатор урона</string>
+    <string name="hp_before_attack">HP перед атакой: %d</string>
+    <string name="attack_dice">атака d100: %d</string>
+    <string name="evasion_dice">уклонение d100: %d</string>
     <string name="temp_damage_modifier">Временный модификатор урона</string>
     <string name="damage_type">Тип урона</string>
     <string name="explosion">Взрыв</string>

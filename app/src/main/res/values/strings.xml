@@ -32,6 +32,9 @@
     <string name="damage_amount">damage: amount of d10</string>
     <string name="constant_damage_modifier">Constant damage modifier</string>
     <string name="damage_modifier">Damage modifier</string>
+    <string name="hp_before_attack">HP before attack: %d</string>
+    <string name="attack_dice">attack d100: %d</string>
+    <string name="evasion_dice">evasion d100: %d</string>
     <string name="temp_damage_modifier">Temp damage modifier</string>
     <string name="damage_type">Damage type</string>
     <string name="explosion">Explosion</string>

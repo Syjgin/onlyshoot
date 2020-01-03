@@ -93,7 +93,7 @@ class AttackResultViewModel : BaseViewModel() {
                     }
                     log("${attacker.name} -> ${defender.name}")
                     val d100 = created100()
-                    log("d100: $d100")
+                    log(String.format(context.getString(R.string.attack_dice), d100))
                     val weapon = database.weaponDao().getById(attacker.weaponId)!!
                     val fullAttack =
                         attacker.attack + attacker.attackModifier + weapon.attackModifier
@@ -167,6 +167,7 @@ class AttackResultViewModel : BaseViewModel() {
                         )
                     )
                     val evasionDice = created100()
+                    log(String.format(context.getString(R.string.evasion_dice), d100))
                     var successCount = (defender.evasion - evasionDice) / 10
                     if (successCount > successAttackAmount) {
                         successCount = successAttackAmount
@@ -297,6 +298,12 @@ class AttackResultViewModel : BaseViewModel() {
                     if ((totalDamage >= rage || totalDamageWithoutArmor >= rage) && attacker.canUseRage) {
                         log(context.getString(R.string.rage_calculation))
                         if (totalDamage >= rage) {
+                            log(
+                                String.format(
+                                    context.getString(R.string.hp_before_attack),
+                                    defender.hp
+                                )
+                            )
                             defender.hp -= totalDamage
                             if (defender.deathFromRage) {
                                 log(context.getString(R.string.death_from_rage))
@@ -315,6 +322,12 @@ class AttackResultViewModel : BaseViewModel() {
                                 continue
                             } else {
                                 val d5 = random.nextInt(1, 6)
+                                log(
+                                    String.format(
+                                        context.getString(R.string.hp_before_attack),
+                                        defender.hp
+                                    )
+                                )
                                 log(String.format(context.getString(R.string.rage_crit), d5))
                                 defender.hp -= d5
                                 val crit = CritDescription.generateCrit(
@@ -349,6 +362,12 @@ class AttackResultViewModel : BaseViewModel() {
                                 continue
                             }
                         } else if (totalDamageWithoutArmor >= rage) {
+                            log(
+                                String.format(
+                                    context.getString(R.string.hp_before_attack),
+                                    defender.hp
+                                )
+                            )
                             defender.hp -= (totalDamage + 1)
                             log(context.getString(R.string.rage_with_armor_save))
                             if (defender.hp < 0) {
@@ -429,6 +448,12 @@ class AttackResultViewModel : BaseViewModel() {
                             }
                         }
                     } else if (totalDamage > 0) {
+                        log(
+                            String.format(
+                                context.getString(R.string.hp_before_attack),
+                                defender.hp
+                            )
+                        )
                         defender.hp -= totalDamage
                         if (defender.hp < 0) {
                             var hpBeyound = (defender.hp * -1) - defender.criticalHitAvoidance
