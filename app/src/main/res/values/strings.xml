@@ -479,7 +479,8 @@ Charge Action within six metres of the target must make a Challenging (+0) Agili
     <string name="all_attacks_evaded">enemy evaded all attacks</string>
     <string name="calculating_attack">calculating attack: %d</string>
     <string name="damage_count">damage d10 count: %d</string>
-    <string name="current_damage">incoming damage for attack %1$d : %2$d</string>
+    <string name="damage_d10">damage d10 amount for attack %1$d : %2$d</string>
+    <string name="current_damage">damage amount with modifiers for attack %1$d : %2$d</string>
     <string name="damage_for_attack">full damage after attack %1$d with modifiers &amp; armor: %2$d</string>
     <string name="armor_for_attack">full armor for attack into %1$s : %2$d</string>
     <string name="total_damage_without_armor">total damage without armor: %d</string>
@@ -506,4 +507,10 @@ Charge Action within six metres of the target must make a Challenging (+0) Agili
     <string name="select_weapon">Select weapon</string>
     <string name="add_weapon">Add weapon</string>
     <string name="edit_weapon">Edit weapon</string>
+    <string name="burst_type">Shoot type</string>
+    <string name="single">Single</string>
+    <string name="short_burst">Short burst</string>
+    <string name="long_burst">Long burst</string>
+    <string name="attack_success_count">Attack success amount: %d</string>
+    <string name="burst_count">Burst attacks amount: %d</string>
 </resources>

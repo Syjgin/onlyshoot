@@ -56,7 +56,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/attack_skill_amount"
-                    android:inputType="numberDecimal"
+                    android:inputType="numberSigned|numberDecimal"
                     tools:ignore="Autofill,LabelFor" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -66,7 +66,7 @@
 
                 <androidx.appcompat.widget.AppCompatEditText
                 style="@style/TextFieldTheme"
-                android:inputType="numberDecimal"
+                    android:inputType="numberSigned|numberDecimal"
                 android:id="@+id/attack_modifier"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -119,7 +119,7 @@
                             android:layout_width="@dimen/armor_input_width"
                             android:layout_height="wrap_content"
                             android:hint="@string/normal_armor"
-                            android:inputType="numberDecimal"
+                            android:inputType="numberSigned|numberDecimal"
                             tools:ignore="Autofill,LabelFor" />
                     </com.google.android.material.textfield.TextInputLayout>
 
@@ -134,7 +134,7 @@
                             android:layout_height="wrap_content"
                             android:hint="@string/proof_armor"
                             android:nextFocusDown="@id/normal_armor_right_hand"
-                            android:inputType="numberDecimal"
+                            android:inputType="numberSigned|numberDecimal"
                             tools:ignore="Autofill,LabelFor" />
                     </com.google.android.material.textfield.TextInputLayout>
                 </LinearLayout>
@@ -165,7 +165,7 @@
                             android:layout_width="@dimen/armor_input_width"
                             android:layout_height="wrap_content"
                             android:hint="@string/normal_armor"
-                            android:inputType="numberDecimal"
+                            android:inputType="numberSigned|numberDecimal"
                             tools:ignore="Autofill,LabelFor" />
                     </com.google.android.material.textfield.TextInputLayout>
 
@@ -180,7 +180,7 @@
                             android:layout_height="wrap_content"
                             android:hint="@string/proof_armor"
                             android:nextFocusDown="@id/normal_armor_left_hand"
-                            android:inputType="numberDecimal"
+                            android:inputType="numberSigned|numberDecimal"
                             tools:ignore="Autofill,LabelFor" />
                     </com.google.android.material.textfield.TextInputLayout>
                 </LinearLayout>
@@ -211,7 +211,7 @@
                             android:layout_width="@dimen/armor_input_width"
                             android:layout_height="wrap_content"
                             android:hint="@string/normal_armor"
-                            android:inputType="numberDecimal"
+                            android:inputType="numberSigned|numberDecimal"
                             tools:ignore="Autofill,LabelFor" />
                     </com.google.android.material.textfield.TextInputLayout>
 
@@ -226,7 +226,7 @@
                             android:layout_height="wrap_content"
                             android:hint="@string/proof_armor"
                             android:nextFocusDown="@id/normal_armor_right_leg"
-                            android:inputType="numberDecimal"
+                            android:inputType="numberSigned|numberDecimal"
                             tools:ignore="Autofill,LabelFor" />
                     </com.google.android.material.textfield.TextInputLayout>
                 </LinearLayout>
@@ -257,7 +257,7 @@
                             android:layout_width="@dimen/armor_input_width"
                             android:layout_height="wrap_content"
                             android:hint="@string/normal_armor"
-                            android:inputType="numberDecimal"
+                            android:inputType="numberSigned|numberDecimal"
                             tools:ignore="Autofill,LabelFor" />
                     </com.google.android.material.textfield.TextInputLayout>
 
@@ -272,7 +272,7 @@
                             android:layout_height="wrap_content"
                             android:hint="@string/proof_armor"
                             android:nextFocusDown="@id/normal_armor_torso"
-                            android:inputType="numberDecimal"
+                            android:inputType="numberSigned|numberDecimal"
                             tools:ignore="Autofill,LabelFor" />
                     </com.google.android.material.textfield.TextInputLayout>
                 </LinearLayout>
@@ -304,7 +304,7 @@
                             android:layout_width="@dimen/armor_input_width"
                             android:layout_height="wrap_content"
                             android:hint="@string/normal_armor"
-                            android:inputType="numberDecimal"
+                            android:inputType="numberSigned|numberDecimal"
                             tools:ignore="Autofill,LabelFor" />
                     </com.google.android.material.textfield.TextInputLayout>
 
@@ -319,7 +319,7 @@
                             android:layout_width="@dimen/armor_input_width"
                             android:layout_height="wrap_content"
                             android:hint="@string/proof_armor"
-                            android:inputType="numberDecimal"
+                            android:inputType="numberSigned|numberDecimal"
                             tools:ignore="Autofill,LabelFor" />
                     </com.google.android.material.textfield.TextInputLayout>
                 </LinearLayout>
@@ -350,7 +350,7 @@
                             android:layout_width="@dimen/armor_input_width"
                             android:layout_height="wrap_content"
                             android:hint="@string/normal_armor"
-                            android:inputType="numberDecimal"
+                            android:inputType="numberSigned|numberDecimal"
                             tools:ignore="Autofill,LabelFor" />
                     </com.google.android.material.textfield.TextInputLayout>
 
@@ -366,7 +366,7 @@
                             android:layout_height="wrap_content"
                             android:hint="@string/proof_armor"
                             android:nextFocusDown="@id/normal_armor_left_leg"
-                            android:inputType="numberDecimal"
+                            android:inputType="numberSigned|numberDecimal"
                             tools:ignore="Autofill,LabelFor" />
                     </com.google.android.material.textfield.TextInputLayout>
                 </LinearLayout>
@@ -390,7 +390,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/constant_damage_modifier"
-                    android:inputType="numberDecimal"
+                    android:inputType="numberSigned|numberDecimal"
                     tools:ignore="Autofill,LabelFor" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -404,7 +404,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/temp_damage_modifier"
-                    android:inputType="numberDecimal"
+                    android:inputType="numberSigned|numberDecimal"
                     tools:ignore="Autofill,LabelFor" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -418,7 +418,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/hp"
-                    android:inputType="numberDecimal"
+                    android:inputType="numberSigned|numberDecimal"
                     tools:ignore="Autofill,LabelFor" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -445,7 +445,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/evasion_skill_amount"
-                    android:inputType="numberDecimal"
+                    android:inputType="numberSigned|numberDecimal"
                     tools:ignore="Autofill,LabelFor" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -460,7 +460,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/content_offset"
                     android:hint="@string/evasion_attack_amount"
-                    android:inputType="numberDecimal"
+                    android:inputType="numberSigned|numberDecimal"
                     tools:ignore="Autofill,LabelFor" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -483,7 +483,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/critical_hit_ignorance"
-                    android:inputType="numberDecimal"
+                    android:inputType="numberSigned|numberDecimal"
                     tools:ignore="Autofill,LabelFor" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -519,7 +519,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/righteous_anger_amount"
-                    android:inputType="numberDecimal"
+                    android:inputType="numberSigned|numberDecimal"
                     android:text="@string/anger_default"
                     tools:ignore="Autofill,LabelFor" />
             </com.google.android.material.textfield.TextInputLayout>

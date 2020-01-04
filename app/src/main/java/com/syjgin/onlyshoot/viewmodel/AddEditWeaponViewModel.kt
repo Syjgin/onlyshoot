@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.syjgin.onlyshoot.di.OnlyShootApp
+import com.syjgin.onlyshoot.model.BurstType
 import com.syjgin.onlyshoot.model.DamageType
 import com.syjgin.onlyshoot.model.Weapon
 import com.syjgin.onlyshoot.utils.DbUtils
@@ -34,7 +35,8 @@ class AddEditWeaponViewModel : BaseViewModel() {
         criticalHitModifier: Int,
         rage: Int,
         damageType: DamageType,
-        armorPenetration: Int
+        armorPenetration: Int,
+        burstType: BurstType
     ) {
         if (weaponId == NO_DATA) {
             weaponId = DbUtils.generateLongUUID()
@@ -50,7 +52,8 @@ class AddEditWeaponViewModel : BaseViewModel() {
             criticalHitModifier,
             rage,
             damageType,
-            armorPenetration
+            armorPenetration,
+            burstType
         )
         viewModelScope.launch {
             database.weaponDao().insert(weapon)

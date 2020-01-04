@@ -466,7 +466,8 @@
     <string name="all_attacks_evaded">враг уклонился от всех атак</string>
     <string name="calculating_attack">расчёт атаки: %d</string>
     <string name="damage_count">урон - количество d10: %d</string>
-    <string name="current_damage">входящий урон для атаки %1$d : %2$d</string>
+    <string name="damage_d10">значение урона на кубах для атаки %1$d : %2$d</string>
+    <string name="current_damage">значение урона с модификаторами %1$d : %2$d</string>
     <string name="damage_for_attack">полный урон после атаки %1$d с модификаторами и бронёй: %2$d</string>
     <string name="armor_for_attack">полная броня при атаке в %1$s : %2$d</string>
     <string name="total_damage_without_armor">полный урон без учёта брони: %d</string>
@@ -492,4 +493,10 @@
     <string name="select_weapon">Выбрать оружие</string>
     <string name="add_weapon">Добавить оружие</string>
     <string name="edit_weapon">Редактировать оружие</string>
+    <string name="burst_type">Тип стрельбы</string>
+    <string name="single">Одиночный</string>
+    <string name="short_burst">Короткая очередь</string>
+    <string name="long_burst">Длинная очередь</string>
+    <string name="attack_success_count">Число успехов при атаке: %d</string>
+    <string name="burst_count">Число выстрелов в очереди: %d</string>
 </resources>

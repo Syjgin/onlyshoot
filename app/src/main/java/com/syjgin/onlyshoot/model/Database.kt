@@ -9,7 +9,7 @@ import androidx.room.TypeConverters
     version = 1,
     exportSchema = false
 )
-@TypeConverters(DamageTypeConverter::class)
+@TypeConverters(DamageTypeConverter::class, BurstTypeConverter::class)
 abstract class Database : RoomDatabase() {
     abstract fun fightDao() : FightDao
     abstract fun unitDao() : UnitDao

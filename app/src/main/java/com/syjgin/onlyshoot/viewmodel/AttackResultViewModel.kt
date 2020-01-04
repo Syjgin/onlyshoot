@@ -6,13 +6,11 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.syjgin.onlyshoot.R
 import com.syjgin.onlyshoot.di.OnlyShootApp
-import com.syjgin.onlyshoot.model.Attack
-import com.syjgin.onlyshoot.model.AttackResult
-import com.syjgin.onlyshoot.model.CritDescription
-import com.syjgin.onlyshoot.model.SquadUnit
+import com.syjgin.onlyshoot.model.*
 import com.syjgin.onlyshoot.navigation.OnlyShootScreen
 import com.syjgin.onlyshoot.navigation.ScreenEnum
 import kotlinx.coroutines.launch
+import kotlin.math.min
 import kotlin.random.Random
 
 class AttackResultViewModel : BaseViewModel() {
@@ -95,6 +93,20 @@ class AttackResultViewModel : BaseViewModel() {
                     val d100 = created100()
                     log(String.format(context.getString(R.string.attack_dice), d100))
                     val weapon = database.weaponDao().getById(attacker.weaponId)!!
+                    val attackSuccessCount =
+                        min(((attacker.attack - d100) / 10), attacksBySingleUnit)
+                    log(
+                        String.format(
+                            context.getString(R.string.attack_success_count),
+                            attackSuccessCount
+                        )
+                    )
+                    var successAttackAmount = when (weapon.burstType) {
+                        BurstType.Single -> attacksBySingleUnit
+                        BurstType.Short -> attackSuccessCount / 2
+                        BurstType.Long -> attackSuccessCount
+                    }
+                    log(String.format(context.getString(R.string.burst_count), successAttackAmount))
                     val fullAttack =
                         attacker.attack + attacker.attackModifier + weapon.attackModifier
                     log(String.format(context.getString(R.string.attack_template), fullAttack))
@@ -159,7 +171,6 @@ class AttackResultViewModel : BaseViewModel() {
                     val allParts = mutableListOf<AttackResult.BodyPart>()
                     allParts.addAll(getAttackParts(firstAttackPart, attacksBySingleUnit))
                     log(String.format(context.getString(R.string.all_attack_parts), allParts))
-                    var successAttackAmount = attacksBySingleUnit
                     log(
                         String.format(
                             context.getString(R.string.attack_count),
@@ -239,6 +250,12 @@ class AttackResultViewModel : BaseViewModel() {
                         for (k in 0 until damage) {
                             currentDamage += random.nextInt(1, 11)
                         }
+                        log(
+                            String.format(
+                                context.getString(R.string.damage_d10),
+                                j, currentDamage
+                            )
+                        )
                         log(
                             String.format(
                                 context.getString(R.string.current_damage),

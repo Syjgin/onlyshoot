@@ -16,5 +16,6 @@ data class Weapon(
     val criticalHitModifier: Int,
     val rage: Int,
     val damageType: DamageType,
-    val armorPenetration: Int
+    val armorPenetration: Int,
+    val burstType: BurstType
 )

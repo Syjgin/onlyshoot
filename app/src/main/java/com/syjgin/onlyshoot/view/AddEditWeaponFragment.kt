@@ -6,6 +6,7 @@ import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.syjgin.onlyshoot.R
+import com.syjgin.onlyshoot.model.BurstType
 import com.syjgin.onlyshoot.model.DamageType
 import com.syjgin.onlyshoot.model.Weapon
 import com.syjgin.onlyshoot.navigation.BundleKeys
@@ -89,6 +90,30 @@ class AddEditWeaponFragment :
                     changeButtonState()
                 }
             }
+            for (checkbox in listOf(
+                single,
+                short_burst,
+                long_burst
+            )) {
+                checkbox.setOnCheckedChangeListener { checkView, isChecked ->
+                    if (!isRadioListenersActive)
+                        return@setOnCheckedChangeListener
+                    isRadioListenersActive = false
+                    if (isChecked) {
+                        val others = when (checkView) {
+                            single -> listOf(short_burst, long_burst)
+                            short_burst -> listOf(single, long_burst)
+                            long_burst -> listOf(single, short_burst)
+                            else -> emptyList()
+                        }
+                        for (checkBox in others) {
+                            checkBox.isChecked = false
+                        }
+                    }
+                    isRadioListenersActive = true
+                    changeButtonState()
+                }
+            }
         }
         save_weapon.setOnClickListener {
             saveWeapon()
@@ -106,6 +131,12 @@ class AddEditWeaponFragment :
             cut.isChecked -> DamageType.Cut
             else -> DamageType.Energy
         }
+        val burstType: BurstType = when {
+            single.isChecked -> BurstType.Single
+            short_burst.isChecked -> BurstType.Short
+            long_burst.isChecked -> BurstType.Long
+            else -> BurstType.Single
+        }
         viewModel?.saveWeapon(
             title_text.text.toString(),
             attack_modifier.text.toString().toInt(),
@@ -116,7 +147,8 @@ class AddEditWeaponFragment :
             critical_modifier.text.toString().toInt(),
             anger_amount.text.toString().toInt(),
             damageType,
-            armor_penetration_attack.text.toString().toInt()
+            armor_penetration_attack.text.toString().toInt(),
+            burstType
         )
     }
 
@@ -148,6 +180,11 @@ class AddEditWeaponFragment :
             DamageType.Cut -> cut.isChecked = true
             DamageType.Strike -> strike.isChecked = true
             DamageType.Energy -> energy.isChecked = true
+        }
+        when (weapon.burstType) {
+            BurstType.Single -> single.isChecked = true
+            BurstType.Short -> short_burst.isChecked = true
+            BurstType.Long -> long_burst.isChecked = true
         }
         weaponId = weapon.id
         changeButtonState()
