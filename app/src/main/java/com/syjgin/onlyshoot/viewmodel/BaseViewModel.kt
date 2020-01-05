@@ -30,4 +30,8 @@ open class BaseViewModel : ViewModel() {
     open fun goBack() {
         router.exit()
     }
+
+    fun exit() {
+        router.exit()
+    }
 }

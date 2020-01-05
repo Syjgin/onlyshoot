@@ -13,6 +13,7 @@ import kotlinx.coroutines.launch
 
 class AddEditWeaponViewModel : BaseViewModel() {
     private var weaponId: Long = NO_DATA
+    private var isCopyMode = false
     private val weaponLiveData = MutableLiveData<Weapon>()
 
     fun getWeaponLiveData(): LiveData<Weapon> = weaponLiveData
@@ -36,9 +37,10 @@ class AddEditWeaponViewModel : BaseViewModel() {
         rage: Int,
         damageType: DamageType,
         armorPenetration: Int,
-        burstType: BurstType
+        burstType: BurstType,
+        unitId: Long
     ) {
-        if (weaponId == NO_DATA) {
+        if (weaponId == NO_DATA || isCopyMode) {
             weaponId = DbUtils.generateLongUUID()
         }
         val weapon = Weapon(
@@ -57,8 +59,16 @@ class AddEditWeaponViewModel : BaseViewModel() {
         )
         viewModelScope.launch {
             database.weaponDao().insert(weapon)
-            router.exit()
+            if (unitId == NO_DATA) {
+                router.exit()
+            } else {
+                weaponLiveData.postValue(weapon)
+            }
         }
+    }
+
+    fun setCopyMode() {
+        isCopyMode = true
     }
 
     init {

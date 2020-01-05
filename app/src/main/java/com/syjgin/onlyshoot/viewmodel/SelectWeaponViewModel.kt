@@ -7,6 +7,7 @@ import com.syjgin.onlyshoot.model.Weapon
 import com.syjgin.onlyshoot.navigation.BundleKeys
 import com.syjgin.onlyshoot.navigation.OnlyShootScreen
 import com.syjgin.onlyshoot.navigation.ScreenEnum
+import com.syjgin.onlyshoot.utils.DbUtils.NO_DATA
 
 class SelectWeaponViewModel : BaseViewModel() {
     private var weaponsLiveData: LiveData<List<Weapon>>
@@ -33,7 +34,21 @@ class SelectWeaponViewModel : BaseViewModel() {
         router.navigateTo(OnlyShootScreen(ScreenEnum.AddEditWeapon, bundle))
     }
 
-    fun exit() {
-        router.exit()
+    fun copyWeapon(weaponId: Long, unitId: Long) {
+        val bundle = Bundle()
+        bundle.putBoolean(BundleKeys.AddFlavor.name, false)
+        bundle.putBoolean(BundleKeys.CopyMode.name, true)
+        bundle.putLong(BundleKeys.WeaponId.name, weaponId)
+        if (unitId != NO_DATA) {
+            bundle.putLong(BundleKeys.Unit.name, unitId)
+        }
+        router.replaceScreen(OnlyShootScreen(ScreenEnum.AddEditWeapon, bundle))
+    }
+
+    fun startCopyWeapon() {
+        val bundle = Bundle()
+        bundle.putBoolean(BundleKeys.ListMode.name, false)
+        bundle.putBoolean(BundleKeys.CopyMode.name, true)
+        router.navigateTo(OnlyShootScreen(ScreenEnum.SelectWeapon, bundle))
     }
 }

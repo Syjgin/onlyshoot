@@ -115,7 +115,9 @@ class AddEditUnitFragment : BaseFragment<AddEditUnitViewModel>(AddEditUnitViewMo
         viewModel?.getWeaponLiveData()?.observe(this, Observer { loadWeapon(it) })
     }
 
-    private fun loadWeapon(weapon: Weapon) {
+    private fun loadWeapon(weapon: Weapon?) {
+        if (weapon == null)
+            return
         weaponId = weapon.id
         load_weapon.text = weapon.name
         changeButtonState()

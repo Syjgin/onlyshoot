@@ -5,6 +5,7 @@ import android.view.View
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import com.syjgin.onlyshoot.R
 import com.syjgin.onlyshoot.model.BurstType
 import com.syjgin.onlyshoot.model.DamageType
@@ -12,6 +13,7 @@ import com.syjgin.onlyshoot.model.Weapon
 import com.syjgin.onlyshoot.navigation.BundleKeys
 import com.syjgin.onlyshoot.utils.AddEditUtils
 import com.syjgin.onlyshoot.utils.DbUtils.NO_DATA
+import com.syjgin.onlyshoot.viewmodel.AddEditUnitViewModel
 import com.syjgin.onlyshoot.viewmodel.AddEditWeaponViewModel
 import kotlinx.android.synthetic.main.fragment_add_edit_weapon.*
 
@@ -27,7 +29,10 @@ class AddEditWeaponFragment :
 
     var isRadioListenersActive = true
     var weaponId: Long = NO_DATA
+    var unitId: Long = NO_DATA
     private var isEditMode = false
+    private var isCopyMode = false
+    private var isAlreadySaved = false
 
     override fun fragmentTitle(): Int {
         return AddEditUtils.getAddEditFragmentTitle(
@@ -41,9 +46,11 @@ class AddEditWeaponFragment :
 
     override fun parseArguments(args: Bundle) {
         isEditMode = !args.getBoolean(BundleKeys.AddFlavor.name)
-        if (isEditMode) {
+        isCopyMode = args.getBoolean(BundleKeys.CopyMode.name)
+        if (isEditMode || isCopyMode) {
             weaponId = args.getLong(BundleKeys.WeaponId.name)
         }
+        unitId = args.getLong(BundleKeys.Unit.name)
     }
 
     override fun hasBackButton() = true
@@ -118,7 +125,10 @@ class AddEditWeaponFragment :
         save_weapon.setOnClickListener {
             saveWeapon()
         }
-        if (isEditMode) {
+        if (isCopyMode) {
+            viewModel?.setCopyMode()
+        }
+        if (isEditMode || isCopyMode) {
             viewModel?.getWeaponLiveData()?.observe(this, Observer { loadWeapon(it) })
             viewModel?.loadWeapon(weaponId)
         }
@@ -148,8 +158,10 @@ class AddEditWeaponFragment :
             anger_amount.text.toString().toInt(),
             damageType,
             armor_penetration_attack.text.toString().toInt(),
-            burstType
+            burstType,
+            unitId
         )
+        isAlreadySaved = true
     }
 
     private fun changeButtonState() {
@@ -188,5 +200,11 @@ class AddEditWeaponFragment :
         }
         weaponId = weapon.id
         changeButtonState()
+        if (isAlreadySaved) {
+            val addEditUnitViewModel =
+                ViewModelProviders.of(activity!!).get(AddEditUnitViewModel::class.java)
+            addEditUnitViewModel.setWeapon(weaponId)
+            viewModel?.exit()
+        }
     }
 }

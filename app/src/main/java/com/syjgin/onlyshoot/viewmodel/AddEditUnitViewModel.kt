@@ -216,6 +216,10 @@ class AddEditUnitViewModel : BaseViewModel() {
         }
     }
 
+    fun getUnitId(): Long {
+        return unitId
+    }
+
     init {
         OnlyShootApp.getInstance().getAppComponent().inject(this)
     }

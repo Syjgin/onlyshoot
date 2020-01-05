@@ -123,15 +123,16 @@ class AddEditFightFragment : BaseFragment<AddEditFightViewModel>(AddEditFightVie
             return
         isDisplayingDialog = true
         var dialog: Dialog? = null
-        dialog = DialogUtils.createAddUnitDialog(context, object :
-            DialogUtils.LoadUnitDialogListener {
-            override fun onFromUnitSelected() {
+        dialog = DialogUtils.createTwoOptionsDialog(
+            context, object :
+                DialogUtils.TwoOptionsDialogListener {
+                override fun onFirstOptionSelected() {
                 dialog?.dismiss()
                 isDisplayingDialog = false
                 viewModel?.loadUnit(isAttackers)
             }
 
-            override fun onFromArchetypeSelected() {
+                override fun onSecondOptionSelected() {
                 dialog?.dismiss()
                 isDisplayingDialog = false
                 viewModel?.loadUnitFromArchetype(isAttackers)
@@ -141,7 +142,9 @@ class AddEditFightFragment : BaseFragment<AddEditFightViewModel>(AddEditFightVie
                 dialog?.dismiss()
                 isDisplayingDialog = false
             }
-        })
+            },
+            R.layout.dialog_add_unit
+        )
         dialog?.show()
     }
 

@@ -103,7 +103,11 @@ class AttackResultViewModel : BaseViewModel() {
                     )
                     var successAttackAmount = when (weapon.burstType) {
                         BurstType.Single -> attacksBySingleUnit
-                        BurstType.Short -> attackSuccessCount / 2
+                        BurstType.Short -> if (attackSuccessCount > 0) {
+                            1 + attackSuccessCount / 2
+                        } else {
+                            0
+                        }
                         BurstType.Long -> attackSuccessCount
                     }
                     log(String.format(context.getString(R.string.burst_count), successAttackAmount))

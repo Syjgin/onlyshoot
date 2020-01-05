@@ -1,5 +1,6 @@
 package com.syjgin.onlyshoot.view
 
+import android.app.Dialog
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
@@ -12,6 +13,7 @@ import com.syjgin.onlyshoot.R
 import com.syjgin.onlyshoot.model.Weapon
 import com.syjgin.onlyshoot.navigation.BundleKeys
 import com.syjgin.onlyshoot.utils.DbUtils.NO_DATA
+import com.syjgin.onlyshoot.utils.DialogUtils
 import com.syjgin.onlyshoot.view.adapter.WeaponSelectAdapter
 import com.syjgin.onlyshoot.viewmodel.AddEditFightViewModel
 import com.syjgin.onlyshoot.viewmodel.AddEditUnitViewModel
@@ -29,12 +31,15 @@ class SelectWeaponFragment : BaseFragment<SelectWeaponViewModel>(SelectWeaponVie
         }
     }
 
+    private var isCopyMode = false
     private var isListMode = false
     private var currentWeaponId = NO_DATA
     private var previousWeaponId = NO_DATA
     private var squadId = NO_DATA
     private var squadGroupName = ""
     private lateinit var adapter: WeaponSelectAdapter
+    private var isDisplayingDialog = false
+
 
     override fun fragmentTitle() = if (isListMode) R.string.arsenal else R.string.select_weapon
 
@@ -44,6 +49,7 @@ class SelectWeaponFragment : BaseFragment<SelectWeaponViewModel>(SelectWeaponVie
         if (args.containsKey(BundleKeys.WeaponId.name)) {
             currentWeaponId = args.getLong(BundleKeys.WeaponId.name)
         }
+        isCopyMode = args.getBoolean(BundleKeys.CopyMode.name)
         isListMode = args.getBoolean(BundleKeys.ListMode.name)
         squadId = args.getLong(BundleKeys.SquadId.name, NO_DATA)
         squadGroupName = args.getString(BundleKeys.GroupName.name, "")
@@ -60,7 +66,41 @@ class SelectWeaponFragment : BaseFragment<SelectWeaponViewModel>(SelectWeaponVie
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.add) {
-            viewModel?.addWeapon()
+            if (adapter.itemCount == 0) {
+                viewModel?.addWeapon()
+            } else {
+                if (isDisplayingDialog)
+                    return false
+                isDisplayingDialog = true
+                var dialog: Dialog? = null
+                dialog = DialogUtils.createTwoOptionsDialog(
+                    context, object :
+                        DialogUtils.TwoOptionsDialogListener {
+                        override fun onFirstOptionSelected() {
+                            dialog?.dismiss()
+                            isDisplayingDialog = false
+                            viewModel?.addWeapon()
+                        }
+
+                        override fun onSecondOptionSelected() {
+                            dialog?.dismiss()
+                            isDisplayingDialog = false
+                            if (currentWeaponId != NO_DATA) {
+                                viewModel?.copyWeapon(currentWeaponId, NO_DATA)
+                            } else {
+                                viewModel?.startCopyWeapon()
+                            }
+                        }
+
+                        override fun onCancel() {
+                            dialog?.dismiss()
+                            isDisplayingDialog = false
+                        }
+                    },
+                    R.layout.dialog_add_weapon
+                )
+                dialog?.show()
+            }
             return true
         }
         return super.onOptionsItemSelected(item)
@@ -85,10 +125,18 @@ class SelectWeaponFragment : BaseFragment<SelectWeaponViewModel>(SelectWeaponVie
                         )
                         viewModel?.exit()
                     } else {
-                        val addEditUnitViewModel =
-                            ViewModelProviders.of(activity!!).get(AddEditUnitViewModel::class.java)
-                        addEditUnitViewModel.setWeapon(currentWeaponId)
-                        viewModel?.exit()
+                        if (isCopyMode) {
+                            val addEditUnitViewModel =
+                                ViewModelProviders.of(activity!!)
+                                    .get(AddEditUnitViewModel::class.java)
+                            viewModel?.copyWeapon(currentWeaponId, addEditUnitViewModel.getUnitId())
+                        } else {
+                            val addEditUnitViewModel =
+                                ViewModelProviders.of(activity!!)
+                                    .get(AddEditUnitViewModel::class.java)
+                            addEditUnitViewModel.setWeapon(currentWeaponId)
+                            viewModel?.exit()
+                        }
                     }
                 }
             }

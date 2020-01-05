@@ -6,6 +6,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.RadioButton
 import android.widget.TextView
+import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AlertDialog
 import com.syjgin.onlyshoot.R
 
@@ -38,41 +39,42 @@ object DialogUtils {
         fun onCancel()
     }
 
-    interface LoadUnitDialogListener {
-        fun onFromUnitSelected()
-        fun onFromArchetypeSelected()
+    interface TwoOptionsDialogListener {
+        fun onFirstOptionSelected()
+        fun onSecondOptionSelected()
         fun onCancel()
     }
 
-    fun createAddUnitDialog(
+    fun createTwoOptionsDialog(
         context: Context?,
-        listener: LoadUnitDialogListener
+        listener: TwoOptionsDialogListener,
+        @LayoutRes layout: Int
     ): Dialog? {
         if (context == null)
             return null
-        var isUnitSelected: Boolean? = null
+        var isFirstOptionSelected: Boolean? = null
         val dialog = Dialog(context)
         dialog.setTitle(context.getString(R.string.add))
-        dialog.setContentView(R.layout.dialog_add_unit)
+        dialog.setContentView(layout)
         dialog.findViewById<Button>(R.id.ok)
             .setOnClickListener {
-                if (isUnitSelected != null) {
-                    if (isUnitSelected!!) {
-                        listener.onFromUnitSelected()
+                if (isFirstOptionSelected != null) {
+                    if (isFirstOptionSelected!!) {
+                        listener.onFirstOptionSelected()
                     } else {
-                        listener.onFromArchetypeSelected()
+                        listener.onSecondOptionSelected()
                     }
                 }
             }
         dialog.findViewById<Button>(R.id.cancel)
             .setOnClickListener { listener.onCancel() }
-        dialog.findViewById<RadioButton>(R.id.create_new)
+        dialog.findViewById<RadioButton>(R.id.first_option)
             .setOnCheckedChangeListener { _, isChecked ->
-                isUnitSelected = isChecked
+                isFirstOptionSelected = isChecked
             }
-        dialog.findViewById<RadioButton>(R.id.select_archetype)
+        dialog.findViewById<RadioButton>(R.id.second_option)
             .setOnCheckedChangeListener { _, isChecked ->
-                isUnitSelected = !isChecked
+                isFirstOptionSelected = !isChecked
             }
         return dialog
     }
