@@ -97,7 +97,7 @@ class AddEditSquadViewModel : BaseViewModel() {
         squadLiveData = if (unitFilter.isEmpty() && weaponFilter == NO_DATA) {
             database.unitDao().getBySquadLiveData(squadId)
         } else {
-            database.unitDao().getBySquadLiveDataWithFilters(squadId, unitFilter, weaponFilter)
+            database.unitDao().getBySquadLiveDataWithFilters(squadId, "%$unitFilter%", weaponFilter)
         }
     }
 }

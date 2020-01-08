@@ -24,7 +24,8 @@
     <string name="name">Name</string>
     <string name="attack_skill_amount">Attack skill amount</string>
     <string name="attack_skill_modifier">Attack skill modifier</string>
-    <string name="armor_penetration_attack">Armor penetration</string>
+    <string name="armor_penetration_amount">Armor penetration: amount of d10</string>
+    <string name="armor_penetration_modifier">Armor penetration modifier</string>
     <string name="Defence">Defence</string>
     <string name="normal_armor">Normal</string>
     <string name="proof_armor">Proof</string>
@@ -514,4 +515,7 @@ Charge Action within six metres of the target must make a Challenging (+0) Agili
     <string name="attack_success_count">Attack success amount: %d</string>
     <string name="burst_count">Burst attacks amount: %d</string>
     <string name="copy_weapon">Copy weapon</string>
+    <string name="enemy_const_attack_skill_amount">Enemy constant attack modifier</string>
+    <string name="enemy_temp_attack_skill_amount">Enemy temp attack modifier</string>
+    <string name="default_penetration" translatable="false">0</string>
 </resources>

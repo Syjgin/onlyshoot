@@ -73,6 +73,8 @@ class AddEditUnitViewModel : BaseViewModel() {
         squadId: Long,
         weaponId: Long,
         weaponName: String,
+        enemyAttackSkill: Int,
+        enemyAttackSkillTemp: Int,
         rage: Int,
         isEditMode: Boolean
     ) {
@@ -108,6 +110,8 @@ class AddEditUnitViewModel : BaseViewModel() {
                     deathFromRage,
                     weaponId,
                     weaponName,
+                    enemyAttackSkill,
+                    enemyAttackSkillTemp,
                     rage)
                 database.archetypeDao().insert(archetype)
                 if (isArchetypeMode) {
@@ -145,6 +149,8 @@ class AddEditUnitViewModel : BaseViewModel() {
                         deathFromRage,
                         weaponId,
                         weaponName,
+                        enemyAttackSkill,
+                        enemyAttackSkillTemp,
                         squadId,
                         rage
                     )

@@ -34,6 +34,8 @@ data class SquadUnit(
     val deathFromRage: Boolean,
     var weaponId: Long,
     var weaponName: String,
+    val constantEnemyAttackModifier: Int = 0,
+    val tempEnemyAttackModifier: Int = 0,
     var squadId: Long = -1,
     val rage: Int = 10
 ) : Serializable

@@ -33,18 +33,13 @@
                     tools:text="text" />
             </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputLayout
+            <TextView
+                style="@style/TextFieldTheme"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    style="@style/TextFieldTheme"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/content_offset"
-                    android:layout_marginBottom="@dimen/content_offset"
-                    android:text="@string/attack" />
-            </com.google.android.material.textfield.TextInputLayout>
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/content_offset"
+                android:layout_marginBottom="@dimen/content_offset"
+                android:text="@string/attack" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
@@ -72,6 +67,34 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/attack_skill_modifier"
                 tools:ignore="Autofill,LabelFor" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/enemy_attack_skill"
+                    style="@style/TextFieldTheme"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/enemy_const_attack_skill_amount"
+                    android:inputType="numberSigned|numberDecimal"
+                    tools:ignore="Autofill,LabelFor" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/enemy_attack_skill_temp"
+                    style="@style/TextFieldTheme"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/enemy_temp_attack_skill_amount"
+                    android:inputType="numberSigned|numberDecimal"
+                    tools:ignore="Autofill,LabelFor" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <TextView

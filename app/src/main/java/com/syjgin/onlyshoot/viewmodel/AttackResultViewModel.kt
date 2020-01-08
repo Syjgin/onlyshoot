@@ -16,9 +16,10 @@ import kotlin.random.Random
 class AttackResultViewModel : BaseViewModel() {
     private val resultData = MutableLiveData<List<AttackResult>>()
     private val logData = MutableLiveData<String>()
-    private val random = Random(System.currentTimeMillis())
     private val log = StringBuilder()
+    private var random = Random(System.currentTimeMillis())
     private val context = OnlyShootApp.getInstance().applicationContext
+    private var alreadyCalculated = false
 
     init {
         OnlyShootApp.getInstance().getAppComponent().inject(this)
@@ -30,8 +31,9 @@ class AttackResultViewModel : BaseViewModel() {
     }
 
     fun load(attacks: List<Attack>, defendSquadId: Long) {
+        if (alreadyCalculated)
+            return
         viewModelScope.launch {
-            val random = Random(System.currentTimeMillis())
             val results = mutableListOf<AttackResult>()
             val mutableAttacks = mutableListOf<Attack>()
             mutableAttacks.addAll(attacks)
@@ -112,7 +114,7 @@ class AttackResultViewModel : BaseViewModel() {
                     }
                     log(String.format(context.getString(R.string.burst_count), successAttackAmount))
                     val fullAttack =
-                        attacker.attack + attacker.attackModifier + weapon.attackModifier
+                        attacker.attack + attacker.attackModifier + weapon.attackModifier + defender.tempEnemyAttackModifier + defender.constantEnemyAttackModifier
                     log(String.format(context.getString(R.string.attack_template), fullAttack))
                     if (d100 > fullAttack) {
                         val attackStatus = if (d100 > weapon.missPossibility) {
@@ -182,8 +184,9 @@ class AttackResultViewModel : BaseViewModel() {
                         )
                     )
                     val evasionDice = created100()
-                    log(String.format(context.getString(R.string.evasion_dice), d100))
-                    var successCount = (defender.evasion - evasionDice) / 10
+                    log(String.format(context.getString(R.string.evasion_dice), evasionDice))
+                    var successCount =
+                        (if (evasionDice < defender.evasion) 1 else 0) + (defender.evasion - evasionDice) / 10
                     if (successCount > successAttackAmount) {
                         successCount = successAttackAmount
                     }
@@ -285,10 +288,16 @@ class AttackResultViewModel : BaseViewModel() {
                             AttackResult.BodyPart.RightLeg -> defender.proofArmorRightLeg
                             AttackResult.BodyPart.LeftLeg -> defender.proofArmorLeftLeg
                         }
+                        var currentPenetration = 0
+                        for (k in 0..weapon.armorPenetration) {
+                            currentPenetration += random.nextInt(0, 11)
+                        }
+                        currentPenetration += weapon.armorPenetrationModifier
                         var totalArmor =
-                            usualArmor - weapon.armorPenetration + proofArmor
+                            usualArmor - currentPenetration
                         if (totalArmor < 0)
                             totalArmor = 0
+                        totalArmor += proofArmor
                         totalDamageWithoutArmor += (currentDamage + attacker.constantDamageModifier + attacker.tempDamageModifier + weapon.damageModifier)
                         totalDamage += (currentDamage + attacker.constantDamageModifier + attacker.tempDamageModifier + weapon.damageModifier - totalArmor)
                         log(
@@ -567,6 +576,7 @@ class AttackResultViewModel : BaseViewModel() {
             resultData.postValue(results)
             logData.postValue(log.toString())
         }
+        alreadyCalculated = true
     }
 
     private fun created100() = random.nextInt(1, 101)

@@ -71,7 +71,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/damage_amount"
-                    android:inputType="numberSigned|numberDecimal"
+                    android:inputType="numberDecimal"
                     tools:ignore="Autofill,LabelFor" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -184,12 +184,28 @@
                 android:layout_height="wrap_content">
 
                 <androidx.appcompat.widget.AppCompatEditText
-                    android:id="@+id/armor_penetration_attack"
+                    android:id="@+id/armor_penetration_amount"
                     style="@style/TextFieldTheme"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/content_offset"
-                    android:hint="@string/armor_penetration_attack"
+                    android:hint="@string/armor_penetration_amount"
+                    android:inputType="numberDecimal"
+                    android:text="@string/default_penetration"
+                    tools:ignore="Autofill,LabelFor" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/armor_penetration_modifier"
+                    style="@style/TextFieldTheme"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/content_offset"
+                    android:hint="@string/armor_penetration_modifier"
                     android:inputType="numberSigned|numberDecimal"
                     tools:ignore="Autofill,LabelFor" />
             </com.google.android.material.textfield.TextInputLayout>

@@ -25,7 +25,8 @@
     <string name="name">Название</string>
     <string name="attack_skill_amount">Уровень навыка атаки</string>
     <string name="attack_skill_modifier">Модификатор навыка</string>
-    <string name="armor_penetration_attack">Пробитие брони</string>
+    <string name="armor_penetration_amount">Пробитие брони: количество d10</string>
+    <string name="armor_penetration_modifier">Модификатор пробития брони</string>
     <string name="Defence">Защита</string>
     <string name="normal_armor">Обычная</string>
     <string name="proof_armor">Непробиваемая</string>
@@ -500,4 +501,6 @@
     <string name="attack_success_count">Число успехов при атаке: %d</string>
     <string name="burst_count">Число выстрелов в очереди: %d</string>
     <string name="copy_weapon">Копировать оружие</string>
+    <string name="enemy_const_attack_skill_amount">Постоянный модификатор атаки врага</string>
+    <string name="enemy_temp_attack_skill_amount">Временный модификатор атаки врага</string>
 </resources>

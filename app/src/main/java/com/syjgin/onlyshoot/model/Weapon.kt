@@ -17,5 +17,6 @@ data class Weapon(
     val rage: Int,
     val damageType: DamageType,
     val armorPenetration: Int,
+    val armorPenetrationModifier: Int,
     val burstType: BurstType
 )

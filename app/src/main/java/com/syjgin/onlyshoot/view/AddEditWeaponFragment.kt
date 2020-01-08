@@ -27,19 +27,23 @@ class AddEditWeaponFragment :
         }
     }
 
-    var isRadioListenersActive = true
-    var weaponId: Long = NO_DATA
-    var unitId: Long = NO_DATA
+    private var isRadioListenersActive = true
+    private var weaponId: Long = NO_DATA
+    private var unitId: Long = NO_DATA
     private var isEditMode = false
     private var isCopyMode = false
     private var isAlreadySaved = false
 
     override fun fragmentTitle(): Int {
-        return AddEditUtils.getAddEditFragmentTitle(
-            arguments,
-            R.string.add_weapon,
-            R.string.edit_weapon
-        )
+        return if (!isCopyMode) {
+            AddEditUtils.getAddEditFragmentTitle(
+                arguments,
+                R.string.add_weapon,
+                R.string.edit_weapon
+            )
+        } else {
+            R.string.copy_weapon
+        }
     }
 
     override fun fragmentLayout() = R.layout.fragment_add_edit_weapon
@@ -50,7 +54,7 @@ class AddEditWeaponFragment :
         if (isEditMode || isCopyMode) {
             weaponId = args.getLong(BundleKeys.WeaponId.name)
         }
-        unitId = args.getLong(BundleKeys.Unit.name)
+        unitId = args.getLong(BundleKeys.Unit.name, NO_DATA)
     }
 
     override fun hasBackButton() = true
@@ -64,7 +68,8 @@ class AddEditWeaponFragment :
             damage_mod,
             attack_count,
             miss_possibility,
-            armor_penetration_attack,
+            armor_penetration_amount,
+            armor_penetration_modifier,
             critical_modifier,
             anger_amount
         )) {
@@ -116,6 +121,14 @@ class AddEditWeaponFragment :
                         for (checkBox in others) {
                             checkBox.isChecked = false
                         }
+                        attack_modifier.setText(
+                            when (checkView) {
+                                single -> "10"
+                                short_burst -> "0"
+                                long_burst -> "-10"
+                                else -> ""
+                            }
+                        )
                     }
                     isRadioListenersActive = true
                     changeButtonState()
@@ -157,7 +170,8 @@ class AddEditWeaponFragment :
             critical_modifier.text.toString().toInt(),
             anger_amount.text.toString().toInt(),
             damageType,
-            armor_penetration_attack.text.toString().toInt(),
+            armor_penetration_amount.text.toString().toInt(),
+            armor_penetration_modifier.text.toString().toInt(),
             burstType,
             unitId
         )
@@ -173,7 +187,8 @@ class AddEditWeaponFragment :
                 miss_possibility.text?.isNotEmpty() ?: false &&
                 critical_modifier.text?.isNotEmpty() ?: false &&
                 anger_amount.text?.isNotEmpty() ?: false &&
-                armor_penetration_attack.text?.isNotEmpty() ?: false &&
+                armor_penetration_amount.text?.isNotEmpty() ?: false &&
+                armor_penetration_modifier.text?.isNotEmpty() ?: false &&
                 (explosion.isChecked || cut.isChecked || strike.isChecked || energy.isChecked)
     }
 
@@ -186,7 +201,8 @@ class AddEditWeaponFragment :
         miss_possibility.setText(weapon.missPossibility.toString())
         critical_modifier.setText(weapon.criticalHitModifier.toString())
         anger_amount.setText(weapon.rage.toString())
-        armor_penetration_attack.setText(weapon.armorPenetration.toString())
+        armor_penetration_amount.setText(weapon.armorPenetration.toString())
+        armor_penetration_modifier.setText(weapon.armorPenetrationModifier.toString())
         when (weapon.damageType) {
             DamageType.Explosion -> explosion.isChecked = true
             DamageType.Cut -> cut.isChecked = true

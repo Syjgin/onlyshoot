@@ -36,7 +36,8 @@ class AddEditWeaponViewModel : BaseViewModel() {
         criticalHitModifier: Int,
         rage: Int,
         damageType: DamageType,
-        armorPenetration: Int,
+        armorPenetrationAmount: Int,
+        armorPenetrationModifier: Int,
         burstType: BurstType,
         unitId: Long
     ) {
@@ -54,7 +55,8 @@ class AddEditWeaponViewModel : BaseViewModel() {
             criticalHitModifier,
             rage,
             damageType,
-            armorPenetration,
+            armorPenetrationAmount,
+            armorPenetrationModifier,
             burstType
         )
         viewModelScope.launch {

@@ -34,6 +34,8 @@ data class UnitArchetype(
     val deathFromRage: Boolean,
     val weaponId: Long,
     val weaponName: String,
+    val constantEnemyAttackModifier: Int = 0,
+    val tempEnemyAttackModifier: Int = 0,
     val rage: Int = 10) : Serializable {
     fun convertToSquadUnit(squadId: Long, unitName: String) : SquadUnit {
         return SquadUnit(
@@ -64,6 +66,8 @@ data class UnitArchetype(
             deathFromRage,
             weaponId,
             weaponName,
+            constantEnemyAttackModifier,
+            tempEnemyAttackModifier,
             squadId,
             rage
         )

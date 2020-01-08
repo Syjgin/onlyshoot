@@ -151,6 +151,8 @@ class AddEditUnitFragment : BaseFragment<AddEditUnitViewModel>(AddEditUnitViewMo
             squadId,
             weaponId,
             load_weapon.text.toString(),
+            enemy_attack_skill.toString().toInt(),
+            enemy_attack_skill_temp.toString().toInt(),
             anger_amount.text.toString().toInt(),
             isEditMode
         )
@@ -176,6 +178,8 @@ class AddEditUnitFragment : BaseFragment<AddEditUnitViewModel>(AddEditUnitViewMo
                 critical_ignorance.text?.isNotEmpty() ?: false &&
                 anger_amount.text?.isNotEmpty() ?: false &&
                 hp.text?.isNotEmpty() ?: false &&
+                enemy_attack_skill.text?.isNotEmpty() ?: false &&
+                enemy_attack_skill_temp.text?.isNotEmpty() ?: false &&
                 weaponId != NO_DATA
     }
 
@@ -206,6 +210,8 @@ class AddEditUnitFragment : BaseFragment<AddEditUnitViewModel>(AddEditUnitViewMo
         hp.setText(squadUnit.hp.toString())
         squadId = squadUnit.squadId
         weaponId = squadUnit.weaponId
+        enemy_attack_skill.setText(squadUnit.constantEnemyAttackModifier)
+        enemy_attack_skill_temp.setText(squadUnit.tempEnemyAttackModifier)
         changeButtonState()
     }
 }
