@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.syjgin.onlyshoot.di.OnlyShootApp
+import com.syjgin.onlyshoot.model.SquadArchetype
 import com.syjgin.onlyshoot.model.SquadDescription
 import com.syjgin.onlyshoot.model.SquadUnit
 import com.syjgin.onlyshoot.navigation.BundleKeys
@@ -18,20 +19,47 @@ class AddEditSquadViewModel : BaseViewModel() {
     private var squadLiveData : LiveData<List<SquadUnit>>? = null
     private val nameLiveData = MutableLiveData<String>()
     private var isEditMode = false
+    private var isArchetypeMode = false
     private var squadId = DbUtils.generateLongUUID()
 
     init {
         OnlyShootApp.getInstance().getAppComponent().inject(this)
     }
 
-    fun loadSquad(id: Long, unitFilter: String, weaponFilter: Long) {
+    fun loadSquad(id: Long, unitFilter: String, weaponFilter: Long, isArchetypeMode: Boolean) {
         squadId = id
         isEditMode = true
-        startObserveSquad(unitFilter, weaponFilter)
+        this.isArchetypeMode = isArchetypeMode
+        if (isArchetypeMode) {
+            refreshArchetypes()
+        } else {
+            startObserveSquad(unitFilter, weaponFilter)
+            viewModelScope.launch {
+                val description = database.squadDescriptionDao().getById(squadId)
+                if (description != null) {
+                    nameLiveData.postValue(description.name)
+                }
+            }
+        }
+    }
+
+    private fun refreshArchetypes() {
         viewModelScope.launch {
-            val description = database.squadDescriptionDao().getById(squadId)
-            if(description != null) {
-                nameLiveData.postValue(description.name)
+            val entries = database.squadArchetypeDao().getSquadArchetypeSync(squadId)
+            if (entries.isNotEmpty()) {
+                nameLiveData.postValue(entries[0].name)
+                val nameList = mutableListOf<String>()
+                val data2display = mutableListOf<SquadUnit>()
+                for (entry in entries) {
+                    val squadUnitArchetype =
+                        database.archetypeDao().getById(entry.unitArchetypeId)!!
+                    val nextName = DbUtils.getNextUnitName(squadUnitArchetype.name, nameList)
+                    val squadUnit = squadUnitArchetype.convertToSquadUnit(squadId, nextName)
+                    nameList.add(nextName)
+                    data2display.add(squadUnit)
+                }
+                squadLiveData = MutableLiveData<List<SquadUnit>>()
+                (squadLiveData as MutableLiveData<List<SquadUnit>>).postValue(data2display)
             }
         }
     }
@@ -53,11 +81,58 @@ class AddEditSquadViewModel : BaseViewModel() {
         viewModelScope.launch {
             if (squadLiveData == null)
                 return@launch
-            database.squadDescriptionDao().insert(SquadDescription(squadId, title))
-            for (member in squadLiveData!!.value!!) {
-                if (member.squadId != squadId) {
-                    member.squadId = squadId
-                    database.unitDao().insert(member)
+            if (isArchetypeMode) {
+                val entries = database.squadArchetypeDao().getSquadArchetypeSync(squadId)
+                if (entries.isNotEmpty()) {
+                    for (entry in entries) {
+                        if (entry.name != title) {
+                            entry.name = title
+                            database.squadArchetypeDao().insert(entry)
+                        }
+                    }
+                }
+            } else {
+                val squadDescription = database.squadDescriptionDao().getById(squadId)
+                var needInsertArchetype = true
+                var squadArchetypeId = DbUtils.generateLongUUID()
+                if (squadDescription != null) {
+                    val existingArchetype = database.squadArchetypeDao()
+                        .getSquadArchetypeSync(squadDescription.archetypeId)
+                    if (existingArchetype.isNotEmpty()) {
+                        needInsertArchetype = false
+                        squadArchetypeId = existingArchetype[0].squadId
+                    }
+                }
+                if (needInsertArchetype) {
+                    val units = database.unitDao().getBySquad(squadId)
+                    val archetypeMap = mutableMapOf<Long, Int>()
+                    for (currentUnit in units) {
+                        if (!archetypeMap.containsKey(currentUnit.parentId)) {
+                            archetypeMap[currentUnit.parentId] = 0
+                        } else {
+                            val oldValue = archetypeMap[currentUnit.parentId]!!
+                            archetypeMap[currentUnit.parentId] = oldValue + 1
+                        }
+                    }
+                    for (currentEntry in archetypeMap.entries) {
+                        database.squadArchetypeDao().insert(
+                            SquadArchetype(
+                                0,
+                                squadArchetypeId,
+                                currentEntry.key,
+                                currentEntry.value,
+                                title
+                            )
+                        )
+                    }
+                }
+                database.squadDescriptionDao()
+                    .insert(SquadDescription(squadId, title, squadArchetypeId))
+                for (member in squadLiveData!!.value!!) {
+                    if (member.squadId != squadId) {
+                        member.squadId = squadId
+                        database.unitDao().insert(member)
+                    }
                 }
             }
             router.exit()
@@ -65,6 +140,8 @@ class AddEditSquadViewModel : BaseViewModel() {
     }
 
     fun openUnit(squadUnit: SquadUnit) {
+        if (isArchetypeMode)
+            return
         val bundle = Bundle()
         bundle.putBoolean(BundleKeys.AddFlavor.name, false)
         bundle.putLong(BundleKeys.Unit.name, squadUnit.id)
@@ -72,18 +149,48 @@ class AddEditSquadViewModel : BaseViewModel() {
     }
 
     fun duplicateUnit(squadUnit: SquadUnit) {
-        DbUtils.duplicateUnit(
-            squadUnit.weaponId,
-            viewModelScope,
-            database,
-            squadUnit.parentId,
-            squadId
-        )
+        if (isArchetypeMode) {
+            viewModelScope.launch {
+                val archetypeEntries = database.squadArchetypeDao().getSquadArchetypeSync(squadId)
+                for (entry in archetypeEntries) {
+                    if (entry.unitArchetypeId == squadUnit.id) {
+                        entry.amount = entry.amount + 1
+                        database.squadArchetypeDao().insert(entry)
+                        refreshArchetypes()
+                        return@launch
+                    }
+                }
+            }
+        } else {
+            DbUtils.duplicateUnit(
+                squadUnit.weaponId,
+                viewModelScope,
+                database,
+                squadUnit.parentId,
+                squadId
+            )
+        }
     }
 
     fun removeUnit(squadUnit: SquadUnit) {
         viewModelScope.launch {
-            database.unitDao().delete(squadUnit.id)
+            if (isArchetypeMode) {
+                val archetypeEntries = database.squadArchetypeDao().getSquadArchetypeSync(squadId)
+                for (entry in archetypeEntries) {
+                    if (entry.unitArchetypeId == squadUnit.id) {
+                        if (entry.amount > 1) {
+                            entry.amount = entry.amount - 1
+                            database.squadArchetypeDao().insert(entry)
+                        } else {
+                            database.squadArchetypeDao().delete(entry.id)
+                        }
+                        refreshArchetypes()
+                        return@launch
+                    }
+                }
+            } else {
+                database.unitDao().delete(squadUnit.id)
+            }
         }
     }
 
@@ -98,6 +205,31 @@ class AddEditSquadViewModel : BaseViewModel() {
             database.unitDao().getBySquadLiveData(squadId)
         } else {
             database.unitDao().getBySquadLiveDataWithFilters(squadId, "%$unitFilter%", weaponFilter)
+        }
+    }
+
+    fun resetToArchetype() {
+        viewModelScope.launch {
+            if (squadId == NO_DATA)
+                return@launch
+            val squad = database.squadDescriptionDao().getById(squadId)!!
+            val squadUnits = database.unitDao().getBySquad(squadId)
+            for (squadUnit in squadUnits) {
+                database.unitDao().delete(squadUnit.id)
+            }
+            val archetypeList =
+                database.squadArchetypeDao().getSquadArchetypeSync(squad.archetypeId)
+            for (archetypeListEntry in archetypeList) {
+                val unitArchetype =
+                    database.archetypeDao().getById(archetypeListEntry.unitArchetypeId)!!
+                val names = mutableListOf<String>()
+                for (i in 0..archetypeListEntry.amount) {
+                    val targetName = DbUtils.getNextUnitName(unitArchetype.name, names)
+                    names.add(targetName)
+                    val newUnit = unitArchetype.convertToSquadUnit(squadId, targetName)
+                    database.unitDao().insert(newUnit)
+                }
+            }
         }
     }
 }

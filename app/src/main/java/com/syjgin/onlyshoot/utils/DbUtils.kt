@@ -147,6 +147,32 @@ object DbUtils {
         return result
     }
 
+    fun createSquadByArchetype(
+        archetypeId: Long,
+        viewModelScope: CoroutineScope,
+        database: Database,
+        callback: ((Long) -> Unit)?
+    ) {
+        viewModelScope.launch {
+            val archetypeList = database.squadArchetypeDao().getSquadArchetypeSync(archetypeId)
+            val squadId = generateLongUUID()
+            for (archetypeListEntry in archetypeList) {
+                val unitArchetype =
+                    database.archetypeDao().getById(archetypeListEntry.unitArchetypeId)!!
+                val names = mutableListOf<String>()
+                for (i in 0..archetypeListEntry.amount) {
+                    val targetName = getNextUnitName(unitArchetype.name, names)
+                    names.add(targetName)
+                    val newUnit = unitArchetype.convertToSquadUnit(squadId, targetName)
+                    database.unitDao().insert(newUnit)
+                }
+            }
+            if (callback != null) {
+                callback(squadId)
+            }
+        }
+    }
+
     fun duplicateUnit(
         weaponId: Long,
         viewModelScope: CoroutineScope,

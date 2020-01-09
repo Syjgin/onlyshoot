@@ -151,8 +151,8 @@ class AddEditUnitFragment : BaseFragment<AddEditUnitViewModel>(AddEditUnitViewMo
             squadId,
             weaponId,
             load_weapon.text.toString(),
-            enemy_attack_skill.toString().toInt(),
-            enemy_attack_skill_temp.toString().toInt(),
+            enemy_attack_skill.text.toString().toInt(),
+            enemy_attack_skill_temp.text.toString().toInt(),
             anger_amount.text.toString().toInt(),
             isEditMode
         )

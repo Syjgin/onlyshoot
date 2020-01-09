@@ -14,6 +14,7 @@ class MainFragmentViewModel : BaseViewModel() {
     fun openSquads() {
         val bundle = Bundle()
         bundle.putBoolean(BundleKeys.ListMode.name, true)
+        bundle.putBoolean(BundleKeys.ArchetypeMode.name, true)
         router.navigateTo(OnlyShootScreen(ScreenEnum.SelectSquad, bundle))
     }
 

@@ -15,5 +15,6 @@ enum class BundleKeys {
     WeaponName,
     ListMode,
     WeaponId,
-    CopyMode
+    CopyMode,
+    ArchetypeMode
 }

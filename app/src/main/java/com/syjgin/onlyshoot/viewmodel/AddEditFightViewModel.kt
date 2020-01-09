@@ -99,10 +99,11 @@ class AddEditFightViewModel : BaseViewModel() {
         return saveDialogLiveEvent
     }
 
-    fun loadSquad(attackers: Boolean) {
+    fun loadSquad(attackers: Boolean, isArchetype: Boolean) {
         val bundle = Bundle()
         bundle.putBoolean(BundleKeys.AddFlavor.name, false)
         bundle.putBoolean(BundleKeys.SelectAttackers.name, attackers)
+        bundle.putBoolean(BundleKeys.ArchetypeMode.name, isArchetype)
         router.navigateTo(OnlyShootScreen(ScreenEnum.SelectSquad, bundle))
     }
 

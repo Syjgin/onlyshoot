@@ -5,7 +5,7 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 
 @Database(
-    entities = [Fight::class, SquadUnit::class, SquadDescription::class, UnitArchetype::class, Weapon::class],
+    entities = [Fight::class, SquadUnit::class, SquadDescription::class, UnitArchetype::class, Weapon::class, SquadArchetype::class],
     version = 1,
     exportSchema = false
 )
@@ -16,4 +16,5 @@ abstract class Database : RoomDatabase() {
     abstract fun squadDescriptionDao() : SquadDescriptionDao
     abstract fun archetypeDao() : ArchetypeDao
     abstract fun weaponDao(): WeaponDao
+    abstract fun squadArchetypeDao(): SquadArchetypeDao
 }

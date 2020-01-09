@@ -30,6 +30,7 @@ class SelectSquadFragment : BaseFragment<SelectSquadViewModel>(SelectSquadViewMo
     private var squad: SquadDescription? = null
     private var isAttackers = false
     private var isListMode = false
+    private var isArchetypeMode = false
     private lateinit var adapter: SquadSelectAdapter
 
     override fun fragmentTitle() = if (isListMode) R.string.squads else R.string.select_squad
@@ -39,6 +40,7 @@ class SelectSquadFragment : BaseFragment<SelectSquadViewModel>(SelectSquadViewMo
     override fun parseArguments(args: Bundle) {
         isAttackers = args.getBoolean(BundleKeys.SelectAttackers.name)
         isListMode = args.getBoolean(BundleKeys.ListMode.name)
+        isArchetypeMode = args.getBoolean(BundleKeys.ArchetypeMode.name)
     }
 
     override fun hasBackButton() = true
@@ -63,14 +65,27 @@ class SelectSquadFragment : BaseFragment<SelectSquadViewModel>(SelectSquadViewMo
         } else {
             select_squad.setOnClickListener {
                 if (squad != null) {
-                    val addEditFightViewModel =
-                        ViewModelProviders.of(activity!!).get(AddEditFightViewModel::class.java)
-                    addEditFightViewModel.setSquadAndReturn(squad!!.id, isAttackers)
+                    if (isArchetypeMode) {
+                        viewModel?.selectArchetype(squad!!.id, object : (Long) -> Unit {
+                            override fun invoke(squadId: Long) {
+                                val addEditFightViewModel =
+                                    ViewModelProviders.of(activity!!)
+                                        .get(AddEditFightViewModel::class.java)
+                                addEditFightViewModel.setSquadAndReturn(squadId, isAttackers)
+                            }
+                        })
+                    } else {
+                        val addEditFightViewModel =
+                            ViewModelProviders.of(activity!!).get(AddEditFightViewModel::class.java)
+                        addEditFightViewModel.setSquadAndReturn(squad!!.id, isAttackers)
+                    }
                 }
             }
         }
         existing_squads.adapter = adapter
-        viewModel?.getSquadsLiveData()?.observe(this, Observer { showSquads(it)})
+        viewModel?.setArchetypeMode(isArchetypeMode) {
+            viewModel?.getSquadsLiveData()?.observe(this, Observer { showSquads(it) })
+        }
     }
 
     private fun showSquads(squads: List<SquadDescription>) {

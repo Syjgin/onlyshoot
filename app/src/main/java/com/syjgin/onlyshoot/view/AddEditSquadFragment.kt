@@ -36,6 +36,7 @@ class AddEditSquadFragment : BaseFragment<AddEditSquadViewModel>(AddEditSquadVie
     private var weaponFilter = NO_DATA
     private var externalUnitFilter = ""
     private var isDisplayingDialog = false
+    private var isArchetypeMode = false
     private val adapter = SquadUnitListAdapter(this, false)
 
     override fun fragmentTitle(): Int {
@@ -46,6 +47,7 @@ class AddEditSquadFragment : BaseFragment<AddEditSquadViewModel>(AddEditSquadVie
 
     override fun parseArguments(args: Bundle) {
         isEditMode = !args.getBoolean(BundleKeys.AddFlavor.name)
+        isArchetypeMode = args.getBoolean(BundleKeys.ArchetypeMode.name)
         if(isEditMode)
             squadId = args.getLong(BundleKeys.SquadId.name)
         externalUnitFilter = args.getString(BundleKeys.GroupName.name, "")
@@ -53,11 +55,15 @@ class AddEditSquadFragment : BaseFragment<AddEditSquadViewModel>(AddEditSquadVie
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.add_menu, menu)
+        inflater.inflate(if (isArchetypeMode) R.menu.add_menu else R.menu.add_archetype_menu, menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.add) {
+            if (isArchetypeMode) {
+                viewModel?.addArchetype()
+                return true
+            }
             if (isDisplayingDialog)
                 return false
             isDisplayingDialog = true
@@ -86,6 +92,9 @@ class AddEditSquadFragment : BaseFragment<AddEditSquadViewModel>(AddEditSquadVie
             )
             dialog?.show()
             return true
+        }
+        if (item.itemId == R.id.archetype) {
+            viewModel?.resetToArchetype()
         }
         return super.onOptionsItemSelected(item)
     }
@@ -116,7 +125,7 @@ class AddEditSquadFragment : BaseFragment<AddEditSquadViewModel>(AddEditSquadVie
             }
         })
         if (isEditMode) {
-            viewModel?.loadSquad(squadId, externalUnitFilter, weaponFilter)
+            viewModel?.loadSquad(squadId, externalUnitFilter, weaponFilter, isArchetypeMode)
         } else {
             viewModel?.startObserveSquad("", NO_DATA)
         }

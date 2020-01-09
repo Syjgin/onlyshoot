@@ -8,4 +8,6 @@ import java.io.Serializable
 data class SquadDescription(
     @PrimaryKey
     val id: Long,
-    val name: String) : Serializable
+    val name: String,
+    val archetypeId: Long
+) : Serializable

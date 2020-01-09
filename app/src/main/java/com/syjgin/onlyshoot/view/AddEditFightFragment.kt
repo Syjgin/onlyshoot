@@ -114,8 +114,42 @@ class AddEditFightFragment : BaseFragment<AddEditFightViewModel>(AddEditFightVie
             return
         load_attackers.text = getString(R.string.load_attackers)
         load_defenders.text = getString(R.string.load_defenders)
-        load_attackers.setOnClickListener { viewModel?.loadSquad(true) }
-        load_defenders.setOnClickListener { viewModel?.loadSquad(false) }
+        load_attackers.setOnClickListener {
+            DialogUtils.createTwoOptionsDialog(
+                context,
+                object : DialogUtils.TwoOptionsDialogListener {
+                    override fun onFirstOptionSelected() {
+                        viewModel?.loadSquad(true, isArchetype = false)
+                    }
+
+                    override fun onSecondOptionSelected() {
+                        viewModel?.loadSquad(true, isArchetype = true)
+                    }
+
+                    override fun onCancel() {}
+
+                },
+                R.layout.dialog_add_squad
+            )
+        }
+        load_defenders.setOnClickListener {
+            DialogUtils.createTwoOptionsDialog(
+                context,
+                object : DialogUtils.TwoOptionsDialogListener {
+                    override fun onFirstOptionSelected() {
+                        viewModel?.loadSquad(false, isArchetype = false)
+                    }
+
+                    override fun onSecondOptionSelected() {
+                        viewModel?.loadSquad(false, isArchetype = true)
+                    }
+
+                    override fun onCancel() {}
+
+                },
+                R.layout.dialog_add_squad
+            )
+        }
     }
 
     private fun displayLoadUnitDialog(isAttackers: Boolean) {
