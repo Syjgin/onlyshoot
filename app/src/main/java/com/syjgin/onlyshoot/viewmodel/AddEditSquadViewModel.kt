@@ -44,6 +44,9 @@ class AddEditSquadViewModel : BaseViewModel() {
     }
 
     private fun refreshArchetypes() {
+        if (squadLiveData == null) {
+            squadLiveData = MutableLiveData<List<SquadUnit>>()
+        }
         viewModelScope.launch {
             val entries = database.squadArchetypeDao().getSquadArchetypeSync(squadId)
             if (entries.isNotEmpty()) {
@@ -51,14 +54,15 @@ class AddEditSquadViewModel : BaseViewModel() {
                 val nameList = mutableListOf<String>()
                 val data2display = mutableListOf<SquadUnit>()
                 for (entry in entries) {
-                    val squadUnitArchetype =
-                        database.archetypeDao().getById(entry.unitArchetypeId)!!
-                    val nextName = DbUtils.getNextUnitName(squadUnitArchetype.name, nameList)
-                    val squadUnit = squadUnitArchetype.convertToSquadUnit(squadId, nextName)
-                    nameList.add(nextName)
-                    data2display.add(squadUnit)
+                    for (i in 0..entry.amount) {
+                        val squadUnitArchetype =
+                            database.archetypeDao().getById(entry.unitArchetypeId)!!
+                        val nextName = DbUtils.getNextUnitName(squadUnitArchetype.name, nameList)
+                        val squadUnit = squadUnitArchetype.convertToSquadUnit(squadId, nextName)
+                        nameList.add(nextName)
+                        data2display.add(squadUnit)
+                    }
                 }
-                squadLiveData = MutableLiveData<List<SquadUnit>>()
                 (squadLiveData as MutableLiveData<List<SquadUnit>>).postValue(data2display)
             }
         }
@@ -140,8 +144,14 @@ class AddEditSquadViewModel : BaseViewModel() {
     }
 
     fun openUnit(squadUnit: SquadUnit) {
-        if (isArchetypeMode)
+        if (isArchetypeMode) {
+            val bundle = Bundle()
+            bundle.putBoolean(BundleKeys.AddFlavor.name, false)
+            bundle.putBoolean(BundleKeys.EditArchetype.name, true)
+            bundle.putLong(BundleKeys.Unit.name, squadUnit.parentId)
+            router.navigateTo(OnlyShootScreen(ScreenEnum.AddEditUnit, bundle))
             return
+        }
         val bundle = Bundle()
         bundle.putBoolean(BundleKeys.AddFlavor.name, false)
         bundle.putLong(BundleKeys.Unit.name, squadUnit.id)
@@ -153,7 +163,7 @@ class AddEditSquadViewModel : BaseViewModel() {
             viewModelScope.launch {
                 val archetypeEntries = database.squadArchetypeDao().getSquadArchetypeSync(squadId)
                 for (entry in archetypeEntries) {
-                    if (entry.unitArchetypeId == squadUnit.id) {
+                    if (entry.unitArchetypeId == squadUnit.parentId) {
                         entry.amount = entry.amount + 1
                         database.squadArchetypeDao().insert(entry)
                         refreshArchetypes()
@@ -177,7 +187,7 @@ class AddEditSquadViewModel : BaseViewModel() {
             if (isArchetypeMode) {
                 val archetypeEntries = database.squadArchetypeDao().getSquadArchetypeSync(squadId)
                 for (entry in archetypeEntries) {
-                    if (entry.unitArchetypeId == squadUnit.id) {
+                    if (entry.unitArchetypeId == squadUnit.parentId) {
                         if (entry.amount > 1) {
                             entry.amount = entry.amount - 1
                             database.squadArchetypeDao().insert(entry)
