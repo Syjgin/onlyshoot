@@ -210,8 +210,8 @@ class AddEditUnitFragment : BaseFragment<AddEditUnitViewModel>(AddEditUnitViewMo
         hp.setText(squadUnit.hp.toString())
         squadId = squadUnit.squadId
         weaponId = squadUnit.weaponId
-        enemy_attack_skill.setText(squadUnit.constantEnemyAttackModifier)
-        enemy_attack_skill_temp.setText(squadUnit.tempEnemyAttackModifier)
+        enemy_attack_skill.setText(squadUnit.constantEnemyAttackModifier.toString())
+        enemy_attack_skill_temp.setText(squadUnit.tempEnemyAttackModifier.toString())
         changeButtonState()
     }
 }

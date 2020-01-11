@@ -115,41 +115,42 @@ class AddEditFightFragment : BaseFragment<AddEditFightViewModel>(AddEditFightVie
         load_attackers.text = getString(R.string.load_attackers)
         load_defenders.text = getString(R.string.load_defenders)
         load_attackers.setOnClickListener {
-            DialogUtils.createTwoOptionsDialog(
-                context,
-                object : DialogUtils.TwoOptionsDialogListener {
-                    override fun onFirstOptionSelected() {
-                        viewModel?.loadSquad(true, isArchetype = false)
-                    }
-
-                    override fun onSecondOptionSelected() {
-                        viewModel?.loadSquad(true, isArchetype = true)
-                    }
-
-                    override fun onCancel() {}
-
-                },
-                R.layout.dialog_add_squad
-            )
+            showAddSquadDialog(true)
         }
         load_defenders.setOnClickListener {
-            DialogUtils.createTwoOptionsDialog(
-                context,
-                object : DialogUtils.TwoOptionsDialogListener {
-                    override fun onFirstOptionSelected() {
-                        viewModel?.loadSquad(false, isArchetype = false)
-                    }
-
-                    override fun onSecondOptionSelected() {
-                        viewModel?.loadSquad(false, isArchetype = true)
-                    }
-
-                    override fun onCancel() {}
-
-                },
-                R.layout.dialog_add_squad
-            )
+            showAddSquadDialog(false)
         }
+    }
+
+    private fun showAddSquadDialog(isAttackers: Boolean) {
+        if (isDisplayingDialog)
+            return
+        isDisplayingDialog = true
+        var dialog: Dialog? = null
+        dialog = DialogUtils.createTwoOptionsDialog(
+            context,
+            object : DialogUtils.TwoOptionsDialogListener {
+                override fun onFirstOptionSelected() {
+                    dialog?.dismiss()
+                    isDisplayingDialog = false
+                    viewModel?.loadSquad(isAttackers, isArchetype = false)
+                }
+
+                override fun onSecondOptionSelected() {
+                    dialog?.dismiss()
+                    isDisplayingDialog = false
+                    viewModel?.loadSquad(isAttackers, isArchetype = true)
+                }
+
+                override fun onCancel() {
+                    dialog?.dismiss()
+                    isDisplayingDialog = false
+                }
+
+            },
+            R.layout.dialog_add_squad
+        )
+        dialog?.show()
     }
 
     private fun displayLoadUnitDialog(isAttackers: Boolean) {

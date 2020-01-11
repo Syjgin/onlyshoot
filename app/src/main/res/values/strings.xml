@@ -20,6 +20,7 @@
     <string name="add">Add</string>
     <string name="select">Select</string>
     <string name="save">Save</string>
+    <string name="save_squad_name">Save squad name</string>
     <string name="attack">Attack</string>
     <string name="name">Name</string>
     <string name="attack_skill_amount">Attack skill amount</string>
@@ -41,7 +42,7 @@
     <string name="explosion">Explosion</string>
     <string name="cut">Cut</string>
     <string name="strike">Strike</string>
-    <string name="energy">Enegry</string>
+    <string name="energy">Energy</string>
     <string name="attack_amount">Attack amount</string>
     <string name="hp">HP</string>
     <string name="evasion">Evasion</string>

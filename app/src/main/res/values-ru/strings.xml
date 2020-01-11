@@ -21,6 +21,7 @@
     <string name="add">Добавить</string>
     <string name="select">Выбрать</string>
     <string name="save">Сохранить</string>
+    <string name="save_squad_name">Сохранить название отряда</string>
     <string name="attack">Атака</string>
     <string name="name">Название</string>
     <string name="attack_skill_amount">Уровень навыка атаки</string>

@@ -1,6 +1,7 @@
 package com.syjgin.onlyshoot.utils
 
 import com.syjgin.onlyshoot.model.Database
+import com.syjgin.onlyshoot.model.SquadDescription
 import com.syjgin.onlyshoot.model.SquadUnit
 import com.syjgin.onlyshoot.model.UnitGroup
 import kotlinx.coroutines.CoroutineScope
@@ -166,6 +167,10 @@ object DbUtils {
                     val newUnit = unitArchetype.convertToSquadUnit(squadId, targetName)
                     database.unitDao().insert(newUnit)
                 }
+            }
+            if (archetypeList.isNotEmpty()) {
+                val squadDescription = SquadDescription(squadId, archetypeList[0].name, archetypeId)
+                database.squadDescriptionDao().insert(squadDescription)
             }
             if (callback != null) {
                 callback(squadId)
