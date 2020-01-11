@@ -245,7 +245,7 @@ class AttackResultViewModel : BaseViewModel() {
                     var totalDamage = 0
                     var totalDamageWithoutArmor = 0
                     for (j in 0 until successAttackAmount) {
-                        log(String.format(context.getString(R.string.calculating_attack), j))
+                        log(String.format(context.getString(R.string.calculating_attack), j + 1))
                         var currentDamage = 0
                         val damage = weapon.damage
                         log(
@@ -260,13 +260,13 @@ class AttackResultViewModel : BaseViewModel() {
                         log(
                             String.format(
                                 context.getString(R.string.damage_d10),
-                                j, currentDamage
+                                j + 1, currentDamage
                             )
                         )
                         log(
                             String.format(
                                 context.getString(R.string.current_damage),
-                                j,
+                                j + 1,
                                 currentDamage + attacker.constantDamageModifier + attacker.tempDamageModifier + weapon.damageModifier
                             )
                         )
