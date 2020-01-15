@@ -5,7 +5,7 @@ import androidx.room.*
 
 @Dao
 interface WeaponDao {
-    @Query("SELECT * FROM Weapon")
+    @Query("SELECT * FROM Weapon ORDER BY name")
     fun getAll(): LiveData<List<Weapon>>
 
     @Query("SELECT * FROM Weapon WHERE id = :id")

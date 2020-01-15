@@ -10,7 +10,6 @@ import com.syjgin.onlyshoot.model.*
 import com.syjgin.onlyshoot.navigation.OnlyShootScreen
 import com.syjgin.onlyshoot.navigation.ScreenEnum
 import kotlinx.coroutines.launch
-import kotlin.math.min
 import kotlin.random.Random
 
 class AttackResultViewModel : BaseViewModel() {
@@ -95,16 +94,18 @@ class AttackResultViewModel : BaseViewModel() {
                     val d100 = created100()
                     log(String.format(context.getString(R.string.attack_dice), d100))
                     val weapon = database.weaponDao().getById(attacker.weaponId)!!
+                    val fullAttack =
+                        attacker.attack + attacker.attackModifier + weapon.attackModifier + defender.tempEnemyAttackModifier + defender.constantEnemyAttackModifier
                     val attackSuccessCount =
-                        min(((attacker.attack - d100) / 10), attacksBySingleUnit)
+                        (if (d100 < fullAttack) 1 else 0) + (fullAttack - d100) / 10
                     log(
                         String.format(
                             context.getString(R.string.attack_success_count),
-                            attackSuccessCount
+                            if (attackSuccessCount > 0) attackSuccessCount else 0
                         )
                     )
                     var successAttackAmount = when (weapon.burstType) {
-                        BurstType.Single -> attacksBySingleUnit
+                        BurstType.Single -> if (attackSuccessCount > 0) 1 else 0
                         BurstType.Short -> if (attackSuccessCount > 0) {
                             1 + attackSuccessCount / 2
                         } else {
@@ -113,9 +114,7 @@ class AttackResultViewModel : BaseViewModel() {
                         BurstType.Long -> attackSuccessCount
                     }
                     log(String.format(context.getString(R.string.burst_count), successAttackAmount))
-                    val fullAttack =
-                        attacker.attack + attacker.attackModifier + weapon.attackModifier + defender.tempEnemyAttackModifier + defender.constantEnemyAttackModifier
-                    log(String.format(context.getString(R.string.attack_template), fullAttack))
+                    log(String.format(context.getString(R.string.attack_log_template), fullAttack))
                     if (d100 > fullAttack) {
                         val attackStatus = if (d100 > weapon.missPossibility) {
                             AttackResult.ResultState.Misfire
@@ -176,43 +175,39 @@ class AttackResultViewModel : BaseViewModel() {
                     )
                     val allParts = mutableListOf<AttackResult.BodyPart>()
                     allParts.addAll(getAttackParts(firstAttackPart, attacksBySingleUnit))
-                    log(String.format(context.getString(R.string.all_attack_parts), allParts))
                     log(
                         String.format(
                             context.getString(R.string.attack_count),
                             successAttackAmount
                         )
                     )
-                    val evasionDice = created100()
-                    log(String.format(context.getString(R.string.evasion_dice), evasionDice))
-                    var successCount =
-                        (if (evasionDice < defender.evasion) 1 else 0) + (defender.evasion - evasionDice) / 10
-                    if (successCount > successAttackAmount) {
-                        successCount = successAttackAmount
-                    }
-                    log(
-                        String.format(
-                            context.getString(R.string.previous_evasion),
-                            evasions[defender.id]
-                        )
-                    )
-                    if (successCount > 0) {
+                    if (evasions[defender.id]!! > 0) {
+                        val evasionDice = created100()
+                        log(String.format(context.getString(R.string.evasion_dice), evasionDice))
+                        var successCount =
+                            (if (evasionDice < defender.evasion) 1 else 0) + (defender.evasion - evasionDice) / 10
+                        if (successCount > successAttackAmount) {
+                            successCount = successAttackAmount
+                        }
                         log(
                             String.format(
-                                context.getString(R.string.evasion_success),
-                                successCount
+                                context.getString(R.string.evasion_log_template),
+                                defender.evasion
                             )
                         )
-                        evasions[defender.id] = evasions[defender.id]!! - successCount
                         log(
                             String.format(
-                                context.getString(R.string.remain_evasions),
-                                defender.name,
+                                context.getString(R.string.previous_evasion),
                                 evasions[defender.id]
                             )
                         )
-                        if (evasions[defender.id]!! > 0) {
-                            successCount += 1
+                        if (successCount > 0) {
+                            log(
+                                String.format(
+                                    context.getString(R.string.evasion_success),
+                                    successCount
+                                )
+                            )
                             successAttackAmount -= successCount
                             log(
                                 String.format(
@@ -225,8 +220,16 @@ class AttackResultViewModel : BaseViewModel() {
                                     allParts.removeAt(0)
                                 }
                             }
+                            evasions[defender.id] = evasions[defender.id]!! - successCount
                         }
                     }
+                    log(
+                        String.format(
+                            context.getString(R.string.remain_evasions),
+                            defender.name,
+                            evasions[defender.id]
+                        )
+                    )
                     if (successAttackAmount <= 0) {
                         log(context.getString(R.string.all_attacks_evaded))
                         val result = AttackResult(
@@ -303,7 +306,7 @@ class AttackResultViewModel : BaseViewModel() {
                         log(
                             String.format(
                                 context.getString(R.string.damage_for_attack),
-                                j,
+                                j + 1,
                                 totalDamage
                             )
                         )
@@ -323,7 +326,9 @@ class AttackResultViewModel : BaseViewModel() {
                             totalDamageWithoutArmor
                         )
                     )
-                    log(String.format(context.getString(R.string.total_damage), totalDamage))
+                    if (totalDamage > 0) {
+                        log(String.format(context.getString(R.string.total_damage), totalDamage))
+                    }
                     val rage = if (attacker.rage > weapon.rage) attacker.rage else weapon.rage
                     if ((totalDamage >= rage || totalDamageWithoutArmor >= rage) && attacker.canUseRage) {
                         log(context.getString(R.string.rage_calculation))
@@ -412,6 +417,7 @@ class AttackResultViewModel : BaseViewModel() {
                                         defender.hp * -1
                                     )
                                 )
+                                defender.hp = hpBeyound * -1
                                 log(
                                     String.format(
                                         context.getString(R.string.crit_modifier_log),
@@ -497,6 +503,7 @@ class AttackResultViewModel : BaseViewModel() {
                                     defender.hp * -1
                                 )
                             )
+                            defender.hp = hpBeyound * -1
                             log(
                                 String.format(
                                     context.getString(R.string.crit_modifier_log),

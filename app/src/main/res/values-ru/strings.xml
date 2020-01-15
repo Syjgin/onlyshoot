@@ -14,6 +14,8 @@
     <string name="load_defenders">Загрузка защищающихся</string>
     <string name="hp_template">HP: %s</string>
     <string name="attack_template">Атака (навык): %s</string>
+    <string name="attack_log_template">Атака (навык + модификаторы): %s</string>
+    <string name="evasion_log_template">Уклонение (навык + модификаторы): %d</string>
     <string name="attack_amount_template">Число атак: %d</string>
     <string name="weapon_template">Оружие: %s</string>
     <string name="no_data_for_attack">Добавьте данные отрядов перед атакой</string>
@@ -459,7 +461,6 @@
     <string name="attack_failed">атака не удалась: %d</string>
     <string name="new_defender">по ошибке попали в: %s</string>
     <string name="attack_part">перевёрнутый d100: %1$d часть тела: %2$s</string>
-    <string name="all_attack_parts">все части тела: %s</string>
     <string name="attack_count">число атак: %d</string>
     <string name="previous_evasion">оставшееся число уклонений: %d</string>
     <string name="evasion_success">число успешных уклонений: %d</string>
