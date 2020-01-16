@@ -28,6 +28,7 @@ data class SquadUnit(
     val tempDamageModifier: Int,
     var hp: Int,
     val evasion: Int,
+    val evasionModifier: Int,
     val evasionCount: Int,
     val criticalHitAvoidance: Int,
     val canUseRage: Boolean,

@@ -184,15 +184,16 @@ class AttackResultViewModel : BaseViewModel() {
                     if (evasions[defender.id]!! > 0) {
                         val evasionDice = created100()
                         log(String.format(context.getString(R.string.evasion_dice), evasionDice))
+                        val fullEvasion = defender.evasion + defender.evasionModifier
                         var successCount =
-                            (if (evasionDice < defender.evasion) 1 else 0) + (defender.evasion - evasionDice) / 10
+                            (if (evasionDice < fullEvasion) 1 else 0) + (fullEvasion - evasionDice) / 10
                         if (successCount > successAttackAmount) {
                             successCount = successAttackAmount
                         }
                         log(
                             String.format(
                                 context.getString(R.string.evasion_log_template),
-                                defender.evasion
+                                fullEvasion
                             )
                         )
                         log(

@@ -91,6 +91,7 @@ class AddEditUnitFragment : BaseFragment<AddEditUnitViewModel>(AddEditUnitViewMo
             normal_armor_right_leg,
             proof_armor_right_leg,
             evasion_skill,
+            evasion_skill_modifier,
             critical_ignorance,
             anger_amount)) {
             textField.addTextChangedListener {
@@ -144,6 +145,7 @@ class AddEditUnitFragment : BaseFragment<AddEditUnitViewModel>(AddEditUnitViewMo
             temp_damage_modifier.text.toString().toInt(),
             hp.text.toString().toInt(),
             evasion_skill.text.toString().toInt(),
+            evasion_skill_modifier.text.toString().toInt(),
             evasion_amount.text.toString().toInt(),
             critical_ignorance.text.toString().toInt(),
             can_use_anger.isChecked,
@@ -175,6 +177,7 @@ class AddEditUnitFragment : BaseFragment<AddEditUnitViewModel>(AddEditUnitViewMo
                 normal_armor_right_leg.text?.isNotEmpty() ?: false &&
                 proof_armor_right_leg.text?.isNotEmpty() ?: false &&
                 evasion_skill.text?.isNotEmpty() ?: false &&
+                evasion_skill_modifier.text?.isNotEmpty() ?: false &&
                 critical_ignorance.text?.isNotEmpty() ?: false &&
                 anger_amount.text?.isNotEmpty() ?: false &&
                 hp.text?.isNotEmpty() ?: false &&
@@ -202,6 +205,7 @@ class AddEditUnitFragment : BaseFragment<AddEditUnitViewModel>(AddEditUnitViewMo
         constant_damage_modifier.setText(squadUnit.constantDamageModifier.toString())
         temp_damage_modifier.setText(squadUnit.tempDamageModifier.toString())
         evasion_skill.setText(squadUnit.evasion.toString())
+        evasion_skill_modifier.setText(squadUnit.evasionModifier.toString())
         evasion_amount.setText(squadUnit.evasionCount.toString())
         critical_ignorance.setText(squadUnit.criticalHitAvoidance.toString())
         anger_amount.setText(squadUnit.rage.toString())

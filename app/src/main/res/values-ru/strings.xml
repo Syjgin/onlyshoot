@@ -505,4 +505,5 @@
     <string name="copy_weapon">Копировать оружие</string>
     <string name="enemy_const_attack_skill_amount">Постоянный модификатор атаки врага</string>
     <string name="enemy_temp_attack_skill_amount">Временный модификатор атаки врага</string>
+    <string name="evasion_skill_modifier">Модификатор навыка уклонения</string>
 </resources>

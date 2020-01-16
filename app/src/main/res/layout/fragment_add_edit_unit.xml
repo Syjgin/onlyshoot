@@ -477,6 +477,20 @@
                 android:layout_height="wrap_content">
 
                 <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/evasion_skill_modifier"
+                    style="@style/TextFieldTheme"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/evasion_skill_modifier"
+                    android:inputType="numberSigned|numberDecimal"
+                    tools:ignore="Autofill,LabelFor" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <androidx.appcompat.widget.AppCompatEditText
                     android:id="@+id/evasion_amount"
                     style="@style/TextFieldTheme"
                     android:layout_width="match_parent"

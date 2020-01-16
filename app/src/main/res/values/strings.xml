@@ -520,4 +520,5 @@ Charge Action within six metres of the target must make a Challenging (+0) Agili
     <string name="enemy_const_attack_skill_amount">Enemy constant attack modifier</string>
     <string name="enemy_temp_attack_skill_amount">Enemy temp attack modifier</string>
     <string name="default_penetration" translatable="false">0</string>
+    <string name="evasion_skill_modifier">Evasion skill modifier</string>
 </resources>

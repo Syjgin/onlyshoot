@@ -6,7 +6,7 @@ import androidx.room.TypeConverters
 
 @Database(
     entities = [Fight::class, SquadUnit::class, SquadDescription::class, UnitArchetype::class, Weapon::class, SquadArchetype::class],
-    version = 1,
+    version = 2,
     exportSchema = false
 )
 @TypeConverters(DamageTypeConverter::class, BurstTypeConverter::class)
