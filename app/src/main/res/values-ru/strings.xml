@@ -2,7 +2,8 @@
     <string name="app_name">OnlyShoot</string>
     <string name="add_fight">Добавить бой</string>
     <string name="edit_fight">Редактировать бой</string>
-    <string name="add_squad">Добавить отряд</string>
+    <string name="add_squad">Добавить готовый отряд</string>
+    <string name="create_squad_from_sample">Создать новый по образцу</string>
     <string name="edit_squad">Редактировать отряд</string>
     <string name="add_unit">Добавить юнита</string>
     <string name="edit_unit">Редактировать юнита</string>

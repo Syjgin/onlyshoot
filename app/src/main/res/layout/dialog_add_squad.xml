@@ -20,7 +20,7 @@
             android:id="@+id/second_option"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/add_archetype" />
+            android:text="@string/create_squad_from_sample" />
     </RadioGroup>
 
     <LinearLayout
