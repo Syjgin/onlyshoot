@@ -97,7 +97,10 @@ class AttackResultViewModel : BaseViewModel() {
                     val fullAttack =
                         attacker.attack + attacker.attackModifier + weapon.attackModifier + defender.tempEnemyAttackModifier + defender.constantEnemyAttackModifier
                     val attackSuccessCount =
-                        (if (d100 < fullAttack) 1 else 0) + (fullAttack - d100) / 10
+                        Math.min(
+                            (if (d100 < fullAttack) 1 else 0) + (fullAttack - d100) / 10,
+                            attacksBySingleUnit
+                        )
                     log(
                         String.format(
                             context.getString(R.string.attack_success_count),
@@ -221,9 +224,10 @@ class AttackResultViewModel : BaseViewModel() {
                                     allParts.removeAt(0)
                                 }
                             }
-                            evasions[defender.id] = evasions[defender.id]!! - successCount
                         }
                     }
+                    if (evasions[defender.id]!! > 0)
+                        evasions[defender.id] = evasions[defender.id]!! - 1
                     log(
                         String.format(
                             context.getString(R.string.remain_evasions),
@@ -296,6 +300,13 @@ class AttackResultViewModel : BaseViewModel() {
                         for (k in 0..weapon.armorPenetration) {
                             currentPenetration += random.nextInt(0, 11)
                         }
+                        log(
+                            String.format(
+                                context.getString(R.string.armor_penetration_log),
+                                currentPenetration,
+                                weapon.armorPenetrationModifier
+                            )
+                        )
                         currentPenetration += weapon.armorPenetrationModifier
                         var totalArmor =
                             usualArmor - currentPenetration

@@ -15,6 +15,7 @@
     <string name="load_defenders">Load defenders</string>
     <string name="hp_template">HP: %s</string>
     <string name="attack_template">Attack skill: %s</string>
+    <string name="armor_penetration_log">Armor penetration: dices + modifier: %1$d + %2$s</string>
     <string name="attack_log_template">Attack (skill + modifiers): %s</string>
     <string name="weapon_template">Weapon: %s</string>
     <string name="no_data_for_attack">Add squads data before attack</string>
