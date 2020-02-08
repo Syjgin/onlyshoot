@@ -37,6 +37,10 @@ class AttackResultAdapter : RecyclerView.Adapter<AttackResultAdapter.AttackResul
             holder.itemView.context.getString(R.string.damage_text),
             currentItem.damage
         )
+        holder.itemView.remain_hp.text = String.format(
+            holder.itemView.context.getString(R.string.remain_hp),
+            currentItem.remainHP
+        )
         holder.itemView.attack_count.text = String.format(
             holder.itemView.context.getString(R.string.attack_amount_template),
             currentItem.attackCount

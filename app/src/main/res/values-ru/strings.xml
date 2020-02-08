@@ -464,6 +464,7 @@
     <string name="new_defender">по ошибке попали в: %s</string>
     <string name="attack_part">перевёрнутый d100: %1$d часть тела: %2$s</string>
     <string name="attack_count">число атак: %d</string>
+    <string name="remain_hp">осталось hp: %d</string>
     <string name="previous_evasion">оставшееся число уклонений: %d</string>
     <string name="evasion_success">число успешных уклонений: %d</string>
     <string name="remain_evasions">оставшееся число уклонений %1$s : %2$d</string>

@@ -251,6 +251,7 @@ class AttackResultViewModel : BaseViewModel() {
                         continue
                     }
                     var totalDamage = 0
+                    var damageOnDice = 0
                     var totalDamageWithoutArmor = 0
                     for (j in 0 until successAttackAmount) {
                         log(String.format(context.getString(R.string.calculating_attack), j + 1))
@@ -271,6 +272,7 @@ class AttackResultViewModel : BaseViewModel() {
                                 j + 1, currentDamage
                             )
                         )
+                        damageOnDice = currentDamage
                         log(
                             String.format(
                                 context.getString(R.string.current_damage),
@@ -342,9 +344,9 @@ class AttackResultViewModel : BaseViewModel() {
                         log(String.format(context.getString(R.string.total_damage), totalDamage))
                     }
                     val rage = if (attacker.rage > weapon.rage) attacker.rage else weapon.rage
-                    if ((totalDamage >= rage || totalDamageWithoutArmor >= rage) && attacker.canUseRage) {
+                    if (damageOnDice >= rage && attacker.canUseRage) {
                         log(context.getString(R.string.rage_calculation))
-                        if (totalDamage >= rage) {
+                        if (totalDamage > damageOnDice) {
                             log(
                                 String.format(
                                     context.getString(R.string.hp_before_attack),
@@ -408,7 +410,7 @@ class AttackResultViewModel : BaseViewModel() {
                                 }
                                 continue
                             }
-                        } else if (totalDamageWithoutArmor >= rage) {
+                        } else {
                             log(
                                 String.format(
                                     context.getString(R.string.hp_before_attack),

@@ -71,11 +71,18 @@
         android:layout_marginTop="@dimen/content_offset" />
 
     <TextView
-        android:id="@+id/result"
+        android:id="@+id/remain_hp"
         style="@style/TextFieldTheme"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/parts"
+        android:layout_marginTop="@dimen/content_offset" />
+    <TextView
+        android:id="@+id/result"
+        style="@style/TextFieldTheme"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/remain_hp"
         android:layout_marginTop="@dimen/content_offset" />
 
     <View
