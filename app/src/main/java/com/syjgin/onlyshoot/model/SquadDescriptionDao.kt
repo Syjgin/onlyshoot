@@ -10,6 +10,9 @@ import androidx.room.Query
 interface SquadDescriptionDao {
     @Query("SELECT * FROM SquadDescription")
     fun getAll() : LiveData<List<SquadDescription>>
+
+    @Query("SELECT * FROM SquadDescription")
+    suspend fun getAllSuspend(): List<SquadDescription>
     @Query("SELECT * FROM SquadDescription WHERE id = :id")
     suspend fun getById(id: Long) : SquadDescription?
     @Insert(onConflict = OnConflictStrategy.REPLACE)

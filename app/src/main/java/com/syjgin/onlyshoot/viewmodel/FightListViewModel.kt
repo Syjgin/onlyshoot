@@ -24,7 +24,40 @@ class FightListViewModel : BaseViewModel() {
 
     fun removeItem(fight: Fight) {
         viewModelScope.launch {
+            val firstSquadId = fight.firstSquadId
+            val secondSquadId = fight.secondSquadId
+            val squads = database.squadDescriptionDao().getAllSuspend()
+            val fights = database.fightDao().getAllSuspend()
+            var isSquadInOtherFights = false
+            for (currentFight in fights) {
+                if (currentFight.id != fight.id) {
+                    if (currentFight.firstSquadId == firstSquadId ||
+                        currentFight.secondSquadId == firstSquadId ||
+                        currentFight.firstSquadId == secondSquadId ||
+                        currentFight.secondSquadId == secondSquadId
+                    ) {
+                        isSquadInOtherFights = true
+                    }
+                }
+            }
             database.fightDao().delete(fight)
+            if (!isSquadInOtherFights) {
+                var isFirstFound = false
+                var isSecondFound = false
+                for (squad in squads) {
+                    if (squad.id == firstSquadId) {
+                        isFirstFound = true
+                        database.squadDescriptionDao().delete(squad.id)
+                    }
+                    if (squad.id == secondSquadId) {
+                        isSecondFound = true
+                        database.squadDescriptionDao().delete(squad.id)
+                    }
+                    if (isFirstFound && isSecondFound) {
+                        break
+                    }
+                }
+            }
         }
     }
 

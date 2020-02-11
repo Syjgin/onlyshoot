@@ -2,7 +2,7 @@
     <string name="app_name">OnlyShoot</string>
     <string name="add_fight">Add fight</string>
     <string name="edit_fight">Edit fight</string>
-    <string name="add_squad">Add ready squad</string>
+    <string name="add_squad">Add squad from fight</string>
     <string name="create_squad_from_sample">Create new from sample</string>
     <string name="edit_squad">Edit squad</string>
     <string name="add_unit">Add unit</string>

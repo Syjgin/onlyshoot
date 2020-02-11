@@ -299,7 +299,7 @@ class AttackResultViewModel : BaseViewModel() {
                             AttackResult.BodyPart.LeftLeg -> defender.proofArmorLeftLeg
                         }
                         var currentPenetration = 0
-                        for (k in 0..weapon.armorPenetration) {
+                        for (k in 0 until weapon.armorPenetration) {
                             currentPenetration += random.nextInt(0, 11)
                         }
                         log(
